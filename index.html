@@ -5,7 +5,7 @@
  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
  <meta name="theme-color" content="#111827" />
  <link rel="manifest" href="manifest.webmanifest" />
- <title>시험 분석 2.4</title>
+ <title>시험 분석 2.5</title>
  <style>
  :root{
  --bg:#eef3ff; --panel:#ffffff; --panel2:#f8faff; --ink:#172033; --muted:#7b8499;
@@ -132,7 +132,7 @@
     .inputProgressWrap{display:grid;grid-template-columns:185px 1fr;align-items:center;gap:13px;padding:11px 13px;border-radius:16px;background:#f7f9ff;border:1px solid #e8eefb;margin-bottom:12px}.inputProgressWrap b{display:block;font-size:13px}.inputProgressWrap small{display:block;margin-top:3px;color:#8290a7;font-weight:800;font-size:10px}.inputProgressTrack{height:9px;background:#e8eefb;border-radius:999px;overflow:hidden}.inputProgressTrack>div{height:100%;width:0;border-radius:999px;background:linear-gradient(90deg,#ff6678,#f36d4f);transition:.2s}
     .questionGrid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px;margin:0 auto 8px;max-width:430px;width:78%}.questionBtn{height:36px;border-radius:10px;background:#f5f7fc;border:1px solid #e3e9f5;color:#536079;font-weight:1000;position:relative;transition:.14s;touch-action:manipulation;cursor:pointer;font-size:13px;padding:0}.questionBtn:hover{transform:translateY(-1px);border-color:#a9bdf5}.questionBtn.wrong{background:linear-gradient(135deg,#fff0f2,#fff7f4);border-color:#ffb8c1;color:#e64c61;box-shadow:0 7px 16px rgba(255,102,120,.10)}.questionBtn.wrong:after{content:"×";position:absolute;right:7px;top:4px;font-size:11px;font-weight:1000}.questionBtn.selected{outline:3px solid rgba(63,115,255,.22);border-color:#3f73ff;color:#3154e8;background:#eef4ff}
     .questionLegend{display:flex;gap:14px;flex-wrap:wrap;color:#7a879f;font-size:10px;font-weight:850;margin-bottom:11px}.questionLegend span{display:inline-flex;align-items:center;gap:6px}.qLegend{width:9px;height:9px;border-radius:3px;background:#f0f3f9;border:1px solid #dfe6f2}.qLegend.wrong{background:#ffe3e7;border-color:#ff9dab}
-    .questionEditor{border-top:1px solid #e9eef8;padding-top:13px}.questionEditorHead{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px}.questionEditorHead small{color:#8490a8;font-weight:900}.questionEditorHead h3{margin:2px 0 0;font-size:19px}.questionEditorActions{position:sticky;bottom:0;background:linear-gradient(180deg,rgba(255,255,255,.78),#fff 38%);padding-top:10px;padding-bottom:2px;z-index:3}.inputQuestionWorkspace .choiceBtn{min-height:46px}.inputQuestionWorkspace textarea{min-height:86px}
+    .questionEditor{border:1px solid #e3e9f5;border-radius:18px;padding:14px;background:#fff;margin-top:12px;scroll-margin-top:12px;box-shadow:0 8px 22px rgba(31,50,91,.06)}.questionEditorHead{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px}.questionEditorHead small{color:#8490a8;font-weight:900}.questionEditorHead h3{margin:2px 0 0;font-size:19px}.questionEditorActions{position:sticky;bottom:0;background:linear-gradient(180deg,rgba(255,255,255,.78),#fff 38%);padding-top:10px;padding-bottom:2px;z-index:3}.inputQuestionWorkspace .choiceBtn{min-height:46px}.inputQuestionWorkspace textarea{min-height:86px}
     @media(max-width:900px){.inputParallelGrid{grid-template-columns:1fr;min-height:0}.inputExamCreateCard,.inputQuestionWorkspace{min-height:0;max-height:none}.inputExamCreateCard .formGrid,.inputWorkspaceScroll{overflow:visible}.inputExamTabs{max-width:100%}.questionGrid{grid-template-columns:repeat(5,minmax(0,1fr));width:100%;max-width:430px}.inputProgressWrap{grid-template-columns:1fr}}
 
 </style>
@@ -189,7 +189,7 @@
  <div class="view" id="inputView">
  <div class="inputParallelGrid">
   <div class="card inputExamCreateCard">
-   <div class="cardHead"><div><h3 id="examFormTitle">시험 정보 입력</h3><p class="sub">시험 정보를 저장하면 오른쪽 문항 입력 영역에서 해당 시험을 바로 선택할 수 있습니다.</p></div><span class="versionBadge">2.4</span></div>
+   <div class="cardHead"><div><h3 id="examFormTitle">시험 정보 입력</h3><p class="sub">시험 정보를 저장하면 오른쪽 문항 입력 영역에서 해당 시험을 바로 선택할 수 있습니다.</p></div><span class="versionBadge">2.5</span></div>
    <form id="examForm"><input type="hidden" id="editingExamId">
     <div class="formGrid inputExamFields">
      <div class="field full"><label>시험명</label><input name="name" placeholder="예: BGM 9회" required></div>
@@ -1120,7 +1120,7 @@ function setView(v){const el=document.getElementById(v+'View');if(!el)v='home';s
 const examFormEl=document.getElementById('examForm');examFormEl.addEventListener('submit',function(e){e.preventDefault();e.stopImmediatePropagation();const f=Object.fromEntries(new FormData(this));const score=Number(f.score);if(state.subject==='math'&&(score<0||score>100||score%4!==0)){alert('수학 점수는 0~100 사이의 4점 단위로 입력하세요.');return}const data={subject:state.subject,name:String(f.name||'').trim(),date:f.date,range:[],limit:selectedLimit,count:state.subject==='math'?25:(+f.count||25),total:state.subject==='math'?100:(+f.total||100),score,topPercent:f.topPercent===''?null:Number(f.topPercent)};if(!data.name){alert('시험명을 입력하세요.');return}const editId=document.getElementById('editingExamId').value;let savedId=editId;if(editId){const idx=state.exams.findIndex(x=>x.id===editId);if(idx>=0)state.exams[idx]={...state.exams[idx],...data,updated:Date.now()};showToast('시험을 수정했습니다')}else{savedId=id();state.exams.push({id:savedId,created:Date.now(),...data});showToast('시험을 저장했습니다')}state.inputExamId=savedId;state.inputQno=null;resetExamForm();save()},true);
 
 
-// ===== 2.4 입력 워크스페이스: 시험 탭/문항 그리드 독립 연결 =====
+// ===== 2.5 입력 워크스페이스: 시험 컨텍스트/문항 컨텍스트 단일화 =====
 state.items = (state.items || []).map(i => ({ ...i, status: '틀림' }));
 let inputEditorItemId = null;
 
@@ -1135,11 +1135,18 @@ function expectedWrongCount(exam) {
 }
 
 function currentInputExam() {
-  return state.exams.find(e => e.id === state.inputExamId && e.subject === state.subject) || null;
+  return current().exams.find(e => String(e.id) === String(state.inputExamId)) || null;
 }
 
 function persistInputSelection() {
   localStorage.setItem(KEY, JSON.stringify(state));
+}
+
+function syncLegacyInputFields(exam, qno) {
+  const examSelect = document.getElementById('examSelect');
+  const itemQno = document.getElementById('itemQno');
+  if (examSelect) examSelect.value = exam ? String(exam.id) : '';
+  if (itemQno) itemQno.value = qno ? String(qno) : '';
 }
 
 function resetQuestionEditor() {
@@ -1150,33 +1157,24 @@ function resetQuestionEditor() {
   const fields = document.getElementById('questionEditorFields');
   if (empty) empty.style.display = 'block';
   if (fields) fields.style.display = 'none';
-  const no = document.getElementById('selectedQuestionNo');
-  if (no) no.textContent = '-';
-  const q = document.getElementById('itemQno');
-  if (q) q.value = '';
-  const course = document.getElementById('itemCourse');
-  const unit = document.getElementById('itemUnit');
-  const detail = document.getElementById('itemDetail');
-  const memo = document.getElementById('itemMemo');
-  if (course) course.value = '';
-  if (unit) unit.value = '';
-  if (detail) detail.value = '';
-  if (memo) memo.value = '';
-  const submit = document.getElementById('itemSubmitBtn');
-  const del = document.getElementById('deleteItemRecordBtn');
-  if (submit) submit.textContent = '오답 저장';
-  if (del) del.style.display = 'none';
+  document.getElementById('selectedQuestionNo').textContent = '-';
+  syncLegacyInputFields(currentInputExam(), null);
+  document.getElementById('itemCourse').value = '';
+  document.getElementById('itemUnit').value = '';
+  document.getElementById('itemDetail').value = '';
+  document.getElementById('itemMemo').value = '';
+  document.getElementById('itemSubmitBtn').textContent = '오답 저장';
+  document.getElementById('deleteItemRecordBtn').style.display = 'none';
   renderTags();
   updateChoiceButtons();
 }
 
-function fillQuestionEditor(exam, qno) {
+function fillQuestionEditor(exam, qno, autoScroll = true) {
   const existing = examItems(exam.id).find(i => questionNumberOf(i) === qno) || null;
   inputEditorItemId = existing ? existing.id : null;
   selectedTags = existing && Array.isArray(existing.tags) ? [...existing.tags] : [];
 
-  document.getElementById('examSelect').value = exam.id;
-  document.getElementById('itemQno').value = String(qno);
+  syncLegacyInputFields(exam, qno);
   document.getElementById('selectedQuestionNo').textContent = qno;
   document.getElementById('itemCourse').value = existing ? (existing.course || '') : '';
   document.getElementById('itemUnit').value = existing ? (existing.unit || '') : '';
@@ -1188,6 +1186,16 @@ function fillQuestionEditor(exam, qno) {
   document.getElementById('deleteItemRecordBtn').style.display = existing ? 'inline-flex' : 'none';
   renderTags();
   updateChoiceButtons();
+
+  if (autoScroll) {
+    requestAnimationFrame(() => {
+      const scroller = document.querySelector('.inputWorkspaceScroll');
+      const editor = document.getElementById('itemForm');
+      if (!scroller || !editor) return;
+      const target = Math.max(0, editor.offsetTop - 10);
+      scroller.scrollTo({ top: target, behavior: 'smooth' });
+    });
+  }
 }
 
 function renderInputExamTabs(exams) {
@@ -1195,8 +1203,31 @@ function renderInputExamTabs(exams) {
   document.getElementById('inputExamCount').textContent = exams.length + '회';
   list.innerHTML = exams.map(e => {
     const wrong = examItems(e.id).filter(i => i.status === '틀림').length;
-    return `<button type="button" class="inputExamTab ${e.id === state.inputExamId ? 'active' : ''}" data-input-exam="${e.id}"><strong>${e.name}</strong><span>${Number.isFinite(+e.score) ? +e.score : '-'}점 · 오답 ${wrong}개</span></button>`;
+    const active = String(e.id) === String(state.inputExamId);
+    return `<button type="button" class="inputExamTab ${active ? 'active' : ''}" data-input-exam="${e.id}" aria-pressed="${active}"><strong>${e.name}</strong><span>${Number.isFinite(+e.score) ? +e.score : '-'}점 · 오답 ${wrong}개</span></button>`;
   }).join('');
+}
+
+function renderQuestionGrid(exam) {
+  const items = examItems(exam.id).filter(i => i.status === '틀림');
+  const wrongNums = new Set(items.map(questionNumberOf).filter(Boolean));
+  const count = state.subject === 'math' ? 25 : Math.max(1, +exam.count || 25);
+  document.getElementById('questionGrid').innerHTML = Array.from({ length: count }, (_, i) => i + 1)
+    .map(n => `<button type="button" class="questionBtn ${wrongNums.has(n) ? 'wrong' : ''} ${Number(state.inputQno) === n ? 'selected' : ''}" data-question-no="${n}" aria-pressed="${Number(state.inputQno) === n}">${n}</button>`)
+    .join('');
+}
+
+function renderInputExamContext(exam) {
+  document.getElementById('inputWorkspaceExamName').textContent = exam.name;
+  const tp = topPercent(exam);
+  document.getElementById('inputWorkspaceMeta').textContent = `${dateLabel(exam.date)} · ${Number.isFinite(+exam.score) ? +exam.score : '-'}점 · ${tp !== null ? '상위 ' + tp + '%' : '상위 % 미입력'}`;
+
+  const items = examItems(exam.id).filter(i => i.status === '틀림');
+  const expected = expectedWrongCount(exam);
+  document.getElementById('inputProgressText').textContent = `오답 기록 ${items.length}개`;
+  document.getElementById('inputExpectedWrong').textContent = expected === null ? '기록이 있는 문항만 오답으로 집계' : `점수 기준 예상 오답 ${expected}개`;
+  const denom = expected === null ? Math.max(1, state.subject === 'math' ? 25 : (+exam.count || 25)) : Math.max(1, expected);
+  document.getElementById('inputProgressFill').style.width = Math.min(100, items.length / denom * 100) + '%';
 }
 
 function renderQuestionWorkspace(exam, keepEditor = false) {
@@ -1209,60 +1240,51 @@ function renderQuestionWorkspace(exam, keepEditor = false) {
   }
   emptyEl.style.display = 'none';
   body.style.display = 'flex';
-
-  document.getElementById('inputWorkspaceExamName').textContent = exam.name;
-  const tp = topPercent(exam);
-  document.getElementById('inputWorkspaceMeta').textContent = `${dateLabel(exam.date)} · ${Number.isFinite(+exam.score) ? +exam.score : '-'}점 · ${tp !== null ? '상위 ' + tp + '%' : '상위 % 미입력'}`;
-
-  const items = examItems(exam.id).filter(i => i.status === '틀림');
-  const wrongNums = new Set(items.map(questionNumberOf).filter(Boolean));
-  const count = state.subject === 'math' ? 25 : Math.max(1, +exam.count || 25);
-  const expected = expectedWrongCount(exam);
-  document.getElementById('inputProgressText').textContent = `오답 기록 ${items.length}개`;
-  document.getElementById('inputExpectedWrong').textContent = expected === null ? '기록이 있는 문항만 오답으로 집계' : `점수 기준 예상 오답 ${expected}개`;
-  const denom = expected === null ? Math.max(1, count) : Math.max(1, expected);
-  document.getElementById('inputProgressFill').style.width = Math.min(100, items.length / denom * 100) + '%';
-
-  document.getElementById('questionGrid').innerHTML = Array.from({ length: count }, (_, i) => i + 1)
-    .map(n => `<button type="button" class="questionBtn ${wrongNums.has(n) ? 'wrong' : ''} ${state.inputQno === n ? 'selected' : ''}" data-question-no="${n}">${n}</button>`)
-    .join('');
-  document.getElementById('examSelect').value = exam.id;
-
-  if (keepEditor && state.inputQno) fillQuestionEditor(exam, Number(state.inputQno));
+  renderInputExamContext(exam);
+  renderQuestionGrid(exam);
+  syncLegacyInputFields(exam, state.inputQno);
+  if (keepEditor && state.inputQno) fillQuestionEditor(exam, Number(state.inputQno), false);
   else resetQuestionEditor();
 }
 
 function selectInputExam(examId) {
-  const exam = state.exams.find(e => e.id === examId && e.subject === state.subject);
+  const exam = current().exams.find(e => String(e.id) === String(examId));
   if (!exam) return;
-  state.inputExamId = examId;
+  state.inputExamId = exam.id;
   state.inputQno = null;
   inputEditorItemId = null;
   selectedTags = [];
   persistInputSelection();
 
   document.querySelectorAll('#inputExamList [data-input-exam]').forEach(btn => {
-    btn.classList.toggle('active', btn.dataset.inputExam === examId);
+    const active = String(btn.dataset.inputExam) === String(exam.id);
+    btn.classList.toggle('active', active);
+    btn.setAttribute('aria-pressed', active ? 'true' : 'false');
   });
-  renderQuestionWorkspace(exam, false);
+  renderInputExamContext(exam);
+  renderQuestionGrid(exam);
+  resetQuestionEditor();
+  const scroller = document.querySelector('.inputWorkspaceScroll');
+  if (scroller) scroller.scrollTop = 0;
 }
 
-function openQuestionEditor(qno) {
+function selectQuestion(qno) {
   const exam = currentInputExam();
   qno = Number(qno);
   if (!exam || !Number.isInteger(qno) || qno < 1) return;
   state.inputQno = qno;
   persistInputSelection();
-
   document.querySelectorAll('#questionGrid [data-question-no]').forEach(btn => {
-    btn.classList.toggle('selected', Number(btn.dataset.questionNo) === qno);
+    const active = Number(btn.dataset.questionNo) === qno;
+    btn.classList.toggle('selected', active);
+    btn.setAttribute('aria-pressed', active ? 'true' : 'false');
   });
-  fillQuestionEditor(exam, qno);
+  fillQuestionEditor(exam, qno, true);
 }
 
 function renderInputWorkspace() {
   const exams = sortedExams(current().exams);
-  if (!exams.some(e => e.id === state.inputExamId)) {
+  if (!exams.some(e => String(e.id) === String(state.inputExamId))) {
     state.inputExamId = exams[0] ? exams[0].id : null;
     state.inputQno = null;
   }
@@ -1270,7 +1292,6 @@ function renderInputWorkspace() {
   renderQuestionWorkspace(currentInputExam(), !!state.inputQno);
 }
 
-// 입력 영역은 DOM이 다시 그려져도 사라지지 않는 고정 컨테이너에 이벤트를 한 번만 연결한다.
 const inputExamListEl = document.getElementById('inputExamList');
 const questionGridEl = document.getElementById('questionGrid');
 inputExamListEl.addEventListener('click', e => {
@@ -1285,10 +1306,9 @@ questionGridEl.addEventListener('click', e => {
   if (!btn || !questionGridEl.contains(btn)) return;
   e.preventDefault();
   e.stopPropagation();
-  openQuestionEditor(btn.dataset.questionNo);
+  selectQuestion(btn.dataset.questionNo);
 });
 
-// 전체 화면 렌더: 입력 탭은 자체 고정 컨테이너 이벤트를 사용한다.
 function render() {
   buildPickers();
   const { exams, items, insights } = current();
@@ -1302,7 +1322,6 @@ function render() {
   updateChoiceButtons();
   if (state.view === 'examDetail') renderExamDetail();
 }
-
 
 
 document.getElementById('itemForm').addEventListener('submit', function(e) {
@@ -1348,7 +1367,17 @@ document.getElementById('itemForm').addEventListener('submit', function(e) {
     inputEditorItemId = fresh.id;
     showToast(`${qno}번을 오답으로 기록했습니다`);
   }
-  save();
+  localStorage.setItem(KEY, JSON.stringify(state));
+  const exam = currentInputExam();
+  if (exam) {
+    renderInputExamContext(exam);
+    renderQuestionGrid(exam);
+    fillQuestionEditor(exam, qno, false);
+    renderInputExamTabs(sortedExams(current().exams));
+  }
+  renderHomeDashboard(current().exams, current().items);
+  renderReview();
+  renderScores();
 }, true);
 
 document.getElementById('deleteItemRecordBtn').addEventListener('click', () => {
@@ -1363,7 +1392,17 @@ document.getElementById('deleteItemRecordBtn').addEventListener('click', () => {
   selectedTags = [];
   state.inputQno = null;
   showToast(`${qno}번 오답 기록을 삭제했습니다`);
-  save();
+  localStorage.setItem(KEY, JSON.stringify(state));
+  const exam = currentInputExam();
+  if (exam) {
+    renderInputExamTabs(sortedExams(current().exams));
+    renderInputExamContext(exam);
+    renderQuestionGrid(exam);
+    resetQuestionEditor();
+  }
+  renderHomeDashboard(current().exams, current().items);
+  renderReview();
+  renderScores();
 });
 
 selectedLimit = /^\d+분$/.test(String(selectedLimit||'')) ? selectedLimit : '60분';
