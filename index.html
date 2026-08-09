@@ -1,0 +1,580 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#111827">
+<title>시험 분석 v5 리메이크</title>
+<style>
+:root{--ink:#162033;--muted:#7e899e;--line:#e5eaf4;--bg:#eef3ff;--panel:#fff;--nav:#111827;--nav2:#1a2437;--blue:#4f73f6;--blue2:#6d63ea;--sky:#5db9f5;--red:#ef6a78;--orange:#f1a942;--green:#43b982;--shadow:0 16px 36px rgba(35,52,90,.10);--r:24px}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html,body{margin:0;height:100%;font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR",Segoe UI,sans-serif;color:var(--ink);background:linear-gradient(135deg,#dfe8ff,#f8faff 52%,#e9f7ff);overflow:hidden}button,input,select,textarea{font:inherit}button{border:0;cursor:pointer}.app{height:100vh;padding:18px;display:grid;place-items:center}.shell{width:min(1180px,100%);height:min(800px,calc(100vh - 36px));display:grid;grid-template-columns:240px 1fr;background:rgba(255,255,255,.78);border:1px solid rgba(255,255,255,.8);border-radius:34px;overflow:hidden;box-shadow:0 30px 90px rgba(33,51,99,.20);backdrop-filter:blur(18px)}
+.sidebar{background:linear-gradient(180deg,var(--nav),var(--nav2));color:#fff;padding:27px 20px;display:flex;flex-direction:column;gap:20px}.brand{display:flex;gap:12px;align-items:center}.logo{width:44px;height:44px;border-radius:15px;display:grid;place-items:center;background:linear-gradient(135deg,var(--blue),var(--sky));font-size:23px}.brand h1{font-size:25px;margin:0;letter-spacing:-.05em}.brand p{margin:4px 0 0;font-size:11px;color:#aab5ce}.navTitle{margin:0 0 5px 10px;font-size:10px;letter-spacing:.1em;color:#77839b;font-weight:900}.nav{display:flex;flex-direction:column;gap:7px}.navBtn{height:50px;border-radius:16px;background:transparent;color:#b8c3dd;padding:0 14px;text-align:left;font-weight:850}.navBtn.active,.navBtn:hover{background:rgba(255,255,255,.11);color:#fff}.navBtn.primary{background:linear-gradient(135deg,var(--blue),var(--blue2));color:#fff}.backup{margin-top:auto;padding:15px;border-radius:20px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.09)}.backup p{margin:0;color:#aab5ce;font-size:11px;line-height:1.5}.backupRow{display:flex;gap:7px;margin-top:10px}.miniBtn{flex:1;height:34px;border-radius:11px;background:rgba(255,255,255,.12);color:#fff;font-size:11px;font-weight:850}
+.main{overflow:hidden;display:grid;grid-template-rows:92px 1fr;background:linear-gradient(180deg,#fbfcff,#f2f6ff)}.topbar{padding:20px 27px 13px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:14px}.pageTitle h2{font-size:29px;margin:0;letter-spacing:-.05em}.pageTitle p{margin:6px 0 0;font-size:12px;color:var(--muted);font-weight:750}.subjectTabs{display:flex;gap:6px;padding:6px;background:#eef3ff;border:1px solid #e0e7f6;border-radius:16px}.subjectTab{height:40px;padding:0 18px;border-radius:12px;background:transparent;color:#71809a;font-weight:900}.subjectTab.active{background:#fff;color:var(--blue);box-shadow:0 6px 14px rgba(42,63,111,.09)}
+.content{overflow:auto;padding:24px 27px 30px}.content::-webkit-scrollbar{width:9px}.content::-webkit-scrollbar-thumb{background:#d8e0f2;border-radius:20px}.view{display:none}.view.active{display:block}.card{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:20px;box-shadow:var(--shadow)}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}.cardHead{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:15px}.cardHead h3{margin:0;font-size:18px}.sub{margin:5px 0 0;color:var(--muted);font-size:12px;font-weight:750}.badge{display:inline-flex;align-items:center;border-radius:999px;padding:6px 10px;background:#edf2ff;color:var(--blue);font-size:11px;font-weight:900}.hero{display:grid;grid-template-columns:1.35fr .65fr;gap:18px;margin-bottom:18px}.heroMain{padding:25px;border-radius:28px;background:linear-gradient(135deg,#4f73f6,#6669ef 68%,#62c9f7);color:#fff;position:relative;overflow:hidden;box-shadow:var(--shadow)}.heroMain:after{content:"";position:absolute;width:240px;height:240px;border-radius:50%;background:rgba(255,255,255,.13);right:-80px;top:-90px}.heroMain h3{margin:0 0 9px;font-size:29px;letter-spacing:-.05em}.heroMain p{margin:0;color:#eaf0ff;font-weight:750}.heroActions{display:flex;gap:9px;margin-top:20px;position:relative;z-index:1}.whiteBtn,.ghostBtn,.blueBtn,.softBtn,.dangerBtn{height:44px;border-radius:14px;padding:0 15px;font-weight:900}.whiteBtn{background:#fff;color:#3658e7}.ghostBtn{background:rgba(255,255,255,.18);color:#fff}.blueBtn{background:linear-gradient(135deg,var(--blue),var(--blue2));color:#fff}.softBtn{background:#eef3ff;color:#596780}.dangerBtn{background:#fff0f2;color:var(--red)}
+.metricGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:13px;margin-bottom:18px}.metric{background:#fff;border:1px solid var(--line);border-radius:21px;padding:17px;box-shadow:0 10px 24px rgba(35,52,90,.07)}.metric small{color:var(--muted);font-weight:850}.metric b{display:block;font-size:28px;margin-top:7px}.metric span{font-size:11px;color:#8b95a8;font-weight:750}.list{display:flex;flex-direction:column;gap:9px}.entry{padding:14px;border-radius:17px;background:#f8faff;border:1px solid #edf1f8}.entryTop{display:flex;justify-content:space-between;gap:12px}.entry h4{margin:0;font-size:14px}.entry p{margin:5px 0 0;color:var(--muted);font-size:11px;font-weight:700}.entryMeta{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}.tiny{display:inline-flex;padding:5px 8px;border-radius:999px;background:#edf2ff;color:#60708f;font-size:10px;font-weight:850}
+.formGrid{display:grid;grid-template-columns:1fr 1fr;gap:13px}.field{display:flex;flex-direction:column;gap:6px}.field.full{grid-column:1/-1}.field label{font-size:11px;color:#6f7890;font-weight:900}.field input,.field select,.field textarea,.choiceBtn{width:100%;min-height:47px;border:1px solid #dde5f4;border-radius:14px;background:#fbfcff;padding:12px 13px;color:var(--ink);outline:none;text-align:left}.field textarea{min-height:100px;resize:vertical}.choiceBtn.placeholder{color:#98a2b5}.field input:focus,.field select:focus,.field textarea:focus,.choiceBtn:focus{border-color:#8ea6ff;box-shadow:0 0 0 4px rgba(79,115,246,.12)}.formActions{display:flex;gap:9px;margin-top:15px}.chips{display:flex;flex-wrap:wrap;gap:7px}.chip{min-height:36px;border-radius:999px;padding:0 12px;background:#eef3ff;color:#68758d;font-weight:850}.chip.active{background:var(--blue);color:#fff}.noteBox{padding:13px 14px;border-radius:15px;background:#f5f7ff;color:#6d7890;font-size:11px;font-weight:750;line-height:1.55}
+/* review remake */
+.reviewTop{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:18px}.rankCard{background:#fff;border:1px solid var(--line);border-radius:26px;padding:20px;box-shadow:var(--shadow)}.rankHeader{display:flex;align-items:center;justify-content:space-between;margin-bottom:13px}.rankHeader h3{margin:0;font-size:18px}.rankScroll{max-height:318px;overflow:auto;padding-right:4px}.rankScroll::-webkit-scrollbar{width:7px}.rankScroll::-webkit-scrollbar-thumb{background:#dbe3f3;border-radius:9px}.rankRow{display:grid;grid-template-columns:42px 1fr auto;align-items:center;gap:11px;padding:11px 8px;border-bottom:1px solid #edf1f7}.rankRow:last-child{border-bottom:0}.rankNo{width:34px;height:34px;border-radius:12px;display:grid;place-items:center;background:#edf2ff;color:#65718a;font-weight:950}.rankRow:nth-child(1) .rankNo{background:linear-gradient(135deg,#4f73f6,#7361ed);color:#fff;box-shadow:0 8px 17px rgba(79,115,246,.22)}.rankRow:nth-child(2) .rankNo{background:#eaf0ff;color:#4264e9}.rankRow:nth-child(3) .rankNo{background:#f4f0ff;color:#7158dc}.rankName b{display:block;font-size:13px}.rankName small{display:block;margin-top:3px;color:var(--muted);font-size:10px;font-weight:750}.rankCount{font-size:18px;font-weight:950;color:var(--blue)}.rankCount small{font-size:10px;color:var(--muted);margin-left:2px}.showHint{margin-top:9px;color:#9aa4b7;font-size:10px;font-weight:800;text-align:center}
+.chartCard{margin-top:18px}.barChart{max-height:460px;overflow:auto;padding:4px 4px 4px 0}.barItem{display:grid;grid-template-columns:minmax(190px,300px) 1fr 46px;align-items:center;gap:13px;padding:9px 0}.barLabel{font-size:12px;font-weight:850;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.track{height:11px;border-radius:999px;background:#edf1f7;overflow:hidden}.fill{height:100%;border-radius:999px;background:linear-gradient(90deg,var(--blue),#7d67ea);min-width:4px}.barValue{text-align:right;font-size:12px;font-weight:950}.trendWrap{overflow-x:auto;padding-bottom:4px}.trendSvg{min-width:700px;width:100%;height:330px}.legend{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}.legend span{font-size:10px;font-weight:850;color:#66738a;display:flex;align-items:center;gap:5px}.legend i{width:9px;height:9px;border-radius:50%;display:inline-block}
+.modalLayer{display:none;position:absolute;inset:0;background:rgba(14,22,38,.32);backdrop-filter:blur(7px);z-index:10;place-items:center;padding:22px}.modalLayer.active{display:grid}.modal{width:min(570px,100%);max-height:78%;overflow:auto;background:#fff;border-radius:25px;padding:20px;box-shadow:0 25px 80px rgba(20,31,55,.25)}.modalHead{display:flex;justify-content:space-between;gap:10px;margin-bottom:13px}.modalHead h3{margin:0}.closeBtn{width:36px;height:36px;border-radius:12px;background:#eef3ff;color:#5e6c86;font-size:20px}.selectorList{display:grid;gap:8px}.selectorOption{padding:13px;border-radius:14px;background:#f6f8fe;color:#33405a;text-align:left;font-weight:850}.selectorOption:hover{background:#edf2ff;color:var(--blue)}.empty{padding:28px;border-radius:17px;background:#f8faff;border:1px dashed #dce4f2;text-align:center;color:#97a2b5;font-weight:800}.toast{position:absolute;left:50%;bottom:24px;transform:translate(-50%,18px);opacity:0;pointer-events:none;background:#172033;color:#fff;padding:10px 15px;border-radius:13px;font-size:11px;font-weight:850;transition:.2s;z-index:20}.toast.show{opacity:1;transform:translate(-50%,0)}
+@media(max-width:900px){.app{padding:0}.shell{width:100%;height:100%;border-radius:0;grid-template-columns:84px 1fr}.sidebar{padding:20px 10px}.brand h1,.brand p,.navTitle,.navBtn span,.backup{display:none}.brand{justify-content:center}.navBtn{text-align:center;padding:0}.topbar{padding:18px}.subjectTab{padding:0 12px}.content{padding:18px}.reviewTop,.grid2,.hero{grid-template-columns:1fr}.metricGrid{grid-template-columns:1fr 1fr}}
+@media(max-width:620px){.shell{grid-template-columns:1fr;grid-template-rows:auto 1fr}.sidebar{display:none}.topbar{height:auto;align-items:flex-start;flex-direction:column}.subjectTabs{width:100%}.subjectTab{flex:1}.metricGrid{grid-template-columns:1fr}.formGrid{grid-template-columns:1fr}.field.full{grid-column:auto}.barItem{grid-template-columns:150px 1fr 40px}}
+</style>
+</head>
+<body><div class="app"><div class="shell">
+<aside class="sidebar">
+<div class="brand"><div class="logo">📊</div><div><h1>시험 분석</h1><p>시험 기록 · 약점 분석</p></div></div>
+<div><p class="navTitle">MAIN</p><div class="nav"><button class="navBtn active" data-view="home">🏠 <span>홈</span></button><button class="navBtn" data-view="exams">🗂 <span>시험</span></button><button class="navBtn primary" data-view="input">✎ <span>입력</span></button><button class="navBtn" data-view="review">↻ <span>복습</span></button><button class="navBtn" data-view="scores">↗ <span>점수</span></button></div></div>
+<div class="backup"><p>기존 v4 백업도 가져올 수 있습니다. 새 버전은 응시인원·등수·환산점수를 사용하지 않습니다.</p><div class="backupRow"><button class="miniBtn" id="exportBtn">백업</button><button class="miniBtn" id="importBtn">가져오기</button><input id="importFile" type="file" accept="application/json" hidden></div></div>
+</aside>
+<main class="main">
+<header class="topbar"><div class="pageTitle"><h2 id="viewTitle">홈</h2><p id="viewSub">점수와 약점을 빠르게 확인합니다.</p></div><div class="subjectTabs"><button class="subjectTab active" data-subject="math">수학</button><button class="subjectTab" data-subject="physics">물리</button><button class="subjectTab" data-subject="chemistry">화학</button></div></header>
+<section class="content">
+<div class="view active" id="homeView"><div class="hero"><div class="heroMain"><h3>필요한 것만 남긴 시험 분석</h3><p>시험 범위·응시인원·환산점수 없이 점수, 상위 %, 단원별 오답에 집중합니다.</p><div class="heroActions"><button class="whiteBtn" data-view="input">시험 기록</button><button class="ghostBtn" data-view="review">약점 보기</button></div></div><div class="card"><div class="cardHead"><div><h3>최근 시험</h3><p class="sub">가장 최근 기록</p></div></div><div id="homeLatest"></div></div></div><div class="metricGrid" id="homeMetrics"></div><div class="grid2"><div class="card"><div class="cardHead"><div><h3>최근 4회 약점</h3><p class="sub">현재 상태를 빠르게 확인</p></div></div><div id="homeRecentRank"></div></div><div class="card"><div class="cardHead"><div><h3>전체 누적 약점</h3><p class="sub">장기적으로 많이 틀린 단원</p></div></div><div id="homeAllRank"></div></div></div></div>
+<div class="view" id="examsView"><div class="card"><div class="cardHead"><div><h3>시험 기록</h3><p class="sub">범위·응시인원·등수는 표시하지 않습니다.</p></div><button class="blueBtn" data-view="input">+ 시험 추가</button></div><div class="list" id="examList"></div></div></div>
+<div class="view" id="inputView"><div class="grid2"><div class="card"><div class="cardHead"><div><h3 id="examFormTitle">시험 입력</h3><p class="sub">전범위 시험 기준으로 필요한 값만 입력합니다.</p></div></div><form id="examForm"><input type="hidden" id="editingExamId"><div class="formGrid"><div class="field full"><label>시험명</label><input name="name" required placeholder="예: 8월 모의고사 3회"></div><div class="field"><label>시험 날짜</label><input name="date" type="date" required></div><div class="field"><label>제한시간</label><input name="limit" type="number" min="0" max="300" step="5" value="60" placeholder="분"></div><div class="field"><label>내 점수</label><input name="score" id="scoreInput" type="number" min="0" max="100" step="1" required placeholder="직접 입력"></div><div class="field"><label>상위 %</label><input name="topPercent" type="number" min="0" max="100" step="0.1" placeholder="예: 8.5"></div><div class="field full"><div class="noteBox" id="mathScoreNote">수학은 25문항 × 4점으로 고정됩니다. 점수를 입력하면 맞힌 개수와 틀린 개수를 자동 계산합니다.</div></div></div><div class="formActions"><button class="blueBtn" id="examSubmitBtn">시험 저장</button><button class="softBtn" type="button" id="cancelExamEditBtn" style="display:none">수정 취소</button></div></form></div>
+<div class="card"><div class="cardHead"><div><h3>오답 문항 입력</h3><p class="sub">세부목차는 없애고 과목 → 단원까지만 선택합니다.</p></div></div><form id="itemForm"><div class="formGrid"><div class="field"><label>연결 시험</label><select name="examId" id="examSelect" required></select></div><div class="field"><label>문항번호</label><input name="qno" required placeholder="예: 17"></div><div class="field"><label>과목명</label><input type="hidden" name="course" id="itemCourse"><button type="button" class="choiceBtn placeholder" id="courseChoice" data-open-selector="course">과목 선택</button></div><div class="field"><label>단원명</label><input type="hidden" name="unit" id="itemUnit"><button type="button" class="choiceBtn placeholder" id="unitChoice" data-open-selector="unit">단원 선택</button></div><div class="field"><label>정오 상태</label><select name="status"><option>틀림</option><option>애매함</option><option>맞았지만 불안함</option></select></div><div class="field"><label>오래 걸린 느낌</label><select name="slow"><option>없음</option><option>조금</option><option>많이</option></select></div><div class="field full"><label>오답 원인 태그</label><div class="chips" id="tagChips"></div></div><div class="field full"><label>메모</label><textarea name="memo" placeholder="막힌 지점, 다음에 확인할 신호 등"></textarea></div></div><div class="formActions"><button class="blueBtn">문항 저장</button></div></form></div></div></div>
+<div class="view" id="reviewView"><div class="reviewTop"><div class="rankCard"><div class="rankHeader"><h3>전체 누적 복습 우선순위</h3><span class="badge">전체 시험</span></div><div class="rankScroll" id="reviewAllRank"></div><div class="showHint">TOP 5 우선 노출 · 아래로 스크롤하면 전체 단원 확인</div></div><div class="rankCard"><div class="rankHeader"><h3>최근 4회 복습 우선순위</h3><span class="badge">현재 상태</span></div><div class="rankScroll" id="reviewRecentRank"></div><div class="showHint">TOP 5 우선 노출 · 아래로 스크롤하면 전체 단원 확인</div></div></div><div class="card chartCard"><div class="cardHead"><div><h3>전체 누적 단원별 오답</h3><p class="sub">과목 구분 없이 단원끼리 직접 비교합니다.</p></div></div><div class="barChart" id="allBarChart"></div></div><div class="card chartCard"><div class="cardHead"><div><h3>최근 4회 약점 변화</h3><p class="sub">최근 4회 TOP 5 단원이 회차별로 어떻게 변했는지 봅니다.</p></div></div><div class="trendWrap" id="recentTrend"></div></div></div>
+<div class="view" id="scoresView"><div class="card"><div class="cardHead"><div><h3>점수 추이</h3><p class="sub">환산 없이 직접 입력한 점수만 사용합니다.</p></div><span class="badge" id="scoreCountBadge">0회</span></div><div id="scoreChart"></div></div><div class="card" style="margin-top:18px"><div class="cardHead"><div><h3>점수 기록</h3><p class="sub">수학은 점수로부터 맞힌/틀린 문항 수를 계산합니다.</p></div></div><div class="list" id="scoreList"></div></div></div>
+</section>
+<div class="modalLayer" id="selectModal"><div class="modal"><div class="modalHead"><div><h3 id="selectModalTitle">선택</h3><p class="sub" id="selectModalSub"></p></div><button class="closeBtn" id="closeSelectModal">×</button></div><div class="selectorList" id="selectOptions"></div></div></div>
+<div class="toast" id="toast"></div>
+</main></div></div>
+<script>
+const KEY='examAnalysisV36';
+const defaultTags=['개념 미숙','공식 기억 오류','조건 해석 오류','계산 실수','풀이 전략 실패','시간 부족','함정·특수조건 놓침','유사문항 경험 부족','부호 실수','단위·기호 혼동','검산 부족'];
+const mathSyllabus={
+  "미분학": {
+    "D-01 함수": [
+      "함수의 기본 개념",
+      "정의역·공역·치역",
+      "함수의 그래프",
+      "단사·전사·전단사와 역함수 존재 조건",
+      "양함수·음함수",
+      "우함수·기함수",
+      "합성함수와 역함수",
+      "지수함수와 로그함수",
+      "가우스 함수",
+      "삼각함수와 그래프",
+      "삼각함수 공식",
+      "역삼각함수",
+      "쌍곡선함수와 역쌍곡선함수"
+    ],
+    "D-02 미분": [
+      "함수의 극한",
+      "좌극한·우극한",
+      "무한대 극한",
+      "연속성과 불연속",
+      "중간값 정리",
+      "평균변화율과 순간변화율",
+      "미분계수와 도함수 정의",
+      "미분가능성과 연속성",
+      "기본 미분 공식",
+      "곱·몫의 미분",
+      "합성함수 미분과 연쇄법칙",
+      "삼각함수·역삼각함수 미분",
+      "지수함수·로그함수 미분",
+      "쌍곡선함수·역쌍곡선함수 미분",
+      "로그미분법",
+      "음함수 미분",
+      "역함수의 미분",
+      "매개변수 함수의 미분",
+      "고계도함수",
+      "라이프니츠 정리"
+    ],
+    "D-03 여러 가지 정리": [
+      "로피탈 정리",
+      "0/0, ∞/∞ 꼴",
+      "부정형 극한 변형",
+      "거듭제곱형 부정형",
+      "테일러 급수와 매클로린 급수",
+      "급수를 이용한 극한",
+      "샌드위치 정리",
+      "연속성과 미분가능성 판정",
+      "조각함수의 연속·미분가능성",
+      "평균값 정리와 롤의 정리",
+      "방정식의 실근 존재성",
+      "실근 개수 판정",
+      "부등식 증명"
+    ],
+    "D-04 미분의 응용": [
+      "미분과 그래프 개형",
+      "증가·감소와 단조성",
+      "극대·극소",
+      "1계도함수 부호 변화 판정",
+      "2계도함수 판정법",
+      "오목·볼록과 변곡점",
+      "젠센부등식",
+      "점근선",
+      "최대·최소 정리",
+      "최적화 문제",
+      "속도와 가속도",
+      "관련률 문제",
+      "접선 조건",
+      "교점 개수 판정"
+    ]
+  },
+  "적분학": {
+    "I-01 적분법": [
+      "부정적분과 원시함수",
+      "미적분학의 기본정리",
+      "기본 부정적분 공식",
+      "지수·로그함수 적분",
+      "삼각함수 적분",
+      "쌍곡선함수 적분",
+      "역삼각함수형 적분",
+      "치환적분법",
+      "정적분의 치환",
+      "삼각치환 적분법",
+      "부분적분법",
+      "반복·순환형 부분적분",
+      "유리함수와 부분분수 적분",
+      "무리함수 적분",
+      "탄젠트 반각치환"
+    ],
+    "I-02 정적분": [
+      "수열과 시그마",
+      "정적분의 정의",
+      "상합·하합과 리만합",
+      "리만적분 가능성",
+      "정적분과 면적",
+      "정적분의 성질",
+      "우함수·기함수 정적분",
+      "대칭구간 적분",
+      "근사적분",
+      "사다리꼴 공식과 심프슨 공식",
+      "정적분과 무한급수",
+      "Wallis 정리",
+      "정적분의 평균값 정리",
+      "적분으로 정의된 함수",
+      "정적분과 도함수",
+      "라이프니츠 정리"
+    ],
+    "I-03 이상적분": [
+      "이상적분의 정의",
+      "무한구간 이상적분",
+      "특이점이 있는 이상적분",
+      "내부 특이점 분할",
+      "이상적분의 수렴·발산",
+      "감마함수",
+      "확률밀도함수",
+      "평균·기댓값·분산",
+      "p-적분 판정",
+      "로그 포함 이상적분",
+      "비교판정법",
+      "디리클레 판정법",
+      "이상적분 종합 유형"
+    ],
+    "I-04 극좌표": [
+      "극좌표의 정의",
+      "극점·극축·동경·편각",
+      "음의 r 해석",
+      "직교좌표와 극좌표 변환",
+      "극방정식 그래프",
+      "극곡선의 대칭성",
+      "극곡선의 교점",
+      "대표 극곡선",
+      "심장형·연주형·장미선",
+      "극좌표계의 기울기",
+      "수평접선·수직접선",
+      "동경과 접선의 사잇각",
+      "두 극곡선의 교각"
+    ],
+    "I-05 적분의 응용": [
+      "직교좌표계의 면적",
+      "두 곡선 사이의 면적",
+      "절댓값 적분",
+      "매개변수 곡선의 면적",
+      "극좌표계의 면적",
+      "곡선의 길이",
+      "Pappus 정리",
+      "회전체의 부피",
+      "원판법·와셔법",
+      "원주각법·껍질법",
+      "절단면에 의한 부피",
+      "회전체의 표면적",
+      "변위와 이동거리",
+      "적분응용 공식 종합"
+    ]
+  },
+  "급수": {
+    "S-01 무한급수": [
+      "무한급수의 기본 개념",
+      "부분합",
+      "급수의 수렴·발산",
+      "발산판정법",
+      "양항급수",
+      "적분판정법",
+      "p-급수와 조화급수",
+      "비교판정법",
+      "극한비교판정법",
+      "비율판정법",
+      "근판정법",
+      "교대급수 판정법",
+      "절대수렴과 조건부수렴",
+      "급수의 재배열",
+      "멱급수",
+      "수렴반경과 수렴구간",
+      "경계점 판정"
+    ],
+    "S-02 Taylor 급수 및 Maclaurin 급수": [
+      "멱급수 전개",
+      "Taylor 급수",
+      "Taylor 다항식",
+      "Maclaurin 급수",
+      "기본 Maclaurin 공식",
+      "지수·로그함수 급수 전개",
+      "삼각·쌍곡선함수 급수 전개",
+      "역삼각·역쌍곡선함수 급수 전개",
+      "함수 합성형 급수 전개",
+      "Taylor 다항식과 근사",
+      "오차와 나머지항",
+      "Lagrange 나머지꼴",
+      "급수를 이용한 극한",
+      "급수의 계수 비교",
+      "도함수와 계수 관계"
+    ]
+  },
+  "선형대수": {
+    "L-01 벡터": [
+      "벡터의 기본 개념",
+      "벡터의 크기와 단위벡터",
+      "벡터의 합·차·스칼라곱",
+      "평면벡터와 공간벡터",
+      "좌표벡터",
+      "두 점으로 벡터 만들기",
+      "벡터의 내적",
+      "두 벡터의 사잇각",
+      "수직 조건",
+      "정사영",
+      "벡터의 외적",
+      "평행 조건",
+      "직선의 방정식",
+      "평면의 방정식",
+      "공간에서의 거리",
+      "점과 직선 사이 거리",
+      "점과 평면 사이 거리",
+      "꼬인 위치 두 직선 사이 거리",
+      "직선·평면 위치관계 종합"
+    ],
+    "L-02 행렬": [
+      "행렬의 기본 개념",
+      "행렬의 종류",
+      "행렬의 합·차·스칼라배",
+      "행렬의 곱셈",
+      "전치행렬",
+      "대각합",
+      "대칭행렬·교대행렬",
+      "직교행렬",
+      "행렬식",
+      "리플라스 전개",
+      "행렬식의 성질",
+      "블록행렬식",
+      "방데르몽드 행렬식",
+      "스칼라 삼중적",
+      "기본 행 연산",
+      "행사다리꼴과 기약행사다리꼴",
+      "Rank",
+      "일차연립방정식과 해",
+      "역행렬",
+      "수반행렬",
+      "기본행렬과 행동치",
+      "Cramer의 법칙",
+      "LU 분해",
+      "행렬 종합 명제"
+    ],
+    "L-03 벡터공간과 선형사상": [
+      "벡터공간",
+      "부분공간",
+      "일차결합과 Span",
+      "선형독립과 선형종속",
+      "기저와 차원",
+      "좌표벡터",
+      "내적공간",
+      "행공간·열공간·영공간",
+      "해공간",
+      "Rank와 Nullity",
+      "직교여공간",
+      "Rank-Nullity 정리",
+      "Gram-Schmidt 직교화",
+      "직교기저와 정규직교기저",
+      "부분공간으로의 정사영",
+      "선형변환과 선형사상",
+      "선형변환 판정",
+      "Kernel과 Image",
+      "단사·전사 선형변환",
+      "선형변환의 차원정리"
+    ],
+    "L-04 고유치, 고유벡터": [
+      "고유치와 고유벡터",
+      "특성방정식과 특성다항식",
+      "고유치·고유벡터 구하기",
+      "고유치의 합과 곱",
+      "전치행렬·역행렬의 고유치",
+      "행렬의 거듭제곱과 고유치",
+      "A+aI의 고유치",
+      "대칭·교대·직교행렬의 고유치",
+      "Cayley-Hamilton 정리",
+      "2차·3차 정방행렬의 특성방정식",
+      "닮음행렬",
+      "대각화",
+      "대수적 중복도와 기하적 중복도",
+      "Jordan 표준형",
+      "직교대각화",
+      "스펙트럼분해",
+      "이차형식",
+      "주축정리",
+      "이차곡선 판별",
+      "정부호 행렬 판정"
+    ],
+    "L-05 선형변환의 표현행렬과 기저변환행렬": [
+      "선형변환의 표현행렬",
+      "정의역 기저와 공역 기저",
+      "좌표행렬",
+      "표현행렬 만들기",
+      "표준기저에 대한 표현행렬",
+      "다항식공간의 표현행렬",
+      "행렬표현을 이용한 선형변환 계산",
+      "기저변환행렬",
+      "좌표벡터 변환",
+      "기저 α에서 기저 β로의 변환",
+      "닮음과 기저변환",
+      "표준행렬",
+      "R2·R3 선형변환의 표준행렬",
+      "사영변환과 사영행렬",
+      "최소제곱해와 사영변환",
+      "대칭·반사변환의 표준행렬",
+      "회전변환 표준행렬",
+      "선형변환과 고유값"
+    ]
+  },
+  "다변수미적분": {
+    "M-01 다변수 함수의 극한, 연속, 미분": [
+      "다변수 함수와 정의역",
+      "곡면 그래프",
+      "다변수 함수의 극한",
+      "경로에 따른 접근",
+      "반복극한",
+      "극좌표 치환 극한",
+      "극한 부존재 판정",
+      "연속성",
+      "편도함수",
+      "고계·혼합편도함수",
+      "전미분과 미분가능성",
+      "선형근사와 접평면",
+      "합성함수의 편미분",
+      "다변수 연쇄법칙",
+      "음함수와 편미분",
+      "방향도함수",
+      "그래디언트",
+      "등위곡선과 그래디언트",
+      "이변수 Taylor·Maclaurin 급수"
+    ],
+    "M-02 공간도형의 방정식": [
+      "공간벡터와 벡터함수",
+      "공간곡선",
+      "매개변수곡선",
+      "접선벡터와 법평면",
+      "평면의 방정식",
+      "직선의 방정식",
+      "직선과 평면의 교점",
+      "두 직선의 위치 관계",
+      "공간에서 거리",
+      "점과 직선 사이 거리",
+      "점과 평면 사이 거리",
+      "평행한 두 평면 사이 거리",
+      "꼬인 위치 직선 사이 거리",
+      "곡률",
+      "공간곡선의 길이"
+    ],
+    "M-03 이변수 함수의 극대와 극소 / 라그랑주 승수법": [
+      "이변수 함수의 극대·극소",
+      "임계점과 안장점",
+      "Hessian 판정법",
+      "판별식 D",
+      "극대·극소·안장점 판정",
+      "절대최대와 절대최소",
+      "닫힌 영역에서의 최대최소",
+      "경계에서의 극값",
+      "라그랑주 승수법",
+      "제약조건과 목적함수",
+      "∇f = λ∇g",
+      "두 개 이상의 제약조건",
+      "제약조건이 있는 거리 최소 문제"
+    ],
+    "M-04 이변수 함수의 적분": [
+      "이중적분의 정의",
+      "리만합과 곡면 아래 부피",
+      "반복적분",
+      "적분순서",
+      "Type I / Type II 영역",
+      "적분한계 설정",
+      "적분순서 변경",
+      "영역 스케치",
+      "분할이 필요한 영역",
+      "극좌표계 이중적분",
+      "변수변환과 Jacobian",
+      "이중적분의 응용",
+      "평면영역의 넓이",
+      "질량·무게중심·관성모멘트"
+    ],
+    "M-05 여러 가지 중적분": [
+      "이중적분을 이용한 부피",
+      "두 곡면 사이 부피",
+      "곡면적",
+      "삼중적분",
+      "삼중적분의 적분순서",
+      "삼중적분을 이용한 부피와 질량",
+      "원주좌표계",
+      "원기둥형·회전체형 영역",
+      "구면좌표계",
+      "구 내부 영역",
+      "원뿔 경계",
+      "삼중적분 변수변환",
+      "3차원 Jacobian"
+    ],
+    "M-06 선적분 및 면적분": [
+      "벡터장",
+      "발산과 회전",
+      "∇ 연산자",
+      "보존장 판정",
+      "선적분",
+      "스칼라장 선적분",
+      "벡터장 선적분",
+      "매개변수화",
+      "일과 경로 의존성",
+      "보존적 벡터장과 포텐셜 함수",
+      "선적분 기본정리",
+      "Green 정리",
+      "폐곡선 방향",
+      "면적분",
+      "곡면의 법선벡터",
+      "플럭스",
+      "Stokes 정리",
+      "Gauss 발산정리"
+    ]
+  },
+  "공학수학": {
+    "E-01 미분방정식": [
+      "미분방정식의 개요",
+      "차수와 해의 종류",
+      "초기조건",
+      "상미분방정식과 편미분방정식",
+      "선형·비선형 / 제차·비제차",
+      "해의 존재성과 유일성",
+      "변수분리형 미분방정식",
+      "동차형 1계 미분방정식",
+      "완전미분방정식과 적분인수",
+      "1계 선형미분방정식",
+      "Bernoulli 미분방정식",
+      "직교사영·곡선족",
+      "1계 미분방정식 응용",
+      "n계 선형미분방정식",
+      "차수축소법",
+      "2계 상수계수 제차 선형미분방정식",
+      "Cauchy-Euler 방정식",
+      "비제차 선형미분방정식",
+      "미정계수법",
+      "매개변수변화법",
+      "진동계와 물리 응용",
+      "급수해법",
+      "선형 연립 미분방정식",
+      "연립 미분방정식의 해곡선"
+    ],
+    "E-02 Laplace 변환": [
+      "Laplace 변환의 정의",
+      "역 Laplace 변환",
+      "기본 함수 변환표",
+      "기본 변환 공식",
+      "지수·삼각·쌍곡선함수 변환",
+      "부분분수 분해",
+      "완전제곱",
+      "Laplace 변환의 성질",
+      "선형성",
+      "s-이동정리",
+      "t-이동정리",
+      "미분정리",
+      "적분정리",
+      "단위계단함수",
+      "Heaviside 함수",
+      "Dirac delta 함수",
+      "Laplace 변환을 이용한 미분방정식 풀이",
+      "초기값 문제",
+      "합성곱",
+      "주기함수의 Laplace 변환"
+    ],
+    "E-03 Fourier 급수": [
+      "Fourier 급수의 정의",
+      "주기함수",
+      "Fourier 계수",
+      "삼각급수 전개",
+      "Fourier 급수 전개",
+      "구간별 함수 전개",
+      "불연속점에서의 수렴값",
+      "우함수·기함수 Fourier 급수",
+      "cosine 급수와 sine 급수",
+      "반구간 전개",
+      "홀확장과 짝확장",
+      "주기 변환",
+      "구간 변환",
+      "2L 주기 공식",
+      "Fourier 급수 응용",
+      "급수합 계산",
+      "Parseval 관계"
+    ]
+  }
+};
+
+const syllabusBySubject={math:mathSyllabus,physics:physicsSyllabus,chemistry:{}};
+const defaults={subject:'math',view:'home',exams:[],items:[],insights:[],tags:defaultTags};
+let state=load(),selectedTags=[],selectorTarget='course';
+function load(){try{const raw=JSON.parse(localStorage.getItem(KEY)||'{}');return {...defaults,...raw,exams:Array.isArray(raw.exams)?raw.exams:[],items:Array.isArray(raw.items)?raw.items:[],tags:Array.isArray(raw.tags)?raw.tags:defaultTags}}catch{return {...defaults}}}
+function save(){localStorage.setItem(KEY,JSON.stringify(state));render()}
+function id(){return Date.now().toString(36)+Math.random().toString(36).slice(2,7)}
+function current(){return {exams:state.exams.filter(x=>x.subject===state.subject),items:state.items.filter(x=>x.subject===state.subject)}}
+function sortedExams(arr){return arr.slice().sort((a,b)=>{const A=a.date?new Date(a.date).getTime():a.created||0,B=b.date?new Date(b.date).getTime():b.created||0;return B-A})}
+function dateLabel(d){if(!d)return '날짜 없음';return d.replaceAll('-','.')}
+function examTop(e){if(e.topPercent!==undefined&&e.topPercent!==''&&e.topPercent!==null)return Number(e.topPercent).toFixed(1);const r=+e.rank,p=+e.participants;if(r>0&&p>0)return Math.min(100,r/p*100).toFixed(1);return null}
+function rawScore(e){const s=Number(e.score);return Number.isFinite(s)?s:null}
+function mathCounts(e){const s=rawScore(e);if(e.subject!=='math'||s===null)return null;const correct=Math.max(0,Math.min(25,Math.round(s/4)));return {correct,wrong:25-correct}}
+function examItems(id){return state.items.filter(i=>i.examId===id)}
+function analysisItems(){return current().items}
+function unitKey(i){const c=(i.course||'').trim(),u=(i.unit||'').trim()||'단원 미입력';return c?`${c} · ${u}`:u}
+function rankBy(items,limit=999){const m={};items.forEach(i=>{const k=unitKey(i);m[k]=(m[k]||0)+1});return Object.entries(m).sort((a,b)=>b[1]-a[1]||a[0].localeCompare(b[0],'ko')).slice(0,limit)}
+function latestExamIds(n){return sortedExams(current().exams).slice(0,n).map(e=>e.id)}
+function latestItems(n){const ids=latestExamIds(n);return current().items.filter(i=>ids.includes(i.examId))}
+function empty(t){return `<div class="empty">${t}</div>`}
+function showToast(t){const el=document.getElementById('toast');el.textContent=t;el.classList.add('show');setTimeout(()=>el.classList.remove('show'),1500)}
+function setView(v){state.view=v;document.querySelectorAll('.view').forEach(x=>x.classList.toggle('active',x.id===v+'View'));document.querySelectorAll('.navBtn').forEach(x=>x.classList.toggle('active',x.dataset.view===v));const meta={home:['홈','점수와 약점을 빠르게 확인합니다.'],exams:['시험','저장된 시험 기록을 확인합니다.'],input:['입력','시험과 오답 문항을 간단히 기록합니다.'],review:['복습','전체 누적 약점과 최근 4회 상태를 비교합니다.'],scores:['점수','직접 입력한 점수의 흐름을 확인합니다.']};document.getElementById('viewTitle').textContent=(meta[v]||meta.home)[0];document.getElementById('viewSub').textContent=(meta[v]||meta.home)[1];localStorage.setItem(KEY,JSON.stringify(state))}
+function rankRows(rank){if(!rank.length)return empty('아직 오답 데이터가 없습니다.');return rank.map(([name,count],i)=>`<div class="rankRow"><div class="rankNo">${i+1}</div><div class="rankName"><b>${name}</b><small>${i<5?'우선 확인':'추가 약점'}</small></div><div class="rankCount">${count}<small>개</small></div></div>`).join('')}
+function miniRank(rank){if(!rank.length)return empty('오답 데이터가 없습니다.');return rank.slice(0,5).map(([n,c],i)=>`<div class="rankRow"><div class="rankNo">${i+1}</div><div class="rankName"><b>${n}</b></div><div class="rankCount">${c}<small>개</small></div></div>`).join('')}
+function renderHome(){const {exams,items}=current(),sorted=sortedExams(exams),latest=sorted[0],scores=sorted.map(rawScore).filter(v=>v!==null),avg=scores.length?scores.reduce((a,b)=>a+b,0)/scores.length:null,best=scores.length?Math.max(...scores):null;document.getElementById('homeLatest').innerHTML=latest?`<div class="entry"><div class="entryTop"><div><h4>${latest.name}</h4><p>${dateLabel(latest.date)} · 제한 ${latest.limit||'-'}분</p></div><span class="badge">${rawScore(latest)??'-'}점</span></div><div class="entryMeta">${examTop(latest)?`<span class="tiny">상위 ${examTop(latest)}%</span>`:''}${mathCounts(latest)?`<span class="tiny">틀린 문항 ${mathCounts(latest).wrong}개</span>`:''}</div></div>`:empty('시험 기록이 없습니다.');document.getElementById('homeMetrics').innerHTML=`<div class="metric"><small>시험 기록</small><b>${exams.length}</b><span>누적 회차</span></div><div class="metric"><small>평균 점수</small><b>${avg===null?'-':avg.toFixed(1)}</b><span>직접 입력 점수 기준</span></div><div class="metric"><small>최고 점수</small><b>${best===null?'-':best}</b><span>환산 없음</span></div><div class="metric"><small>분석 문항</small><b>${items.length}</b><span>단원 분류 누적</span></div>`;document.getElementById('homeRecentRank').innerHTML=miniRank(rankBy(latestItems(4),5));document.getElementById('homeAllRank').innerHTML=miniRank(rankBy(items,5))}
+function renderExams(){const list=document.getElementById('examList'),exams=sortedExams(current().exams);list.innerHTML=exams.length?exams.map(e=>{const mc=mathCounts(e),tp=examTop(e);return `<div class="entry"><div class="entryTop"><div><h4>${e.name}</h4><p>${dateLabel(e.date)} · 제한 ${e.limit||'-'}분</p></div><span class="badge">${rawScore(e)??'-'}점</span></div><div class="entryMeta">${tp?`<span class="tiny">상위 ${tp}%</span>`:''}${mc?`<span class="tiny">맞힌 문항 ${mc.correct}개</span><span class="tiny">틀린 문항 ${mc.wrong}개</span>`:`<span class="tiny">분석 문항 ${examItems(e.id).length}개</span>`}<button class="softBtn" style="height:30px;padding:0 10px" data-edit-exam="${e.id}">수정</button><button class="dangerBtn" style="height:30px;padding:0 10px" data-delete-exam="${e.id}">삭제</button></div></div>`}).join(''):empty('저장된 시험이 없습니다.')}
+function renderInput(){document.querySelectorAll('.subjectTab').forEach(b=>b.classList.toggle('active',b.dataset.subject===state.subject));document.getElementById('mathScoreNote').style.display=state.subject==='math'?'block':'none';const exams=sortedExams(current().exams);document.getElementById('examSelect').innerHTML=exams.length?exams.map(e=>`<option value="${e.id}">${e.name}</option>`).join(''):'<option value="">먼저 시험을 저장하세요</option>';renderTags();updateChoices()}
+function renderTags(){document.getElementById('tagChips').innerHTML=state.tags.map(t=>`<button type="button" class="chip ${selectedTags.includes(t)?'active':''}" data-tag="${t}">${t}</button>`).join('')}
+function allUnitNames(){const syl=syllabusBySubject[state.subject]||{};const out=[];Object.entries(syl).forEach(([course,units])=>Object.keys(units).forEach(unit=>out.push(`${course} · ${unit}`)));return out}
+function renderBarChart(){const rank=rankBy(analysisItems()),el=document.getElementById('allBarChart');if(!rank.length){el.innerHTML=empty('오답 데이터가 쌓이면 단원별 막대그래프가 표시됩니다.');return}const max=Math.max(...rank.map(x=>x[1]));el.innerHTML=rank.map(([n,c])=>`<div class="barItem"><div class="barLabel" title="${n}">${n}</div><div class="track"><div class="fill" style="width:${c/max*100}%"></div></div><div class="barValue">${c}개</div></div>`).join('')}
+function trendSvg(){const exams=sortedExams(current().exams).slice(0,4).reverse();if(!exams.length)return empty('최근 시험 데이터가 없습니다.');const recentItems=latestItems(4),top5=rankBy(recentItems,5).map(x=>x[0]);if(!top5.length)return empty('최근 4회 오답 데이터가 없습니다.');const W=760,H=300,pL=58,pR=25,pT=28,pB=48,plotW=W-pL-pR,plotH=H-pT-pB;const counts=top5.map(k=>exams.map(e=>examItems(e.id).filter(i=>unitKey(i)===k).length));const max=Math.max(1,...counts.flat());const xs=exams.map((_,i)=>pL+(exams.length===1?plotW/2:plotW*i/(exams.length-1)));const y=v=>pT+plotH-(v/max)*plotH;const series=['#4f73f6','#7a61e9','#54aeea','#43b982','#f1a942'];const grids=Array.from({length:max+1},(_,v)=>{const yy=y(v);return `<line x1="${pL}" y1="${yy}" x2="${W-pR}" y2="${yy}" stroke="#e9edf5"/><text x="${pL-12}" y="${yy+4}" text-anchor="end" font-size="10" fill="#8d97aa">${v}</text>`}).join('');const lines=counts.map((arr,si)=>{const d=arr.map((v,i)=>`${i?'L':'M'} ${xs[i]} ${y(v)}`).join(' ');const pts=arr.map((v,i)=>`<circle cx="${xs[i]}" cy="${y(v)}" r="5" fill="${series[si]}"/><text x="${xs[i]}" y="${y(v)-10}" text-anchor="middle" font-size="10" font-weight="800" fill="${series[si]}">${v}</text>`).join('');return `<path d="${d}" fill="none" stroke="${series[si]}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>${pts}`}).join('');const labels=exams.map((e,i)=>`<text x="${xs[i]}" y="${H-18}" text-anchor="middle" font-size="10" font-weight="800" fill="#6f7b92">${e.name.length>9?e.name.slice(0,9)+'…':e.name}</text>`).join('');const legend=top5.map((n,i)=>`<span><i style="background:${series[i]}"></i>${n}</span>`).join('');return `<svg class="trendSvg" viewBox="0 0 ${W} ${H}">${grids}${lines}${labels}</svg><div class="legend">${legend}</div>`}
+function renderReview(){const all=rankBy(analysisItems()),recent=rankBy(latestItems(4));document.getElementById('reviewAllRank').innerHTML=rankRows(all);document.getElementById('reviewRecentRank').innerHTML=rankRows(recent);renderBarChart();document.getElementById('recentTrend').innerHTML=trendSvg()}
+function scoreTrendSvg(exams){const rows=sortedExams(exams).reverse().filter(e=>rawScore(e)!==null);if(!rows.length)return empty('점수 데이터가 없습니다.');const W=Math.max(720,rows.length*82),H=300,pL=52,pR=24,pT=25,pB=46,plotW=W-pL-pR,plotH=H-pT-pB,x=idx=>pL+(rows.length===1?plotW/2:plotW*idx/(rows.length-1)),y=v=>pT+(100-v)*plotH/100;const grids=[0,20,40,60,80,100].map(v=>`<line x1="${pL}" y1="${y(v)}" x2="${W-pR}" y2="${y(v)}" stroke="#e9edf5"/><text x="${pL-12}" y="${y(v)+4}" text-anchor="end" font-size="10" fill="#8d97aa">${v}</text>`).join('');const d=rows.map((e,i)=>`${i?'L':'M'} ${x(i)} ${y(rawScore(e))}`).join(' ');const pts=rows.map((e,i)=>`<circle cx="${x(i)}" cy="${y(rawScore(e))}" r="6" fill="#4f73f6"/><text x="${x(i)}" y="${y(rawScore(e))-12}" text-anchor="middle" font-size="10" font-weight="900" fill="#4f73f6">${rawScore(e)}</text><text x="${x(i)}" y="${H-17}" text-anchor="middle" font-size="10" fill="#6e7990">${i+1}회</text>`).join('');return `<div class="trendWrap"><svg class="trendSvg" style="min-width:${W}px" viewBox="0 0 ${W} ${H}">${grids}<path d="${d}" fill="none" stroke="#4f73f6" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>${pts}</svg></div>`}
+function renderScores(){const exams=current().exams,sorted=sortedExams(exams);document.getElementById('scoreCountBadge').textContent=sorted.length+'회';document.getElementById('scoreChart').innerHTML=scoreTrendSvg(exams);document.getElementById('scoreList').innerHTML=sorted.length?sorted.map(e=>{const tp=examTop(e),mc=mathCounts(e);return `<div class="entry"><div class="entryTop"><div><h4>${e.name}</h4><p>${dateLabel(e.date)}</p></div><span class="badge">${rawScore(e)??'-'}점</span></div><div class="entryMeta">${tp?`<span class="tiny">상위 ${tp}%</span>`:''}${mc?`<span class="tiny">맞힌 ${mc.correct}개</span><span class="tiny">틀린 ${mc.wrong}개</span>`:`<span class="tiny">분석 문항 ${examItems(e.id).length}개</span>`}</div></div>`}).join(''):empty('점수 기록이 없습니다.')}
+function render(){document.querySelectorAll('.subjectTab').forEach(b=>b.classList.toggle('active',b.dataset.subject===state.subject));renderHome();renderExams();renderInput();renderReview();renderScores();setView(state.view||'home')}
+function resetExamForm(){const f=document.getElementById('examForm');f.reset();document.getElementById('editingExamId').value='';document.getElementById('examFormTitle').textContent='시험 입력';document.getElementById('examSubmitBtn').textContent='시험 저장';document.getElementById('cancelExamEditBtn').style.display='none';f.querySelector('[name=limit]').value=60}
+function startEdit(idv){const e=state.exams.find(x=>x.id===idv);if(!e)return;setView('input');document.getElementById('editingExamId').value=e.id;document.getElementById('examFormTitle').textContent='시험 수정';document.getElementById('examSubmitBtn').textContent='수정 저장';document.getElementById('cancelExamEditBtn').style.display='inline-flex';const f=document.getElementById('examForm');f.name.value=e.name||'';f.date.value=e.date||'';f.limit.value=String(e.limit||'60').replace(/[^0-9]/g,'')||60;f.score.value=e.score??'';f.topPercent.value=examTop(e)??''}
+function selectedCourse(){return document.getElementById('itemCourse').value}
+function selectedUnit(){return document.getElementById('itemUnit').value}
+function updateChoices(){const c=selectedCourse(),u=selectedUnit();const cb=document.getElementById('courseChoice'),ub=document.getElementById('unitChoice');cb.textContent=c||'과목 선택';ub.textContent=u||'단원 선택';cb.classList.toggle('placeholder',!c);ub.classList.toggle('placeholder',!u)}
+function openSelector(target){selectorTarget=target;const syl=syllabusBySubject[state.subject]||{};let opts=[],sub='';if(target==='course'){opts=Object.keys(syl);sub=opts.length?'과목을 선택하세요.':'이 과목의 목차는 아직 등록되지 않았습니다.'}else{const c=selectedCourse();opts=c?Object.keys(syl[c]||{}):[];sub=c?`${c}의 단원을 선택하세요.`:'먼저 과목명을 선택하세요.'}document.getElementById('selectModalTitle').textContent=target==='course'?'과목명 선택':'단원명 선택';document.getElementById('selectModalSub').textContent=sub;document.getElementById('selectOptions').innerHTML=opts.length?opts.map(o=>`<button class="selectorOption" type="button" data-select-option="${o}">${o}</button>`).join(''):empty(sub);document.getElementById('selectModal').classList.add('active')}
+function chooseSelector(v){if(selectorTarget==='course'){document.getElementById('itemCourse').value=v;document.getElementById('itemUnit').value=''}else document.getElementById('itemUnit').value=v;updateChoices();document.getElementById('selectModal').classList.remove('active')}
+document.addEventListener('click',e=>{const v=e.target.closest('[data-view]')?.dataset.view;if(v){setView(v);return}const s=e.target.closest('.subjectTab')?.dataset.subject;if(s){state.subject=s;state.view='home';selectedTags=[];save();return}const tag=e.target.closest('[data-tag]')?.dataset.tag;if(tag){selectedTags=selectedTags.includes(tag)?selectedTags.filter(x=>x!==tag):[...selectedTags,tag];renderTags();return}const edit=e.target.closest('[data-edit-exam]')?.dataset.editExam;if(edit){startEdit(edit);return}const del=e.target.closest('[data-delete-exam]')?.dataset.deleteExam;if(del){const ex=state.exams.find(x=>x.id===del);if(ex&&confirm(`“${ex.name}” 시험을 삭제할까요?`)){state.exams=state.exams.filter(x=>x.id!==del);state.items=state.items.filter(x=>x.examId!==del);save();showToast('시험을 삭제했습니다')}return}const open=e.target.closest('[data-open-selector]')?.dataset.openSelector;if(open){openSelector(open);return}const opt=e.target.closest('[data-select-option]')?.dataset.selectOption;if(opt){chooseSelector(opt);return}})
+document.getElementById('closeSelectModal').addEventListener('click',()=>document.getElementById('selectModal').classList.remove('active'));
+document.getElementById('selectModal').addEventListener('click',e=>{if(e.target.id==='selectModal')e.currentTarget.classList.remove('active')});
+document.getElementById('examForm').addEventListener('submit',e=>{e.preventDefault();const f=Object.fromEntries(new FormData(e.target));const score=Number(f.score),tp=f.topPercent===''?null:Number(f.topPercent);if(state.subject==='math'&&(score<0||score>100)){alert('수학 점수는 0~100점으로 입력하세요.');return}const data={subject:state.subject,name:f.name.trim(),date:f.date,limit:Number(f.limit)||0,score,topPercent:tp,total:100,count:state.subject==='math'?25:null,range:[]};const editId=document.getElementById('editingExamId').value;if(editId){const idx=state.exams.findIndex(x=>x.id===editId);if(idx>=0)state.exams[idx]={...state.exams[idx],...data,updated:Date.now()};showToast('시험을 수정했습니다')}else{state.exams.push({id:id(),created:Date.now(),...data});showToast('시험을 저장했습니다')}resetExamForm();save()});
+document.getElementById('cancelExamEditBtn').addEventListener('click',()=>{resetExamForm();showToast('수정을 취소했습니다')});
+document.getElementById('itemForm').addEventListener('submit',e=>{e.preventDefault();const f=Object.fromEntries(new FormData(e.target));if(!f.examId){alert('연결 시험을 먼저 선택하세요.');return}if(!f.course||!f.unit){alert('과목과 단원을 선택하세요.');return}state.items.push({id:id(),subject:state.subject,created:Date.now(),tags:[...selectedTags],...f,detail:''});selectedTags=[];e.target.reset();document.getElementById('itemCourse').value='';document.getElementById('itemUnit').value='';updateChoices();save();showToast('문항을 저장했습니다')});
+function makeBackup(){return {__app:'exam-analysis',__backupVersion:'5.0-remake',__storageKey:KEY,__exportedAt:new Date().toISOString(),data:state}}
+function exportBackup(){const blob=new Blob(['\ufeff'+JSON.stringify(makeBackup(),null,2)],{type:'application/json;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='exam-analysis-remake-backup.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)}
+document.getElementById('exportBtn').addEventListener('click',exportBackup);document.getElementById('importBtn').addEventListener('click',()=>document.getElementById('importFile').click());document.getElementById('importFile').addEventListener('change',e=>{const file=e.target.files[0];if(!file)return;const r=new FileReader();r.onload=()=>{try{const p=JSON.parse(String(r.result||'').replace(/^\ufeff/,'')),raw=p.data||p;state={...defaults,...raw,exams:Array.isArray(raw.exams)?raw.exams:[],items:Array.isArray(raw.items)?raw.items:[],tags:Array.isArray(raw.tags)?raw.tags:defaultTags};localStorage.setItem(KEY,JSON.stringify(state));render();showToast('백업을 가져왔습니다')}catch{alert('백업 파일을 읽을 수 없습니다.')}};r.readAsText(file,'utf-8')});
+render();
+if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));}
+</script></body></html>

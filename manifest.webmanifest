@@ -1,0 +1,9 @@
+{
+  "name": "시험 분석 v5 리메이크",
+  "short_name": "시험 분석",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#eef3ff",
+  "theme_color": "#111827",
+  "lang": "ko"
+}
