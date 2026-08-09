@@ -135,16 +135,20 @@
     .questionEditor{border:1px solid #e3e9f5;border-radius:18px;padding:12px 14px;background:#fff;margin-top:5px;scroll-margin-top:12px;box-shadow:0 8px 22px rgba(31,50,91,.06)}.questionEditorHead{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:6px}.questionEditorHead small{color:#8490a8;font-weight:900}.questionEditorHead h3{margin:2px 0 0;font-size:19px}.questionEditorActions{position:sticky;bottom:0;background:linear-gradient(180deg,rgba(255,255,255,.78),#fff 38%);padding-top:10px;padding-bottom:2px;z-index:3}.inputQuestionWorkspace .choiceBtn{min-height:40px}.inputQuestionWorkspace textarea{min-height:68px}
     @media(max-width:900px){.inputParallelGrid{grid-template-columns:1fr;min-height:0}.inputExamCreateCard,.inputQuestionWorkspace{min-height:0;max-height:none}.inputExamCreateCard .formGrid,.inputWorkspaceScroll{overflow:visible}.inputExamTabs{max-width:100%}.questionGrid{grid-template-columns:repeat(5,minmax(0,1fr));width:82%;max-width:365px}.inputProgressWrap{grid-template-columns:1fr}}
 
-/* 2.8: 문항 입력 2열 병렬 구조 */
-.examInputStandalone{max-width:920px;margin:0 auto}.examInputStandalone .inputExamFields{grid-template-columns:1fr 1fr}.examInputStandalone .field.full{grid-column:1/-1}.questionInputStandalone{min-height:calc(100vh - 170px);display:flex;flex-direction:column}.questionInputStandalone .inputWorkspaceBody{display:flex;flex-direction:column;min-height:0;flex:1}.questionInputStandalone .inputExamTabs{max-width:100%;padding-bottom:4px}.questionInputStandalone .inputWorkspaceScroll{overflow:hidden;min-height:0;padding-right:0;flex:1}.questionInputSplit{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px;min-height:0;height:100%}.questionPickerPane,.questionRecordPane{min-width:0;min-height:0}.questionPickerPane{overflow-y:auto;padding-right:4px}.questionRecordPane{overflow-y:auto;padding-left:2px}.questionInputStandalone .questionGrid{width:100%;max-width:100%;grid-template-columns:repeat(5,minmax(42px,1fr));gap:7px;margin:8px 0 10px}.questionInputStandalone .questionBtn{height:38px}.questionInputStandalone .questionEditor{width:100%;margin:0}.questionInputStandalone textarea{min-height:150px}.questionInputStandalone .inputProgressWrap,.questionInputStandalone .inputWorkspaceHead,.questionInputStandalone .questionLegend{max-width:none;width:100%;margin-left:0;margin-right:0}.questionEntryGrid{grid-template-columns:1fr 1fr}.questionEntryGrid .field.full{grid-column:1/-1}@media(max-width:900px){.examInputStandalone .inputExamFields,.questionEntryGrid{grid-template-columns:1fr}.questionInputStandalone{min-height:0}.questionInputStandalone .inputWorkspaceScroll{overflow:visible}.questionInputSplit{grid-template-columns:1fr;height:auto}.questionPickerPane,.questionRecordPane{overflow:visible}.questionInputStandalone .questionGrid{max-width:440px;grid-template-columns:repeat(5,minmax(0,1fr));margin-left:auto;margin-right:auto}}
-
+/* 2.9: 문항 입력 탭 완전 재작성 */
+.examInputStandalone{max-width:920px;margin:0 auto}.examInputStandalone .inputExamFields{grid-template-columns:1fr 1fr}.examInputStandalone .field.full{grid-column:1/-1}
+.q29Shell{min-height:calc(100vh - 170px);display:flex;flex-direction:column;gap:14px}.q29ExamBar{display:flex;align-items:center;gap:10px;overflow-x:auto;padding:2px 2px 8px;scrollbar-width:thin}.q29ExamTab{flex:0 0 auto;min-width:150px;padding:11px 14px;border:1px solid #dfe6f4;border-radius:14px;background:#f8faff;text-align:left;cursor:pointer;touch-action:manipulation}.q29ExamTab strong{display:block;font-size:14px;color:#26324a}.q29ExamTab span{display:block;margin-top:4px;font-size:11px;color:#7d889e;font-weight:800}.q29ExamTab.active{background:#eef4ff;border-color:#7d9cff;box-shadow:0 7px 18px rgba(63,115,255,.12)}
+.q29Empty{min-height:360px;display:grid;place-items:center;color:#8a94a8;font-weight:900;border:1px dashed #d9e1ef;border-radius:18px;background:#fbfcff}.q29Body{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px;min-height:0;flex:1}.q29Pane{border:1px solid #e1e7f2;border-radius:18px;background:#fff;min-width:0;padding:16px;box-shadow:0 8px 22px rgba(31,50,91,.05)}.q29PaneHead{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:12px}.q29PaneHead h3{margin:4px 0 0;font-size:20px}.q29PaneHead p{margin:4px 0 0;color:#7f8aa0;font-size:12px;font-weight:800}.q29Progress{margin:0 0 12px;padding:10px 12px;border-radius:13px;background:#f7f9fe;display:flex;align-items:center;justify-content:space-between;gap:10px}.q29Progress b{font-size:13px}.q29Progress span{font-size:11px;color:#7c879c;font-weight:800}
+.q29Grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:7px}.q29Q{height:38px;border-radius:10px;border:1px solid #e1e7f2;background:#f6f8fc;color:#58647b;font-size:13px;font-weight:1000;cursor:pointer;touch-action:manipulation}.q29Q.wrong{background:#fff2f3;border-color:#ffb8c1;color:#df5062}.q29Q.selected{outline:3px solid rgba(63,115,255,.20);border-color:#5f84f8;background:#edf3ff;color:#3154e8}.q29Legend{display:flex;gap:14px;flex-wrap:wrap;margin-top:12px;color:#7e899d;font-size:11px;font-weight:800}
+.q29RecordEmpty{height:100%;min-height:300px;display:grid;place-items:center;text-align:center;color:#8b95a9;font-weight:900}.q29Record{display:none}.q29Record.active{display:block}.q29Field{margin-bottom:14px}.q29Field label{display:block;margin-bottom:7px;font-size:12px;font-weight:900;color:#525f76}.q29Field select,.q29Field textarea{width:100%;border:1px solid #dfe6f2;border-radius:12px;background:#fbfcff;padding:11px 12px;font:inherit;color:#27344c;outline:none}.q29Field select:focus,.q29Field textarea:focus{border-color:#7897f5;box-shadow:0 0 0 3px rgba(63,115,255,.10)}.q29Field textarea{min-height:180px;resize:vertical}.q29Actions{display:flex;gap:8px;justify-content:flex-end;margin-top:10px}
+@media(max-width:900px){.examInputStandalone .inputExamFields{grid-template-columns:1fr}.q29Shell{min-height:0}.q29Body{grid-template-columns:1fr}.q29Field textarea{min-height:120px}}
 </style>
 <link rel="apple-touch-icon" href="./apple-touch-icon.png?v=4010">
 </head>
 <body>
 <div class="app"><div class="shell">
  <aside class="sidebar">
- <div class="brand"><div class="logo">📊</div><div><h1>시험 분석</h1><p>2.7 · 시험 기록 · 약점 분석</p></div></div>
+ <div class="brand"><div class="logo">📊</div><div><h1>시험 분석</h1><p>2.9 · 시험 기록 · 약점 분석</p></div></div>
  <div class="navBlock"><p class="navTitle">MAIN</p>
  <button class="navBtn active" data-view="home"><span class="ico">⌂</span>홈</button>
  <button class="navBtn" data-view="exams"><span class="ico">▤</span>시험 관리</button>
@@ -192,7 +196,7 @@
  </div>
  <div class="view" id="examInputView">
  <div class="card examInputStandalone">
-  <div class="cardHead"><div><h3 id="examFormTitle">시험 정보 입력</h3><p class="sub">시험 기본 정보를 저장합니다. 저장한 시험은 문항 입력 탭에서 바로 선택할 수 있습니다.</p></div><span class="versionBadge">2.8</span></div>
+  <div class="cardHead"><div><h3 id="examFormTitle">시험 정보 입력</h3><p class="sub">시험 기본 정보를 저장합니다. 저장한 시험은 문항 입력 탭에서 바로 선택할 수 있습니다.</p></div><span class="versionBadge">2.9</span></div>
   <form id="examForm"><input type="hidden" id="editingExamId">
    <div class="formGrid inputExamFields">
     <div class="field full"><label>시험명</label><input name="name" placeholder="예: BGM 9회" required></div>
@@ -207,43 +211,27 @@
  </div>
  </div>
  <div class="view" id="questionInputView">
-  <div class="card questionInputStandalone">
-   <div class="cardHead"><div><h3>문항 입력</h3><p class="sub">시험 선택 → 틀린 문항 번호 → 단원·메모 순서로 기록합니다.</p></div><span class="badge" id="inputExamCount">0회</span></div>
-   <div id="inputWorkspaceEmpty" class="inputWorkspaceEmpty">시험을 먼저 저장하세요.</div>
-   <div id="inputWorkspaceBody" class="inputWorkspaceBody" style="display:none">
-    <div class="inputExamTabSection">
-     <div class="inputExamTabHead"><b>시험 선택</b><small>시험이 많아지면 좌우로 스크롤</small></div>
-     <div class="inputExamTabs" id="inputExamList"></div>
-    </div>
-    <div class="inputWorkspaceScroll">
-     <div class="questionInputSplit">
-      <section class="questionPickerPane">
-       <div class="inputWorkspaceHead"><div><span class="typeBadge hot">선택된 시험</span><h3 id="inputWorkspaceExamName">-</h3><p id="inputWorkspaceMeta">-</p></div></div>
-       <div class="inputProgressWrap"><div><b id="inputProgressText">오답 기록 0개</b><small id="inputExpectedWrong">점수 기준 예상 오답 0개</small></div><div class="inputProgressTrack"><div id="inputProgressFill"></div></div></div>
-       <div class="questionGrid" id="questionGrid"></div>
-       <div class="questionLegend"><span><i class="qLegend normal"></i>기록 없음 = 정답</span><span><i class="qLegend wrong"></i>오답 기록 있음</span></div>
-      </section>
-      <section class="questionRecordPane">
-       <form id="itemForm" class="questionEditor">
-        <input type="hidden" name="examId" id="examSelect">
-        <input type="hidden" name="qno" id="itemQno">
-        <input type="hidden" name="status" value="틀림">
-        <input type="hidden" name="slow" value="없음">
-        <input type="hidden" name="detail" id="itemDetail">
-        <div class="questionEditorHead"><div><small>선택 문항</small><h3><span id="selectedQuestionNo">-</span>번 문항</h3></div><span class="badge red">오답 기록</span></div>
-        <div id="questionEditorEmpty" class="emptyNote">왼쪽에서 틀린 문항 번호를 탭하세요.</div>
-        <div id="questionEditorFields" style="display:none">
-         <div class="formGrid questionEntryGrid">
-          <div class="field"><label>과목명</label><input type="hidden" name="course" id="itemCourse"><button type="button" class="choiceBtn placeholder" id="courseChoice" data-open-selector="course">과목 선택</button></div>
-          <div class="field"><label>단원명</label><input type="hidden" name="unit" id="itemUnit"><button type="button" class="choiceBtn placeholder" id="unitChoice" data-open-selector="unit">단원 선택</button></div>
-          <div class="field full"><label>메모</label><textarea name="memo" id="itemMemo" placeholder="막힌 지점, 실수 원인, 다음에 볼 신호 등"></textarea></div>
-         </div>
-         <div class="formActions questionEditorActions"><button class="blueBtn" id="itemSubmitBtn">오답 저장</button><button class="dangerBtn" type="button" id="deleteItemRecordBtn" style="display:none">기록 삭제</button></div>
-        </div>
-       </form>
-      </section>
-     </div>
-    </div>
+  <div class="card q29Shell">
+   <div class="cardHead"><div><h3>문항 입력</h3><p class="sub">시험을 선택하고, 틀린 번호를 누른 뒤 오른쪽에서 단원과 메모를 기록합니다.</p></div><span class="badge" id="q29ExamCount">0회</span></div>
+   <div class="q29ExamBar" id="q29ExamTabs"></div>
+   <div class="q29Empty" id="q29Empty">시험을 먼저 저장하세요.</div>
+   <div class="q29Body" id="q29Body" style="display:none">
+    <section class="q29Pane">
+     <div class="q29PaneHead"><div><span class="typeBadge hot">선택된 시험</span><h3 id="q29ExamName">-</h3><p id="q29ExamMeta">-</p></div></div>
+     <div class="q29Progress"><b id="q29WrongCount">오답 기록 0개</b><span id="q29Expected">기록 없음 = 정답</span></div>
+     <div class="q29Grid" id="q29Grid"></div>
+     <div class="q29Legend"><span>기록 없음 = 정답</span><span>붉은 번호 = 오답 기록 있음</span></div>
+    </section>
+    <section class="q29Pane">
+     <div class="q29RecordEmpty" id="q29RecordEmpty">왼쪽에서 틀린 문항 번호를 선택하세요.</div>
+     <form class="q29Record" id="q29RecordForm">
+      <div class="q29PaneHead"><div><span class="typeBadge">선택 문항</span><h3><span id="q29QuestionNo">-</span>번 문항</h3><p id="q29RecordExamName">-</p></div><span class="badge red">오답 기록</span></div>
+      <div class="q29Field"><label>과목명</label><select id="q29Course" required></select></div>
+      <div class="q29Field"><label>단원명</label><select id="q29Unit" required></select></div>
+      <div class="q29Field"><label>메모</label><textarea id="q29Memo" placeholder="막힌 지점이나 다시 볼 포인트를 기록하세요."></textarea></div>
+      <div class="q29Actions"><button class="dangerBtn" type="button" id="q29Delete" style="display:none">기록 삭제</button><button class="blueBtn" type="submit" id="q29Save">오답 저장</button></div>
+     </form>
+    </section>
    </div>
   </div>
  </div>
@@ -1125,196 +1113,100 @@ function renderExamDetail(){const exam=getDetailExam();if(!exam)return;state.det
 function sidePanelGraphic(){return ''}
 function setView(v){if(v==='input')v='examInput';const el=document.getElementById(v+'View');if(!el)v='home';state.view=v;document.querySelectorAll('.view').forEach(x=>x.classList.remove('active'));document.getElementById(v+'View').classList.add('active');document.querySelectorAll('.navBtn').forEach(x=>x.classList.toggle('active',x.dataset.view===v));const titles={home:['홈','점수와 약점을 빠르게 확인합니다.'],exams:['시험','저장된 시험을 수정하거나 삭제합니다.'],examInput:['시험 입력','시험명·날짜·점수·상위 %·제한시간을 기록합니다.'],questionInput:['문항 입력','선택한 시험의 오답 문항과 단원·메모를 기록합니다.'],review:['복습','최근 4회와 전체 누적 약점을 비교합니다.'],scores:['점수','시험별 점수 변화와 상위 퍼센트를 확인합니다.'],examDetail:['회차 분석','선택한 시험의 단원별 오답을 확인합니다.']};document.getElementById('viewTitle').textContent=(titles[v]||titles.home)[0];document.getElementById('viewSub').textContent=(titles[v]||titles.home)[1];localStorage.setItem(KEY,JSON.stringify(state))}
 // 기존 submit listener보다 먼저 캡처 단계에서 새 시험 저장 규칙을 적용
-const examFormEl=document.getElementById('examForm');examFormEl.addEventListener('submit',function(e){e.preventDefault();e.stopImmediatePropagation();const f=Object.fromEntries(new FormData(this));const score=Number(f.score);if(state.subject==='math'&&(score<0||score>100||score%4!==0)){alert('수학 점수는 0~100 사이의 4점 단위로 입력하세요.');return}const data={subject:state.subject,name:String(f.name||'').trim(),date:f.date,range:[],limit:selectedLimit,count:state.subject==='math'?25:(+f.count||25),total:state.subject==='math'?100:(+f.total||100),score,topPercent:f.topPercent===''?null:Number(f.topPercent)};if(!data.name){alert('시험명을 입력하세요.');return}const editId=document.getElementById('editingExamId').value;let savedId=editId;if(editId){const idx=state.exams.findIndex(x=>x.id===editId);if(idx>=0)state.exams[idx]={...state.exams[idx],...data,updated:Date.now()};showToast('시험을 수정했습니다')}else{savedId=id();state.exams.push({id:savedId,created:Date.now(),...data});showToast('시험을 저장했습니다')}state.inputExamId=String(savedId);state.inputQno=null;resetExamForm();save()},true);
+const examFormEl=document.getElementById('examForm');examFormEl.addEventListener('submit',function(e){e.preventDefault();e.stopImmediatePropagation();const f=Object.fromEntries(new FormData(this));const score=Number(f.score);if(state.subject==='math'&&(score<0||score>100||score%4!==0)){alert('수학 점수는 0~100 사이의 4점 단위로 입력하세요.');return}const data={subject:state.subject,name:String(f.name||'').trim(),date:f.date,range:[],limit:selectedLimit,count:state.subject==='math'?25:(+f.count||25),total:state.subject==='math'?100:(+f.total||100),score,topPercent:f.topPercent===''?null:Number(f.topPercent)};if(!data.name){alert('시험명을 입력하세요.');return}const editId=document.getElementById('editingExamId').value;let savedId=editId;if(editId){const idx=state.exams.findIndex(x=>x.id===editId);if(idx>=0)state.exams[idx]={...state.exams[idx],...data,updated:Date.now()};showToast('시험을 수정했습니다')}else{savedId=id();state.exams.push({id:savedId,created:Date.now(),...data});showToast('시험을 저장했습니다')}state.questionExamId=String(savedId);state.questionNo=null;resetExamForm();save()},true);
 
 
-// ===== 2.6 입력 워크스페이스: 시험/문항 컨텍스트 안정화 + 공간 압축 =====
+// ===== 2.9 문항 입력: 독립 상태/렌더/저장 모듈 =====
 state.items = (state.items || []).map(i => ({ ...i, status: '틀림' }));
-let inputEditorItemId = null;
+if (state.questionExamId == null && state.inputExamId != null) state.questionExamId = String(state.inputExamId);
+if (state.questionNo == null && state.inputQno != null) state.questionNo = Number(state.inputQno) || null;
 
-function questionNumberOf(item) {
-  const m = String(item.qno || '').match(/\d+/);
-  return m ? Number(m[0]) : null;
+function q29Num(item){const m=String(item.qno||'').match(/\d+/);return m?Number(m[0]):null}
+function q29Exam(){return current().exams.find(e=>sameId(e.id,state.questionExamId))||null}
+function q29Items(examId){return state.items.filter(i=>i.subject===state.subject&&sameId(i.examId,examId)&&i.status==='틀림')}
+function q29Expected(exam){if(state.subject!=='math'||!Number.isFinite(+exam.score))return null;return Math.max(0,Math.min(25,Math.round((100-(+exam.score))/4)))}
+function q29Persist(){localStorage.setItem(KEY,JSON.stringify(state))}
+function q29UnitsFor(course){return Object.keys((syllabusBySubject[state.subject]||{})[course]||{})}
+function q29Courses(){return Object.keys(syllabusBySubject[state.subject]||{})}
+function q29FillSelect(el,values,selected,placeholder){el.innerHTML=`<option value="">${placeholder}</option>`+values.map(v=>`<option value="${escapeHtml(v)}" ${v===selected?'selected':''}>${escapeHtml(v)}</option>`).join('')}
+
+function q29RenderExamTabs(exams){
+ const tabs=document.getElementById('q29ExamTabs');
+ document.getElementById('q29ExamCount').textContent=exams.length+'회';
+ tabs.innerHTML=exams.map(e=>{const wrong=q29Items(e.id).length,active=sameId(e.id,state.questionExamId);return `<button type="button" class="q29ExamTab ${active?'active':''}" data-q29-exam="${e.id}"><strong>${escapeHtml(e.name)}</strong><span>${Number.isFinite(+e.score)?+e.score:'-'}점 · 오답 ${wrong}개</span></button>`}).join('');
+}
+function q29ClearRecord(){
+ state.questionNo=null;
+ document.getElementById('q29RecordEmpty').style.display='grid';
+ document.getElementById('q29RecordForm').classList.remove('active');
+ document.getElementById('q29QuestionNo').textContent='-';
+ document.getElementById('q29Memo').value='';
+ document.getElementById('q29Delete').style.display='none';
+ document.getElementById('q29Save').textContent='오답 저장';
+}
+function q29RenderGrid(exam){
+ const wrong=new Set(q29Items(exam.id).map(q29Num).filter(Boolean));
+ const count=state.subject==='math'?25:Math.max(1,+exam.count||25);
+ document.getElementById('q29Grid').innerHTML=Array.from({length:count},(_,i)=>i+1).map(n=>`<button type="button" class="q29Q ${wrong.has(n)?'wrong':''} ${Number(state.questionNo)===n?'selected':''}" data-q29-q="${n}">${n}</button>`).join('');
+}
+function q29RenderContext(exam){
+ document.getElementById('q29ExamName').textContent=exam.name;
+ const tp=topPercent(exam),wrong=q29Items(exam.id).length,expected=q29Expected(exam);
+ document.getElementById('q29ExamMeta').textContent=`${dateLabel(exam.date)} · ${Number.isFinite(+exam.score)?+exam.score:'-'}점 · ${tp!==null?'상위 '+tp+'%':'상위 % 미입력'}`;
+ document.getElementById('q29WrongCount').textContent=`오답 기록 ${wrong}개`;
+ document.getElementById('q29Expected').textContent=expected===null?'기록 없음 = 정답':`점수 기준 예상 오답 ${expected}개`;
+ document.getElementById('q29RecordExamName').textContent=exam.name;
+}
+function q29OpenRecord(qno){
+ const exam=q29Exam(); if(!exam)return;
+ state.questionNo=Number(qno); q29Persist();
+ const existing=q29Items(exam.id).find(i=>q29Num(i)===Number(qno))||null;
+ document.querySelectorAll('#q29Grid [data-q29-q]').forEach(b=>b.classList.toggle('selected',Number(b.dataset.q29Q)===Number(qno)));
+ document.getElementById('q29RecordEmpty').style.display='none';
+ document.getElementById('q29RecordForm').classList.add('active');
+ document.getElementById('q29QuestionNo').textContent=qno;
+ const courses=q29Courses();
+ const course=(existing&&existing.course&&courses.includes(existing.course))?existing.course:(courses[0]||'');
+ q29FillSelect(document.getElementById('q29Course'),courses,course,'과목 선택');
+ const units=q29UnitsFor(course);
+ const unit=(existing&&existing.unit&&units.includes(existing.unit))?existing.unit:'';
+ q29FillSelect(document.getElementById('q29Unit'),units,unit,'단원 선택');
+ document.getElementById('q29Memo').value=existing?.memo||'';
+ document.getElementById('q29Delete').style.display=existing?'inline-flex':'none';
+ document.getElementById('q29Save').textContent=existing?'수정 저장':'오답 저장';
+}
+function q29SelectExam(examId){
+ const exam=current().exams.find(e=>sameId(e.id,examId)); if(!exam)return;
+ state.questionExamId=String(exam.id); state.questionNo=null; q29Persist();
+ document.querySelectorAll('#q29ExamTabs [data-q29-exam]').forEach(b=>b.classList.toggle('active',sameId(b.dataset.q29Exam,state.questionExamId)));
+ q29RenderContext(exam); q29RenderGrid(exam); q29ClearRecord();
+}
+function renderQuestionInputV29(){
+ const exams=sortedExams(current().exams);
+ if(!exams.some(e=>sameId(e.id,state.questionExamId))){state.questionExamId=exams[0]?String(exams[0].id):null;state.questionNo=null}
+ q29RenderExamTabs(exams);
+ const exam=q29Exam(),empty=document.getElementById('q29Empty'),body=document.getElementById('q29Body');
+ if(!exam){empty.style.display='grid';body.style.display='none';q29ClearRecord();return}
+ empty.style.display='none';body.style.display='grid';q29RenderContext(exam);q29RenderGrid(exam);
+ if(state.questionNo)q29OpenRecord(state.questionNo);else q29ClearRecord();
 }
 
-function expectedWrongCount(exam) {
-  if (state.subject !== 'math' || !Number.isFinite(+exam.score)) return null;
-  return Math.max(0, Math.min(25, Math.round((100 - (+exam.score)) / 4)));
-}
-
-function currentInputExam() {
-  return current().exams.find(e => sameId(e.id, state.inputExamId)) || null;
-}
-
-function persistInputSelection() {
-  localStorage.setItem(KEY, JSON.stringify(state));
-}
-
-function syncLegacyInputFields(exam, qno) {
-  const examSelect = document.getElementById('examSelect');
-  const itemQno = document.getElementById('itemQno');
-  if (examSelect) examSelect.value = exam ? String(exam.id) : '';
-  if (itemQno) itemQno.value = qno ? String(qno) : '';
-}
-
-function resetQuestionEditor() {
-  state.inputQno = null;
-  inputEditorItemId = null;
-  selectedTags = [];
-  const empty = document.getElementById('questionEditorEmpty');
-  const fields = document.getElementById('questionEditorFields');
-  if (empty) empty.style.display = 'block';
-  if (fields) fields.style.display = 'none';
-  document.getElementById('selectedQuestionNo').textContent = '-';
-  syncLegacyInputFields(currentInputExam(), null);
-  document.getElementById('itemCourse').value = '';
-  document.getElementById('itemUnit').value = '';
-  document.getElementById('itemDetail').value = '';
-  document.getElementById('itemMemo').value = '';
-  document.getElementById('itemSubmitBtn').textContent = '오답 저장';
-  document.getElementById('deleteItemRecordBtn').style.display = 'none';
-  renderTags();
-  updateChoiceButtons();
-}
-
-function fillQuestionEditor(exam, qno, autoScroll = true) {
-  const existing = examItems(exam.id).find(i => questionNumberOf(i) === qno) || null;
-  inputEditorItemId = existing ? existing.id : null;
-  selectedTags = [];
-
-  syncLegacyInputFields(exam, qno);
-  document.getElementById('selectedQuestionNo').textContent = qno;
-  document.getElementById('itemCourse').value = existing ? (existing.course || '') : '';
-  document.getElementById('itemUnit').value = existing ? (existing.unit || '') : '';
-  document.getElementById('itemDetail').value = '';
-  document.getElementById('itemMemo').value = existing ? (existing.memo || '') : '';
-  document.getElementById('questionEditorEmpty').style.display = 'none';
-  document.getElementById('questionEditorFields').style.display = 'block';
-  document.getElementById('itemSubmitBtn').textContent = existing ? '수정 저장' : '오답 저장';
-  document.getElementById('deleteItemRecordBtn').style.display = existing ? 'inline-flex' : 'none';
-  renderTags();
-  updateChoiceButtons();
-
-  if (autoScroll) {
-    requestAnimationFrame(() => {
-      const pane = document.querySelector('.questionRecordPane');
-      if (pane) pane.scrollTop = 0;
-    });
-  }
-}
-
-function renderInputExamTabs(exams) {
-  const list = document.getElementById('inputExamList');
-  document.getElementById('inputExamCount').textContent = exams.length + '회';
-  list.innerHTML = exams.map(e => {
-    const wrong = examItems(e.id).filter(i => i.status === '틀림').length;
-    const active = sameId(e.id, state.inputExamId);
-    return `<button type="button" class="inputExamTab ${active ? 'active' : ''}" data-input-exam="${e.id}" aria-pressed="${active}"><strong>${e.name}</strong><span>${Number.isFinite(+e.score) ? +e.score : '-'}점 · 오답 ${wrong}개</span></button>`;
-  }).join('');
-}
-
-function renderQuestionGrid(exam) {
-  const items = examItems(exam.id).filter(i => i.status === '틀림');
-  const wrongNums = new Set(items.map(questionNumberOf).filter(Boolean));
-  const count = state.subject === 'math' ? 25 : Math.max(1, +exam.count || 25);
-  document.getElementById('questionGrid').innerHTML = Array.from({ length: count }, (_, i) => i + 1)
-    .map(n => `<button type="button" class="questionBtn ${wrongNums.has(n) ? 'wrong' : ''} ${Number(state.inputQno) === n ? 'selected' : ''}" data-question-no="${n}" aria-pressed="${Number(state.inputQno) === n}">${n}</button>`)
-    .join('');
-}
-
-function renderInputExamContext(exam) {
-  document.getElementById('inputWorkspaceExamName').textContent = exam.name;
-  const tp = topPercent(exam);
-  document.getElementById('inputWorkspaceMeta').textContent = `${dateLabel(exam.date)} · ${Number.isFinite(+exam.score) ? +exam.score : '-'}점 · ${tp !== null ? '상위 ' + tp + '%' : '상위 % 미입력'}`;
-
-  const items = examItems(exam.id).filter(i => i.status === '틀림');
-  const expected = expectedWrongCount(exam);
-  document.getElementById('inputProgressText').textContent = `오답 기록 ${items.length}개`;
-  document.getElementById('inputExpectedWrong').textContent = expected === null ? '기록이 있는 문항만 오답으로 집계' : `점수 기준 예상 오답 ${expected}개`;
-  const denom = expected === null ? Math.max(1, state.subject === 'math' ? 25 : (+exam.count || 25)) : Math.max(1, expected);
-  document.getElementById('inputProgressFill').style.width = Math.min(100, items.length / denom * 100) + '%';
-}
-
-function renderQuestionWorkspace(exam, keepEditor = false) {
-  const emptyEl = document.getElementById('inputWorkspaceEmpty');
-  const body = document.getElementById('inputWorkspaceBody');
-  if (!exam) {
-    emptyEl.style.display = 'grid';
-    body.style.display = 'none';
-    return;
-  }
-  emptyEl.style.display = 'none';
-  body.style.display = 'flex';
-  renderInputExamContext(exam);
-  renderQuestionGrid(exam);
-  syncLegacyInputFields(exam, state.inputQno);
-  if (keepEditor && state.inputQno) fillQuestionEditor(exam, Number(state.inputQno), false);
-  else resetQuestionEditor();
-}
-
-function selectInputExam(examId) {
-  const exam = current().exams.find(e => sameId(e.id, examId));
-  if (!exam) return;
-
-  // 입력 탭의 유일한 시험 컨텍스트. dataset/저장 데이터의 숫자·문자열 차이를 제거한다.
-  state.inputExamId = String(exam.id);
-  state.inputQno = null;
-  inputEditorItemId = null;
-  selectedTags = [];
-  persistInputSelection();
-
-  // 탭 표시와 아래 컨텍스트를 반드시 같은 exam 객체로 갱신한다.
-  document.querySelectorAll('#inputExamList [data-input-exam]').forEach(btn => {
-    const active = sameId(btn.dataset.inputExam, state.inputExamId);
-    btn.classList.toggle('active', active);
-    btn.setAttribute('aria-pressed', active ? 'true' : 'false');
-  });
-  renderQuestionWorkspace(exam, false);
-
-  const activeTab = document.querySelector('#inputExamList .inputExamTab.active');
-  activeTab?.scrollIntoView({behavior:'smooth', block:'nearest', inline:'nearest'});
-  const scroller = document.querySelector('.inputWorkspaceScroll');
-  if (scroller) scroller.scrollTop = 0;
-}
-function selectQuestion(qno) {
-  const exam = currentInputExam();
-  qno = Number(qno);
-  if (!exam || !Number.isInteger(qno) || qno < 1) return;
-  state.inputQno = qno;
-  persistInputSelection();
-  document.querySelectorAll('#questionGrid [data-question-no]').forEach(btn => {
-    const active = Number(btn.dataset.questionNo) === qno;
-    btn.classList.toggle('selected', active);
-    btn.setAttribute('aria-pressed', active ? 'true' : 'false');
-  });
-  fillQuestionEditor(exam, qno, true);
-}
-
-function renderInputWorkspace() {
-  const exams = sortedExams(current().exams);
-  if (!exams.some(e => sameId(e.id, state.inputExamId))) {
-    state.inputExamId = exams[0] ? String(exams[0].id) : null;
-    state.inputQno = null;
-  }
-  renderInputExamTabs(exams);
-  renderQuestionWorkspace(currentInputExam(), !!state.inputQno);
-}
-
-const inputExamListEl = document.getElementById('inputExamList');
-const questionGridEl = document.getElementById('questionGrid');
-inputExamListEl.addEventListener('click', e => {
-  const btn = e.target.closest('[data-input-exam]');
-  if (!btn || !inputExamListEl.contains(btn)) return;
-  e.preventDefault();
-  e.stopPropagation();
-  selectInputExam(btn.dataset.inputExam);
+document.getElementById('q29ExamTabs').addEventListener('click',e=>{const b=e.target.closest('[data-q29-exam]');if(!b)return;e.preventDefault();q29SelectExam(b.dataset.q29Exam)});
+document.getElementById('q29Grid').addEventListener('click',e=>{const b=e.target.closest('[data-q29-q]');if(!b)return;e.preventDefault();q29OpenRecord(Number(b.dataset.q29Q))});
+document.getElementById('q29Course').addEventListener('change',e=>{q29FillSelect(document.getElementById('q29Unit'),q29UnitsFor(e.target.value),'','단원 선택')});
+document.getElementById('q29RecordForm').addEventListener('submit',e=>{
+ e.preventDefault();const exam=q29Exam(),qno=Number(state.questionNo);if(!exam||!qno){alert('문항 번호를 선택하세요.');return}
+ const course=document.getElementById('q29Course').value,unit=document.getElementById('q29Unit').value,memo=document.getElementById('q29Memo').value;
+ if(!course||!unit){alert('과목과 단원을 선택하세요.');return}
+ const existing=state.items.find(i=>i.subject===state.subject&&sameId(i.examId,exam.id)&&q29Num(i)===qno);
+ const payload={subject:state.subject,examId:String(exam.id),qno:String(qno),course,unit,detail:'',status:'틀림',slow:'없음',slowScore:0,tags:[],memo,review:0};
+ if(existing){Object.assign(existing,payload,{updated:Date.now()});showToast(`${qno}번 오답 기록을 수정했습니다`)}else{state.items.push({id:id(),created:Date.now(),...payload});showToast(`${qno}번을 오답으로 기록했습니다`)}
+ q29Persist();q29RenderExamTabs(sortedExams(current().exams));q29RenderContext(exam);q29RenderGrid(exam);q29OpenRecord(qno);renderHomeDashboard(current().exams,current().items);renderReview();renderScores();
 });
-questionGridEl.addEventListener('click', e => {
-  const btn = e.target.closest('[data-question-no]');
-  if (!btn || !questionGridEl.contains(btn)) return;
-  e.preventDefault();
-  e.stopPropagation();
-  selectQuestion(btn.dataset.questionNo);
+document.getElementById('q29Delete').addEventListener('click',()=>{
+ const exam=q29Exam(),qno=Number(state.questionNo);if(!exam||!qno)return;
+ const existing=state.items.find(i=>i.subject===state.subject&&sameId(i.examId,exam.id)&&q29Num(i)===qno);if(!existing)return;
+ state.items=state.items.filter(i=>i.id!==existing.id);showToast(`${qno}번 오답 기록을 삭제했습니다`);q29Persist();q29RenderExamTabs(sortedExams(current().exams));q29RenderContext(exam);q29RenderGrid(exam);q29OpenRecord(qno);renderHomeDashboard(current().exams,current().items);renderReview();renderScores();
 });
 
 function render() {
@@ -1326,92 +1218,11 @@ function render() {
   renderReview();
   renderAnalysis();
   renderScores();
-  renderInputWorkspace();
+  renderQuestionInputV29();
   updateChoiceButtons();
   if (state.view === 'examDetail') renderExamDetail();
 }
 
-
-document.getElementById('itemForm').addEventListener('submit', function(e) {
-  e.preventDefault();
-  e.stopImmediatePropagation();
-  const examId = state.inputExamId;
-  const qno = Number(state.inputQno);
-  if (!examId || !qno) {
-    alert('문항 번호를 먼저 선택하세요.');
-    return;
-  }
-  const f = Object.fromEntries(new FormData(this));
-  if (!String(f.unit || '').trim()) {
-    alert('단원을 선택하세요.');
-    return;
-  }
-
-  const payload = {
-    subject: state.subject,
-    examId,
-    qno: String(qno),
-    course: f.course || '',
-    unit: f.unit || '',
-    detail: '',
-    status: '틀림',
-    slow: '없음',
-    slowScore: 0,
-    tags: [],
-    memo: f.memo || '',
-    review: 0
-  };
-
-  const existingById = inputEditorItemId ? state.items.find(i => i.id === inputEditorItemId) : null;
-  const existingByQuestion = state.items.find(i => sameId(i.examId, examId) && questionNumberOf(i) === qno);
-  const existing = existingById || existingByQuestion;
-  if (existing) {
-    Object.assign(existing, payload, { updated: Date.now() });
-    inputEditorItemId = existing.id;
-    showToast(`${qno}번 오답 기록을 수정했습니다`);
-  } else {
-    const fresh = { id: id(), created: Date.now(), ...payload };
-    state.items.push(fresh);
-    inputEditorItemId = fresh.id;
-    showToast(`${qno}번을 오답으로 기록했습니다`);
-  }
-  localStorage.setItem(KEY, JSON.stringify(state));
-  const exam = currentInputExam();
-  if (exam) {
-    renderInputExamContext(exam);
-    renderQuestionGrid(exam);
-    fillQuestionEditor(exam, qno, false);
-    renderInputExamTabs(sortedExams(current().exams));
-  }
-  renderHomeDashboard(current().exams, current().items);
-  renderReview();
-  renderScores();
-}, true);
-
-document.getElementById('deleteItemRecordBtn').addEventListener('click', () => {
-  const examId = state.inputExamId;
-  const qno = Number(state.inputQno);
-  const existingById = inputEditorItemId ? state.items.find(i => i.id === inputEditorItemId) : null;
-  const existingByQuestion = state.items.find(i => sameId(i.examId, examId) && questionNumberOf(i) === qno);
-  const existing = existingById || existingByQuestion;
-  if (!existing) return;
-  state.items = state.items.filter(i => i.id !== existing.id);
-  inputEditorItemId = null;
-  selectedTags = [];
-  state.inputQno = null;
-  showToast(`${qno}번 오답 기록을 삭제했습니다`);
-  localStorage.setItem(KEY, JSON.stringify(state));
-  const exam = currentInputExam();
-  if (exam) {
-    renderInputExamTabs(sortedExams(current().exams));
-    renderInputExamContext(exam);
-    renderQuestionGrid(exam);
-    resetQuestionEditor();
-  }
-  renderHomeDashboard(current().exams, current().items);
-  renderReview();
-  renderScores();
-});
 
 selectedLimit = /^\d+분$/.test(String(selectedLimit||'')) ? selectedLimit : '60분';
 fillBaseSelects();
