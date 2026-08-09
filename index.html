@@ -5,7 +5,7 @@
  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
  <meta name="theme-color" content="#111827" />
  <link rel="manifest" href="manifest.webmanifest" />
- <title>시험 분석 2.0</title>
+ <title>시험 분석 2.1</title>
  <style>
  :root{
  --bg:#eef3ff; --panel:#ffffff; --panel2:#f8faff; --ink:#172033; --muted:#7b8499;
@@ -116,10 +116,24 @@
 .rankNo.c1{background:linear-gradient(135deg,#5f46ff,#3f73ff);color:#fff}.rankNo.c2{background:#eaf0ff;color:#3f73ff}.rankNo.c3{background:#eff8ff;color:#1899a6}
 @media(max-width:900px){#examCountField,#examTotalField{grid-column:1/-1}}
 
-/* 2.0 입력 흐름: 시험 → 문항 → 오답 기록 */
+/* 2.1 입력 흐름: 기존 병렬구조 유지 + 시험 탭 → 문항 → 오답 기록 */
 .versionBadge{display:inline-flex;align-items:center;justify-content:center;height:30px;padding:0 11px;border-radius:999px;background:#edf3ff;color:var(--blue);font-size:12px;font-weight:1000}
-.inputV2Stack{display:grid;gap:18px}.inputExamCreateCard{min-height:0}.inputExamFields{grid-template-columns:1.2fr .8fr}.inputExamFields .examLimitField{grid-column:1/-1}.inputExamFields .examDateField{grid-column:auto}.inputV2WorkGrid{display:grid;grid-template-columns:minmax(270px,.78fr) minmax(0,1.55fr);gap:18px;align-items:stretch;min-height:520px}.inputExamListCard,.inputQuestionWorkspace{min-height:520px}.inputExamListCard{display:flex;flex-direction:column;overflow:hidden}.inputExamScroll{display:flex;flex-direction:column;gap:10px;overflow-y:auto;min-height:0;max-height:560px;padding-right:6px}.inputExamScroll::-webkit-scrollbar,.questionEditor::-webkit-scrollbar{width:9px}.inputExamScroll::-webkit-scrollbar-thumb,.questionEditor::-webkit-scrollbar-thumb{background:#d5def4;border-radius:999px}.inputExamChoice{width:100%;text-align:left;padding:15px 16px;border-radius:18px;background:#f7f9ff;border:1px solid #e5ecfb;color:var(--ink);transition:.15s;display:block}.inputExamChoice:hover{transform:translateY(-1px);border-color:#cbd8f8}.inputExamChoice.active{background:linear-gradient(135deg,#edf3ff,#f6f9ff);border-color:#91abff;box-shadow:0 10px 25px rgba(63,115,255,.12)}.inputExamChoiceTop{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}.inputExamChoice h4{margin:0;font-size:15px}.inputExamChoice p{margin:5px 0 0;color:#7b8499;font-size:11px;font-weight:800}.inputExamChoiceMeta{display:flex;flex-wrap:wrap;gap:6px;margin-top:11px}.inputExamChoiceMeta span{padding:5px 8px;border-radius:999px;background:white;border:1px solid #e4ebfb;color:#68758d;font-size:10px;font-weight:900}.inputQuestionWorkspace{overflow:hidden;position:relative}.inputWorkspaceEmpty{height:100%;min-height:450px;display:grid;place-items:center;text-align:center;color:#9aa5b8;font-weight:900;border:1px dashed #dbe4f7;border-radius:20px;background:#fbfcff}.inputWorkspaceHead{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;margin-bottom:14px}.inputWorkspaceHead h3{font-size:24px;margin:8px 0 4px}.inputWorkspaceHead p{margin:0;color:#7b8499;font-size:12px;font-weight:850}.compactBtn{height:38px;padding:0 13px}.inputProgressWrap{display:grid;grid-template-columns:190px 1fr;align-items:center;gap:14px;padding:13px 14px;border-radius:17px;background:#f7f9ff;border:1px solid #e8eefb;margin-bottom:15px}.inputProgressWrap b{display:block;font-size:14px}.inputProgressWrap small{display:block;margin-top:3px;color:#8290a7;font-weight:800;font-size:11px}.inputProgressTrack{height:11px;background:#e8eefb;border-radius:999px;overflow:hidden}.inputProgressTrack>div{height:100%;width:0;border-radius:999px;background:linear-gradient(90deg,#ff6678,#f36d4f);transition:.2s}.questionGrid{display:grid;grid-template-columns:repeat(5,1fr);gap:9px;margin-bottom:10px}.questionBtn{aspect-ratio:1.35/1;border-radius:14px;background:#f5f7fc;border:1px solid #e3e9f5;color:#536079;font-weight:1000;position:relative;transition:.14s;min-height:44px}.questionBtn:hover{transform:translateY(-1px);border-color:#a9bdf5}.questionBtn.wrong{background:linear-gradient(135deg,#fff0f2,#fff7f4);border-color:#ffb8c1;color:#e64c61;box-shadow:0 7px 16px rgba(255,102,120,.10)}.questionBtn.wrong:after{content:"×";position:absolute;right:7px;top:5px;font-size:11px;font-weight:1000}.questionBtn.selected{outline:3px solid rgba(63,115,255,.22);border-color:#3f73ff;color:#3154e8}.questionLegend{display:flex;gap:15px;flex-wrap:wrap;color:#7a879f;font-size:11px;font-weight:850;margin-bottom:15px}.questionLegend span{display:inline-flex;align-items:center;gap:6px}.qLegend{width:10px;height:10px;border-radius:3px;background:#f0f3f9;border:1px solid #dfe6f2}.qLegend.wrong{background:#ffe3e7;border-color:#ff9dab}.questionEditor{border-top:1px solid #e9eef8;padding-top:16px;max-height:340px;overflow-y:auto;padding-right:5px}.questionEditorHead{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}.questionEditorHead small{color:#8490a8;font-weight:900}.questionEditorHead h3{margin:2px 0 0;font-size:20px}.questionEditorActions{position:sticky;bottom:0;background:linear-gradient(180deg,rgba(255,255,255,.75),#fff 35%);padding-top:10px;padding-bottom:2px}.inputV2WorkGrid .choiceBtn{min-height:48px}.inputV2WorkGrid textarea{min-height:92px}.questionEditor .inlineTagManager{margin-top:6px}.questionEditor .field.full{min-width:0}
-@media(max-width:900px){.inputExamFields{grid-template-columns:1fr}.inputV2WorkGrid{grid-template-columns:1fr;min-height:0}.inputExamListCard,.inputQuestionWorkspace{min-height:0}.inputExamScroll{max-height:300px}.inputWorkspaceEmpty{min-height:220px}.questionEditor{max-height:none;overflow:visible}.inputProgressWrap{grid-template-columns:1fr}.questionGrid{grid-template-columns:repeat(5,1fr)}}
+
+    .inputParallelGrid{display:grid;grid-template-columns:minmax(360px,.86fr) minmax(0,1.45fr);gap:18px;align-items:stretch;min-height:660px}
+    .inputExamCreateCard,.inputQuestionWorkspace{min-height:660px;max-height:760px;overflow:hidden}
+    .inputExamCreateCard{display:flex;flex-direction:column}.inputExamCreateCard form{display:flex;flex-direction:column;min-height:0;flex:1}.inputExamCreateCard .formGrid{overflow-y:auto;padding-right:5px;min-height:0}.inputExamCreateCard .formActions{margin-top:auto;padding-top:14px;background:#fff}
+    .inputExamCreateCard .formGrid::-webkit-scrollbar,.inputWorkspaceScroll::-webkit-scrollbar,.inputExamTabs::-webkit-scrollbar{width:8px;height:8px}.inputExamCreateCard .formGrid::-webkit-scrollbar-thumb,.inputWorkspaceScroll::-webkit-scrollbar-thumb,.inputExamTabs::-webkit-scrollbar-thumb{background:#d5def4;border-radius:999px}
+    .inputExamFields{grid-template-columns:1fr}.inputExamFields .examLimitField,.inputExamFields .examDateField{grid-column:auto}.inputExamFields .field.full{grid-column:1/-1}
+    .inputQuestionWorkspace{display:flex;flex-direction:column;position:relative}.inputWorkspaceEmpty{height:100%;display:grid;place-items:center;text-align:center;color:#9aa5b8;font-weight:900;border:1px dashed #dbe4f7;border-radius:20px;background:#fbfcff}
+    .inputWorkspaceBody{display:flex;flex-direction:column;min-height:0;height:100%}.inputWorkspaceScroll{overflow-y:auto;min-height:0;padding-right:5px;flex:1}
+    .inputExamTabSection{margin-bottom:14px}.inputExamTabHead{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:9px}.inputExamTabHead b{font-size:13px}.inputExamTabHead small{color:#8490a8;font-weight:850}
+    .inputExamTabs{display:flex;gap:8px;overflow-x:auto;padding:2px 2px 8px;scrollbar-width:thin;overscroll-behavior-x:contain}.inputExamTab{flex:0 0 auto;min-width:118px;max-width:170px;border:1px solid #e2e9f7;background:#f7f9ff;border-radius:15px;padding:10px 12px;text-align:left;color:#526079;transition:.14s}.inputExamTab:hover{border-color:#b8c8f6;transform:translateY(-1px)}.inputExamTab.active{background:linear-gradient(135deg,#edf3ff,#f6f9ff);border-color:#7f9dff;color:#3154e8;box-shadow:0 8px 18px rgba(63,115,255,.11)}.inputExamTab strong{display:block;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.inputExamTab span{display:block;margin-top:4px;font-size:10px;font-weight:850;color:#7f8ca3}.inputExamTab.active span{color:#6480dc}
+    .inputWorkspaceHead{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;margin-bottom:12px}.inputWorkspaceHead h3{font-size:22px;margin:7px 0 3px}.inputWorkspaceHead p{margin:0;color:#7b8499;font-size:12px;font-weight:850}
+    .inputProgressWrap{display:grid;grid-template-columns:185px 1fr;align-items:center;gap:13px;padding:11px 13px;border-radius:16px;background:#f7f9ff;border:1px solid #e8eefb;margin-bottom:12px}.inputProgressWrap b{display:block;font-size:13px}.inputProgressWrap small{display:block;margin-top:3px;color:#8290a7;font-weight:800;font-size:10px}.inputProgressTrack{height:9px;background:#e8eefb;border-radius:999px;overflow:hidden}.inputProgressTrack>div{height:100%;width:0;border-radius:999px;background:linear-gradient(90deg,#ff6678,#f36d4f);transition:.2s}
+    .questionGrid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:8px}.questionBtn{height:48px;border-radius:13px;background:#f5f7fc;border:1px solid #e3e9f5;color:#536079;font-weight:1000;position:relative;transition:.14s;touch-action:manipulation;cursor:pointer}.questionBtn:hover{transform:translateY(-1px);border-color:#a9bdf5}.questionBtn.wrong{background:linear-gradient(135deg,#fff0f2,#fff7f4);border-color:#ffb8c1;color:#e64c61;box-shadow:0 7px 16px rgba(255,102,120,.10)}.questionBtn.wrong:after{content:"×";position:absolute;right:7px;top:4px;font-size:11px;font-weight:1000}.questionBtn.selected{outline:3px solid rgba(63,115,255,.22);border-color:#3f73ff;color:#3154e8;background:#eef4ff}
+    .questionLegend{display:flex;gap:14px;flex-wrap:wrap;color:#7a879f;font-size:10px;font-weight:850;margin-bottom:11px}.questionLegend span{display:inline-flex;align-items:center;gap:6px}.qLegend{width:9px;height:9px;border-radius:3px;background:#f0f3f9;border:1px solid #dfe6f2}.qLegend.wrong{background:#ffe3e7;border-color:#ff9dab}
+    .questionEditor{border-top:1px solid #e9eef8;padding-top:13px}.questionEditorHead{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px}.questionEditorHead small{color:#8490a8;font-weight:900}.questionEditorHead h3{margin:2px 0 0;font-size:19px}.questionEditorActions{position:sticky;bottom:0;background:linear-gradient(180deg,rgba(255,255,255,.78),#fff 38%);padding-top:10px;padding-bottom:2px;z-index:3}.inputQuestionWorkspace .choiceBtn{min-height:46px}.inputQuestionWorkspace textarea{min-height:86px}
+    @media(max-width:900px){.inputParallelGrid{grid-template-columns:1fr;min-height:0}.inputExamCreateCard,.inputQuestionWorkspace{min-height:0;max-height:none}.inputExamCreateCard .formGrid,.inputWorkspaceScroll{overflow:visible}.inputExamTabs{max-width:100%}.questionGrid{grid-template-columns:repeat(5,1fr)}.inputProgressWrap{grid-template-columns:1fr}}
 
 </style>
 <link rel="apple-touch-icon" href="./apple-touch-icon.png?v=4010">
@@ -127,7 +141,7 @@
 <body>
 <div class="app"><div class="shell">
  <aside class="sidebar">
- <div class="brand"><div class="logo">📊</div><div><h1>시험 분석</h1><p>2.0 · 시험 기록 · 약점 분석</p></div></div>
+ <div class="brand"><div class="logo">📊</div><div><h1>시험 분석</h1><p>2.1 · 시험 기록 · 약점 분석</p></div></div>
  <div class="navBlock"><p class="navTitle">MAIN</p>
  <button class="navBtn active" data-view="home"><span class="ico">⌂</span>홈</button>
  <button class="navBtn" data-view="exams"><span class="ico">▤</span>시험 관리</button>
@@ -173,9 +187,9 @@
  </div>
  </div>
  <div class="view" id="inputView">
- <div class="inputV2Stack">
+ <div class="inputParallelGrid">
   <div class="card inputExamCreateCard">
-   <div class="cardHead"><div><h3 id="examFormTitle">시험 정보 입력</h3><p class="sub">시험을 먼저 저장한 뒤, 아래 목록에서 해당 시험을 열어 오답 문항만 기록합니다.</p></div><span class="versionBadge">2.0</span></div>
+   <div class="cardHead"><div><h3 id="examFormTitle">시험 정보 입력</h3><p class="sub">시험 정보를 저장하면 오른쪽 문항 입력 영역에서 해당 시험을 바로 선택할 수 있습니다.</p></div><span class="versionBadge">2.1</span></div>
    <form id="examForm"><input type="hidden" id="editingExamId">
     <div class="formGrid inputExamFields">
      <div class="field full"><label>시험명</label><input name="name" placeholder="예: BGM 9회" required></div>
@@ -189,17 +203,17 @@
    </form>
   </div>
 
-  <div class="inputV2WorkGrid">
-   <div class="card inputExamListCard">
-    <div class="cardHead"><div><h3>등록된 시험</h3><p class="sub">시험을 선택하면 오른쪽에서 25개 문항을 바로 기록할 수 있습니다.</p></div><span class="badge" id="inputExamCount">0회</span></div>
-    <div class="inputExamScroll" id="inputExamList"></div>
-   </div>
-
-   <div class="card inputQuestionWorkspace">
-    <div id="inputWorkspaceEmpty" class="inputWorkspaceEmpty">왼쪽에서 시험을 선택하세요.</div>
-    <div id="inputWorkspaceBody" style="display:none">
+  <div class="card inputQuestionWorkspace">
+   <div class="cardHead"><div><h3>문항 입력</h3><p class="sub">시험 선택 → 틀린 문항 번호 → 단원·오답 원인 기록 순서로 입력합니다.</p></div><span class="badge" id="inputExamCount">0회</span></div>
+   <div id="inputWorkspaceEmpty" class="inputWorkspaceEmpty">시험을 먼저 저장하세요.</div>
+   <div id="inputWorkspaceBody" class="inputWorkspaceBody" style="display:none">
+    <div class="inputExamTabSection">
+     <div class="inputExamTabHead"><b>시험 선택</b><small>좌우로 스크롤</small></div>
+     <div class="inputExamTabs" id="inputExamList"></div>
+    </div>
+    <div class="inputWorkspaceScroll">
      <div class="inputWorkspaceHead"><div><span class="typeBadge hot">선택된 시험</span><h3 id="inputWorkspaceExamName">-</h3><p id="inputWorkspaceMeta">-</p></div></div>
-     <div class="inputProgressWrap"><div><b id="inputProgressText">오답 0개</b><small id="inputExpectedWrong">점수 기준 예상 오답 0개</small></div><div class="inputProgressTrack"><div id="inputProgressFill"></div></div></div>
+     <div class="inputProgressWrap"><div><b id="inputProgressText">오답 기록 0개</b><small id="inputExpectedWrong">점수 기준 예상 오답 0개</small></div><div class="inputProgressTrack"><div id="inputProgressFill"></div></div></div>
      <div class="questionGrid" id="questionGrid"></div>
      <div class="questionLegend"><span><i class="qLegend normal"></i>기록 없음 = 정답</span><span><i class="qLegend wrong"></i>오답 기록 있음</span></div>
 
@@ -1100,7 +1114,7 @@ function setView(v){const el=document.getElementById(v+'View');if(!el)v='home';s
 const examFormEl=document.getElementById('examForm');examFormEl.addEventListener('submit',function(e){e.preventDefault();e.stopImmediatePropagation();const f=Object.fromEntries(new FormData(this));const score=Number(f.score);if(state.subject==='math'&&(score<0||score>100||score%4!==0)){alert('수학 점수는 0~100 사이의 4점 단위로 입력하세요.');return}const data={subject:state.subject,name:String(f.name||'').trim(),date:f.date,range:[],limit:selectedLimit,count:state.subject==='math'?25:(+f.count||25),total:state.subject==='math'?100:(+f.total||100),score,topPercent:f.topPercent===''?null:Number(f.topPercent)};if(!data.name){alert('시험명을 입력하세요.');return}const editId=document.getElementById('editingExamId').value;let savedId=editId;if(editId){const idx=state.exams.findIndex(x=>x.id===editId);if(idx>=0)state.exams[idx]={...state.exams[idx],...data,updated:Date.now()};showToast('시험을 수정했습니다')}else{savedId=id();state.exams.push({id:savedId,created:Date.now(),...data});showToast('시험을 저장했습니다')}state.inputExamId=savedId;state.inputQno=null;resetExamForm();save()},true);
 
 
-// ===== 2.0 입력 워크스페이스 =====
+// ===== 2.1 입력 워크스페이스 =====
 state.items = (state.items || []).map(i => ({ ...i, status: '틀림' }));
 let inputEditorItemId = null;
 
@@ -1144,8 +1158,26 @@ function openQuestionEditor(qno) {
   document.getElementById('itemSubmitBtn').textContent = existing ? '수정 저장' : '오답 저장';
   document.getElementById('deleteItemRecordBtn').style.display = existing ? 'inline-flex' : 'none';
   renderInputWorkspace(false);
+  bindInputWorkspaceButtons();
   renderTags();
   updateChoiceButtons();
+}
+
+function bindInputWorkspaceButtons() {
+  document.querySelectorAll('#inputExamList [data-input-exam]').forEach(btn => {
+    btn.onclick = function(ev) {
+      ev.preventDefault();
+      ev.stopPropagation();
+      selectInputExam(this.dataset.inputExam);
+    };
+  });
+  document.querySelectorAll('#questionGrid [data-question-no]').forEach(btn => {
+    btn.onclick = function(ev) {
+      ev.preventDefault();
+      ev.stopPropagation();
+      openQuestionEditor(Number(this.dataset.questionNo));
+    };
+  });
 }
 
 function renderInputWorkspace(resetEditorDOM = true) {
@@ -1161,16 +1193,9 @@ function renderInputWorkspace(resetEditorDOM = true) {
   list.innerHTML = exams.length
     ? exams.map(e => {
         const wrong = examItems(e.id).length;
-        const tp = topPercent(e);
-        return `<button type="button" class="inputExamChoice ${e.id === state.inputExamId ? 'active' : ''}" data-input-exam="${e.id}">
-          <div class="inputExamChoiceTop">
-            <div><h4>${e.name}</h4><p>${dateLabel(e.date)}</p></div>
-            <span class="badge">${Number.isFinite(+e.score) ? +e.score : '-'}점</span>
-          </div>
-          <div class="inputExamChoiceMeta"><span>상위 ${tp !== null ? tp + '%' : '-'}</span><span>오답 ${wrong}개</span><span>${e.limit || '-'}</span></div>
-        </button>`;
+        return `<button type="button" class="inputExamTab ${e.id === state.inputExamId ? 'active' : ''}" data-input-exam="${e.id}"><strong>${e.name}</strong><span>${Number.isFinite(+e.score) ? +e.score : '-'}점 · 오답 ${wrong}개</span></button>`;
       }).join('')
-    : empty('시험을 먼저 저장하세요.');
+    : '';
 
   const exam = exams.find(e => e.id === state.inputExamId);
   const emptyEl = document.getElementById('inputWorkspaceEmpty');
@@ -1182,7 +1207,7 @@ function renderInputWorkspace(resetEditorDOM = true) {
   }
 
   emptyEl.style.display = 'none';
-  body.style.display = 'block';
+  body.style.display = 'flex';
   document.getElementById('inputWorkspaceExamName').textContent = exam.name;
   const tp = topPercent(exam);
   document.getElementById('inputWorkspaceMeta').textContent = `${dateLabel(exam.date)} · ${Number.isFinite(+exam.score) ? +exam.score : '-'}점 · ${tp !== null ? '상위 ' + tp + '%' : '상위 % 미입력'}`;
@@ -1200,25 +1225,27 @@ function renderInputWorkspace(resetEditorDOM = true) {
     .join('');
   document.getElementById('examSelect').value = exam.id;
 
-  if (!resetEditorDOM) return;
-  if (state.inputQno) {
-    const existing = items.find(i => questionNumberOf(i) === state.inputQno);
-    inputEditorItemId = existing ? existing.id : null;
-    document.getElementById('itemQno').value = state.inputQno;
-    document.getElementById('selectedQuestionNo').textContent = state.inputQno;
-    document.getElementById('itemCourse').value = existing ? (existing.course || '') : '';
-    document.getElementById('itemUnit').value = existing ? (existing.unit || '') : '';
-    document.getElementById('itemMemo').value = existing ? (existing.memo || '') : '';
-    selectedTags = existing && existing.tags ? [...existing.tags] : [];
-    document.getElementById('questionEditorEmpty').style.display = 'none';
-    document.getElementById('questionEditorFields').style.display = 'block';
-    document.getElementById('itemSubmitBtn').textContent = existing ? '수정 저장' : '오답 저장';
-    document.getElementById('deleteItemRecordBtn').style.display = existing ? 'inline-flex' : 'none';
-  } else {
-    document.getElementById('questionEditorEmpty').style.display = 'block';
-    document.getElementById('questionEditorFields').style.display = 'none';
-    document.getElementById('selectedQuestionNo').textContent = '-';
+  if (resetEditorDOM) {
+    if (state.inputQno) {
+      const existing = items.find(i => questionNumberOf(i) === state.inputQno);
+      inputEditorItemId = existing ? existing.id : null;
+      document.getElementById('itemQno').value = state.inputQno;
+      document.getElementById('selectedQuestionNo').textContent = state.inputQno;
+      document.getElementById('itemCourse').value = existing ? (existing.course || '') : '';
+      document.getElementById('itemUnit').value = existing ? (existing.unit || '') : '';
+      document.getElementById('itemMemo').value = existing ? (existing.memo || '') : '';
+      selectedTags = existing && existing.tags ? [...existing.tags] : [];
+      document.getElementById('questionEditorEmpty').style.display = 'none';
+      document.getElementById('questionEditorFields').style.display = 'block';
+      document.getElementById('itemSubmitBtn').textContent = existing ? '수정 저장' : '오답 저장';
+      document.getElementById('deleteItemRecordBtn').style.display = existing ? 'inline-flex' : 'none';
+    } else {
+      document.getElementById('questionEditorEmpty').style.display = 'block';
+      document.getElementById('questionEditorFields').style.display = 'none';
+      document.getElementById('selectedQuestionNo').textContent = '-';
+    }
   }
+  bindInputWorkspaceButtons();
 }
 
 function render() {
@@ -1235,17 +1262,6 @@ function render() {
   if (state.view === 'examDetail') renderExamDetail();
 }
 
-document.addEventListener('click', e => {
-  const ie = e.target.closest('[data-input-exam]')?.dataset.inputExam;
-  if (ie) {
-    selectInputExam(ie);
-    return;
-  }
-  const q = e.target.closest('[data-question-no]')?.dataset.questionNo;
-  if (q) {
-    openQuestionEditor(Number(q));
-  }
-}, true);
 
 
 document.getElementById('itemForm').addEventListener('submit', function(e) {
