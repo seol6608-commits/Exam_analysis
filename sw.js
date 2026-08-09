@@ -1,4 +1,3 @@
-// Development/test build: service-worker caching is intentionally disabled.
+// Service worker intentionally not registered during active development.
 self.addEventListener('install', () => self.skipWaiting());
-self.addEventListener('activate', event => event.waitUntil(self.clients.claim()));
-self.addEventListener('fetch', () => {});
+self.addEventListener('activate', e => e.waitUntil(self.clients.claim()));
