@@ -5,7 +5,7 @@
  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
  <meta name="theme-color" content="#111827" />
  <link rel="manifest" href="manifest.webmanifest" />
- <title>시험 분석 2.1</title>
+ <title>시험 분석 2.2</title>
  <style>
  :root{
  --bg:#eef3ff; --panel:#ffffff; --panel2:#f8faff; --ink:#172033; --muted:#7b8499;
@@ -130,10 +130,10 @@
     .inputExamTabs{display:flex;gap:8px;overflow-x:auto;padding:2px 2px 8px;scrollbar-width:thin;overscroll-behavior-x:contain}.inputExamTab{flex:0 0 auto;min-width:118px;max-width:170px;border:1px solid #e2e9f7;background:#f7f9ff;border-radius:15px;padding:10px 12px;text-align:left;color:#526079;transition:.14s}.inputExamTab:hover{border-color:#b8c8f6;transform:translateY(-1px)}.inputExamTab.active{background:linear-gradient(135deg,#edf3ff,#f6f9ff);border-color:#7f9dff;color:#3154e8;box-shadow:0 8px 18px rgba(63,115,255,.11)}.inputExamTab strong{display:block;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.inputExamTab span{display:block;margin-top:4px;font-size:10px;font-weight:850;color:#7f8ca3}.inputExamTab.active span{color:#6480dc}
     .inputWorkspaceHead{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;margin-bottom:12px}.inputWorkspaceHead h3{font-size:22px;margin:7px 0 3px}.inputWorkspaceHead p{margin:0;color:#7b8499;font-size:12px;font-weight:850}
     .inputProgressWrap{display:grid;grid-template-columns:185px 1fr;align-items:center;gap:13px;padding:11px 13px;border-radius:16px;background:#f7f9ff;border:1px solid #e8eefb;margin-bottom:12px}.inputProgressWrap b{display:block;font-size:13px}.inputProgressWrap small{display:block;margin-top:3px;color:#8290a7;font-weight:800;font-size:10px}.inputProgressTrack{height:9px;background:#e8eefb;border-radius:999px;overflow:hidden}.inputProgressTrack>div{height:100%;width:0;border-radius:999px;background:linear-gradient(90deg,#ff6678,#f36d4f);transition:.2s}
-    .questionGrid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:8px}.questionBtn{height:48px;border-radius:13px;background:#f5f7fc;border:1px solid #e3e9f5;color:#536079;font-weight:1000;position:relative;transition:.14s;touch-action:manipulation;cursor:pointer}.questionBtn:hover{transform:translateY(-1px);border-color:#a9bdf5}.questionBtn.wrong{background:linear-gradient(135deg,#fff0f2,#fff7f4);border-color:#ffb8c1;color:#e64c61;box-shadow:0 7px 16px rgba(255,102,120,.10)}.questionBtn.wrong:after{content:"×";position:absolute;right:7px;top:4px;font-size:11px;font-weight:1000}.questionBtn.selected{outline:3px solid rgba(63,115,255,.22);border-color:#3f73ff;color:#3154e8;background:#eef4ff}
+    .questionGrid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px;margin:0 auto 8px;max-width:430px;width:78%}.questionBtn{height:36px;border-radius:10px;background:#f5f7fc;border:1px solid #e3e9f5;color:#536079;font-weight:1000;position:relative;transition:.14s;touch-action:manipulation;cursor:pointer;font-size:13px;padding:0}.questionBtn:hover{transform:translateY(-1px);border-color:#a9bdf5}.questionBtn.wrong{background:linear-gradient(135deg,#fff0f2,#fff7f4);border-color:#ffb8c1;color:#e64c61;box-shadow:0 7px 16px rgba(255,102,120,.10)}.questionBtn.wrong:after{content:"×";position:absolute;right:7px;top:4px;font-size:11px;font-weight:1000}.questionBtn.selected{outline:3px solid rgba(63,115,255,.22);border-color:#3f73ff;color:#3154e8;background:#eef4ff}
     .questionLegend{display:flex;gap:14px;flex-wrap:wrap;color:#7a879f;font-size:10px;font-weight:850;margin-bottom:11px}.questionLegend span{display:inline-flex;align-items:center;gap:6px}.qLegend{width:9px;height:9px;border-radius:3px;background:#f0f3f9;border:1px solid #dfe6f2}.qLegend.wrong{background:#ffe3e7;border-color:#ff9dab}
     .questionEditor{border-top:1px solid #e9eef8;padding-top:13px}.questionEditorHead{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px}.questionEditorHead small{color:#8490a8;font-weight:900}.questionEditorHead h3{margin:2px 0 0;font-size:19px}.questionEditorActions{position:sticky;bottom:0;background:linear-gradient(180deg,rgba(255,255,255,.78),#fff 38%);padding-top:10px;padding-bottom:2px;z-index:3}.inputQuestionWorkspace .choiceBtn{min-height:46px}.inputQuestionWorkspace textarea{min-height:86px}
-    @media(max-width:900px){.inputParallelGrid{grid-template-columns:1fr;min-height:0}.inputExamCreateCard,.inputQuestionWorkspace{min-height:0;max-height:none}.inputExamCreateCard .formGrid,.inputWorkspaceScroll{overflow:visible}.inputExamTabs{max-width:100%}.questionGrid{grid-template-columns:repeat(5,1fr)}.inputProgressWrap{grid-template-columns:1fr}}
+    @media(max-width:900px){.inputParallelGrid{grid-template-columns:1fr;min-height:0}.inputExamCreateCard,.inputQuestionWorkspace{min-height:0;max-height:none}.inputExamCreateCard .formGrid,.inputWorkspaceScroll{overflow:visible}.inputExamTabs{max-width:100%}.questionGrid{grid-template-columns:repeat(5,minmax(0,1fr));width:100%;max-width:430px}.inputProgressWrap{grid-template-columns:1fr}}
 
 </style>
 <link rel="apple-touch-icon" href="./apple-touch-icon.png?v=4010">
@@ -141,7 +141,7 @@
 <body>
 <div class="app"><div class="shell">
  <aside class="sidebar">
- <div class="brand"><div class="logo">📊</div><div><h1>시험 분석</h1><p>2.1 · 시험 기록 · 약점 분석</p></div></div>
+ <div class="brand"><div class="logo">📊</div><div><h1>시험 분석</h1><p>2.2 · 시험 기록 · 약점 분석</p></div></div>
  <div class="navBlock"><p class="navTitle">MAIN</p>
  <button class="navBtn active" data-view="home"><span class="ico">⌂</span>홈</button>
  <button class="navBtn" data-view="exams"><span class="ico">▤</span>시험 관리</button>
@@ -1129,12 +1129,16 @@ function expectedWrongCount(exam) {
 }
 
 function selectInputExam(examId) {
+  const tabStrip = document.getElementById('inputExamList');
+  const oldScrollLeft = tabStrip ? tabStrip.scrollLeft : 0;
   state.inputExamId = examId;
   state.inputQno = null;
   inputEditorItemId = null;
   selectedTags = [];
   localStorage.setItem(KEY, JSON.stringify(state));
   renderInputWorkspace();
+  const refreshedStrip = document.getElementById('inputExamList');
+  if (refreshedStrip) refreshedStrip.scrollLeft = oldScrollLeft;
   renderTags();
   updateChoiceButtons();
 }
@@ -1158,27 +1162,13 @@ function openQuestionEditor(qno) {
   document.getElementById('itemSubmitBtn').textContent = existing ? '수정 저장' : '오답 저장';
   document.getElementById('deleteItemRecordBtn').style.display = existing ? 'inline-flex' : 'none';
   renderInputWorkspace(false);
-  bindInputWorkspaceButtons();
   renderTags();
   updateChoiceButtons();
 }
 
-function bindInputWorkspaceButtons() {
-  document.querySelectorAll('#inputExamList [data-input-exam]').forEach(btn => {
-    btn.onclick = function(ev) {
-      ev.preventDefault();
-      ev.stopPropagation();
-      selectInputExam(this.dataset.inputExam);
-    };
-  });
-  document.querySelectorAll('#questionGrid [data-question-no]').forEach(btn => {
-    btn.onclick = function(ev) {
-      ev.preventDefault();
-      ev.stopPropagation();
-      openQuestionEditor(Number(this.dataset.questionNo));
-    };
-  });
-}
+// 시험 탭/문항 버튼은 아래의 단일 이벤트 위임 루틴에서 처리한다.
+// 동적 렌더링 때마다 onclick을 다시 부착하지 않아 iPad/Safari에서도 연결성이 유지된다.
+function bindInputWorkspaceButtons() {}
 
 function renderInputWorkspace(resetEditorDOM = true) {
   const exams = sortedExams(current().exams);
@@ -1245,8 +1235,26 @@ function renderInputWorkspace(resetEditorDOM = true) {
       document.getElementById('selectedQuestionNo').textContent = '-';
     }
   }
-  bindInputWorkspaceButtons();
 }
+
+// 입력 워크스페이스 단일 이벤트 위임: 동적으로 다시 그려지는 시험 탭과 문항 버튼을 항상 처리한다.
+document.addEventListener('click', function(e) {
+  const examBtn = e.target.closest('#inputExamList [data-input-exam]');
+  if (examBtn) {
+    e.preventDefault();
+    e.stopPropagation();
+    selectInputExam(examBtn.dataset.inputExam);
+    return;
+  }
+
+  const qBtn = e.target.closest('#questionGrid [data-question-no]');
+  if (qBtn) {
+    e.preventDefault();
+    e.stopPropagation();
+    openQuestionEditor(Number(qBtn.dataset.questionNo));
+    return;
+  }
+}, true);
 
 function render() {
   buildPickers();
@@ -1325,7 +1333,11 @@ document.getElementById('deleteItemRecordBtn').addEventListener('click', () => {
   save();
 });
 
-fillBaseSelects();buildPickers();setView((state.view&&state.view!=='analysis')?state.view:'home');render();
+selectedLimit = /^\d+분$/.test(String(selectedLimit||'')) ? selectedLimit : '60분';
+fillBaseSelects();
+buildPickers();
+setView((state.view&&state.view!=='analysis')?state.view:'home');
+render();
 </script>
 </body>
 </html>
