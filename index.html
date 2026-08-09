@@ -906,7 +906,31 @@ function load(){try{return {...defaults,...JSON.parse(localStorage.getItem(KEY)|
 function save(){localStorage.setItem(KEY,JSON.stringify(state));render()}
 function id(){return Date.now().toString(36)+Math.random().toString(36).slice(2,7)}
 function normalizeSubject(v){const s=String(v??'').trim().toLowerCase();if(s==='math'||s==='수학')return 'math';if(s==='physics'||s==='물리')return 'physics';if(s==='chemistry'||s==='화학')return 'chemistry';return s}
-function current(){const key=normalizeSubject(state.subject);return {exams:(state.exams||[]).filter(x=>normalizeSubject(x.subject)===key),items:(state.items||[]).filter(x=>normalizeSubject(x.subject)===key),insights:(state.insights||[]).filter(x=>normalizeSubject(x.subject)===key)}}
+function migrateLegacySubjects(){
+  let changed=false;
+  state.subject=normalizeSubject(state.subject)||'math';
+  const examSubjectById=new Map();
+  (state.exams||[]).forEach(exam=>{
+    let sub=normalizeSubject(exam.subject);
+    if(!sub){sub='math';exam.subject='math';changed=true}
+    else if(exam.subject!==sub){exam.subject=sub;changed=true}
+    examSubjectById.set(String(exam.id),sub);
+  });
+  (state.items||[]).forEach(item=>{
+    let sub=normalizeSubject(item.subject);
+    if(!sub){sub=examSubjectById.get(String(item.examId))||'math';item.subject=sub;changed=true}
+    else if(item.subject!==sub){item.subject=sub;changed=true}
+    if(item.examId!=null && typeof item.examId!=='string'){item.examId=String(item.examId);changed=true}
+  });
+  (state.insights||[]).forEach(ins=>{
+    let sub=normalizeSubject(ins.subject);
+    if(!sub){ins.subject='math';changed=true}
+    else if(ins.subject!==sub){ins.subject=sub;changed=true}
+  });
+  if(changed)localStorage.setItem(KEY,JSON.stringify(state));
+}
+migrateLegacySubjects();
+function current(){const key=normalizeSubject(state.subject)||'math';return {exams:(state.exams||[]).filter(x=>(normalizeSubject(x.subject)||'math')===key),items:(state.items||[]).filter(x=>(normalizeSubject(x.subject)||'math')===key),insights:(state.insights||[]).filter(x=>(normalizeSubject(x.subject)||'math')===key)}}
 function empty(t){return `<div class="empty">${t}</div>`}
 function daysSince(d){if(!d)return '날짜 없음';const diff=Math.floor((Date.now()-new Date(d+'T00:00:00').getTime())/86400000);return diff===0?'오늘':diff>0?`${diff}일 지남`:`D-${Math.abs(diff)}`}
 function dateLabel(d){if(!d)return '날짜 없음';const day=['일','월','화','수','목','금','토'][new Date(d+'T00:00:00').getDay()];return d.replaceAll('-','.')+` (${day})`}
@@ -1066,12 +1090,13 @@ document.getElementById('examForm').addEventListener('submit',e=>{
  state.questionNo=null;
  resetExamForm();
  save();
+ if(state.view==='questionInput')renderQuestionInputV29();
 });
 document.getElementById('cancelExamEditBtn').addEventListener('click',()=>{resetExamForm();showToast('수정을 취소했습니다')});
 // 2.0: 문항 저장은 시험 내부 25문항 편집기에서 처리
 document.getElementById('insightForm').addEventListener('submit',e=>{e.preventDefault();const f=Object.fromEntries(new FormData(e.target));state.insights.push({id:id(),subject:state.subject,created:Date.now(),review:0,...f});e.target.reset();save();showToast('메모를 저장했습니다')});
 document.getElementById('addTagBtn')?.addEventListener('click',()=>{const i=document.getElementById('newTagInput');const v=i?.value.trim();if(v&&!state.tags.includes(v)){state.tags.push(v);i.value='';save();showToast('태그를 추가했습니다')}});
-function makeBackupPayload(){return {__app:'exam-analysis',__backupVersion:'4.0.7-safe',__storageKey:KEY,__exportedAt:new Date().toISOString(),data:state}}
+function makeBackupPayload(){return {__app:'exam-analysis',__backupVersion:'2.11',__storageKey:KEY,__exportedAt:new Date().toISOString(),data:state}}
 function safeBackupName(){const d=new Date();const pad=n=>String(n).padStart(2,'0');return `exam-analysis-backup-${d.getFullYear()}${pad(d.getMonth()+1)}${pad(d.getDate())}-${pad(d.getHours())}${pad(d.getMinutes())}.json`}
 async function exportBackup(){try{const json=JSON.stringify(makeBackupPayload(),null,2);const fileName=safeBackupName();const blob=new Blob(['\ufeff'+json],{type:'application/json;charset=utf-8'});const file=new File([blob],fileName,{type:'application/json'});if(navigator.canShare&&navigator.canShare({files:[file]})){await navigator.share({files:[file],title:'시험 분석 백업',text:'시험 분석 앱 백업 파일'});showToast('백업 파일을 공유/저장했습니다');return}const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=fileName;a.rel='noopener';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1500);showToast('백업 파일을 생성했습니다')}catch(err){console.error(err);alert('백업 생성에 실패했습니다. 다시 시도해 주세요.')}}
 function normalizeBackup(obj){const raw=obj&&obj.data?obj.data:obj;if(!raw||typeof raw!=='object')throw new Error('invalid backup');return {...defaults,...raw,exams:Array.isArray(raw.exams)?raw.exams:[],items:Array.isArray(raw.items)?raw.items:[],insights:Array.isArray(raw.insights)?raw.insights:[],tags:Array.isArray(raw.tags)?raw.tags:defaultTags}}
@@ -1137,9 +1162,9 @@ if (state.questionExamId == null && state.inputExamId != null) state.questionExa
 if (state.questionNo == null && state.inputQno != null) state.questionNo = Number(state.inputQno) || null;
 
 function q29Num(item){const m=String(item.qno||'').match(/\d+/);return m?Number(m[0]):null}
-function q29Exams(){const key=normalizeSubject(state.subject);return sortedExams((state.exams||[]).filter(e=>normalizeSubject(e.subject)===key))}
+function q29Exams(){migrateLegacySubjects();const key=normalizeSubject(state.subject)||'math';return sortedExams((state.exams||[]).filter(e=>(normalizeSubject(e.subject)||'math')===key))}
 function q29Exam(){return q29Exams().find(e=>sameId(e.id,state.questionExamId))||null}
-function q29Items(examId){const key=normalizeSubject(state.subject);return (state.items||[]).filter(i=>normalizeSubject(i.subject)===key&&sameId(i.examId,examId)&&i.status==='틀림')}
+function q29Items(examId){const key=normalizeSubject(state.subject)||'math';return (state.items||[]).filter(i=>(normalizeSubject(i.subject)||'math')===key&&sameId(i.examId,examId)&&i.status==='틀림')}
 function q29Expected(exam){if(state.subject!=='math'||!Number.isFinite(+exam.score))return null;return Math.max(0,Math.min(25,Math.round((100-(+exam.score))/4)))}
 function q29Persist(){localStorage.setItem(KEY,JSON.stringify(state))}
 function q29UnitsFor(course){return Object.keys((syllabusBySubject[state.subject]||{})[course]||{})}
