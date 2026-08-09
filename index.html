@@ -135,17 +135,21 @@
     .questionEditor{border:1px solid #e3e9f5;border-radius:18px;padding:12px 14px;background:#fff;margin-top:5px;scroll-margin-top:12px;box-shadow:0 8px 22px rgba(31,50,91,.06)}.questionEditorHead{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:6px}.questionEditorHead small{color:#8490a8;font-weight:900}.questionEditorHead h3{margin:2px 0 0;font-size:19px}.questionEditorActions{position:sticky;bottom:0;background:linear-gradient(180deg,rgba(255,255,255,.78),#fff 38%);padding-top:10px;padding-bottom:2px;z-index:3}.inputQuestionWorkspace .choiceBtn{min-height:40px}.inputQuestionWorkspace textarea{min-height:68px}
     @media(max-width:900px){.inputParallelGrid{grid-template-columns:1fr;min-height:0}.inputExamCreateCard,.inputQuestionWorkspace{min-height:0;max-height:none}.inputExamCreateCard .formGrid,.inputWorkspaceScroll{overflow:visible}.inputExamTabs{max-width:100%}.questionGrid{grid-template-columns:repeat(5,minmax(0,1fr));width:82%;max-width:365px}.inputProgressWrap{grid-template-columns:1fr}}
 
+/* 2.7: 시험 입력 / 문항 입력 완전 분리 */
+.examInputStandalone{max-width:920px;margin:0 auto}.examInputStandalone .inputExamFields{grid-template-columns:1fr 1fr}.examInputStandalone .field.full{grid-column:1/-1}.questionInputStandalone{min-height:calc(100vh - 170px);display:flex;flex-direction:column}.questionInputStandalone .inputWorkspaceBody{display:flex;flex-direction:column;min-height:0;flex:1}.questionInputStandalone .inputWorkspaceScroll{overflow-y:auto;min-height:0;padding-right:4px}.questionInputStandalone .inputExamTabs{max-width:100%;padding-bottom:4px}.questionInputStandalone .questionGrid{width:100%;max-width:720px;grid-template-columns:repeat(5,minmax(54px,1fr));gap:7px;margin:8px auto 10px}.questionInputStandalone .questionBtn{height:38px}.questionInputStandalone .questionEditor{max-width:920px;width:100%;margin:10px auto 0}.questionInputStandalone textarea{min-height:120px}.questionInputStandalone .inputProgressWrap{max-width:920px;width:100%;margin-left:auto;margin-right:auto}.questionInputStandalone .inputWorkspaceHead{max-width:920px;width:100%;margin-left:auto;margin-right:auto}.questionInputStandalone .questionLegend{max-width:720px;width:100%;margin-left:auto;margin-right:auto}.questionEntryGrid{grid-template-columns:1fr 1fr}.questionEntryGrid .field.full{grid-column:1/-1}@media(max-width:900px){.examInputStandalone .inputExamFields,.questionEntryGrid{grid-template-columns:1fr}.questionInputStandalone{min-height:0}.questionInputStandalone .inputWorkspaceScroll{overflow:visible}.questionInputStandalone .questionGrid{max-width:440px;grid-template-columns:repeat(5,minmax(0,1fr))}}
+
 </style>
 <link rel="apple-touch-icon" href="./apple-touch-icon.png?v=4010">
 </head>
 <body>
 <div class="app"><div class="shell">
  <aside class="sidebar">
- <div class="brand"><div class="logo">📊</div><div><h1>시험 분석</h1><p>2.4 · 시험 기록 · 약점 분석</p></div></div>
+ <div class="brand"><div class="logo">📊</div><div><h1>시험 분석</h1><p>2.7 · 시험 기록 · 약점 분석</p></div></div>
  <div class="navBlock"><p class="navTitle">MAIN</p>
  <button class="navBtn active" data-view="home"><span class="ico">⌂</span>홈</button>
  <button class="navBtn" data-view="exams"><span class="ico">▤</span>시험 관리</button>
- <button class="navBtn" data-view="input"><span class="ico">✎</span>입력</button>
+ <button class="navBtn" data-view="examInput"><span class="ico">✎</span>시험 입력</button>
+ <button class="navBtn" data-view="questionInput"><span class="ico">▦</span>문항 입력</button>
  <button class="navBtn" data-view="review"><span class="ico">↻</span>복습</button>
  
  <button class="navBtn" data-view="scores"><span class="ico">↗</span>점수</button>
@@ -186,29 +190,29 @@
  <div class="examDetailPanel" id="examSidePanel"></div>
  </div>
  </div>
- <div class="view" id="inputView">
- <div class="inputParallelGrid">
-  <div class="card inputExamCreateCard">
-   <div class="cardHead"><div><h3 id="examFormTitle">시험 정보 입력</h3><p class="sub">시험 정보를 저장하면 오른쪽 문항 입력 영역에서 해당 시험을 바로 선택할 수 있습니다.</p></div><span class="versionBadge">2.6</span></div>
-   <form id="examForm"><input type="hidden" id="editingExamId">
-    <div class="formGrid inputExamFields">
-     <div class="field full"><label>시험명</label><input name="name" placeholder="예: BGM 9회" required></div>
-     <div class="field examDateField"><label>시험 날짜</label><input name="date" type="date" required></div>
-     <div class="field"><label>내 점수</label><input name="score" id="scoreDirect" class="selectLike" type="number" min="0" max="100" step="1" placeholder="예: 84" required><small id="mathScoreNote" style="color:#7b8499;font-weight:800">수학은 25문항 · 문항당 4점</small></div>
-     <div class="field"><label>상위 %</label><input name="topPercent" id="topPercentInput" type="number" min="0" max="100" step="0.1" placeholder="예: 12.5"></div>
-     <div class="field examLimitField"><label>제한시간</label><div class="picker" id="limitPicker"><div class="limitDial"><div class="limitDialTop"><div><div class="dialValue" id="limitDialValue">60분</div><div class="dialSub">0~240분 · 5분 단위</div></div><div class="dialFace" style="--dial:25"></div></div><input class="dialRange" id="limitDialInput" type="range" min="0" max="240" step="5" value="60" aria-label="제한시간"></div></div></div>
-     <div style="display:none"><div id="rangePicker"></div><select name="count" id="countSelect"></select><input name="total" id="totalInput" value="100"><input name="rank" id="rankInput"><input name="participants" id="participantsInput"></div>
-    </div>
-    <div class="formActions"><button class="blueBtn" id="examSubmitBtn">시험 저장</button><button class="softBtn" type="button" id="cancelExamEditBtn" style="display:none">수정 취소</button></div>
-   </form>
-  </div>
-
-  <div class="card inputQuestionWorkspace">
-   <div class="cardHead"><div><h3>문항 입력</h3><p class="sub">시험 선택 → 틀린 문항 번호 → 단원·메모 순서로 입력합니다.</p></div><span class="badge" id="inputExamCount">0회</span></div>
+ <div class="view" id="examInputView">
+ <div class="card examInputStandalone">
+  <div class="cardHead"><div><h3 id="examFormTitle">시험 정보 입력</h3><p class="sub">시험 기본 정보를 저장합니다. 저장한 시험은 문항 입력 탭에서 바로 선택할 수 있습니다.</p></div><span class="versionBadge">2.7</span></div>
+  <form id="examForm"><input type="hidden" id="editingExamId">
+   <div class="formGrid inputExamFields">
+    <div class="field full"><label>시험명</label><input name="name" placeholder="예: BGM 9회" required></div>
+    <div class="field examDateField"><label>시험 날짜</label><input name="date" type="date" required></div>
+    <div class="field"><label>내 점수</label><input name="score" id="scoreDirect" class="selectLike" type="number" min="0" max="100" step="1" placeholder="예: 84" required><small id="mathScoreNote" style="color:#7b8499;font-weight:800">수학은 25문항 · 문항당 4점</small></div>
+    <div class="field"><label>상위 %</label><input name="topPercent" id="topPercentInput" type="number" min="0" max="100" step="0.1" placeholder="예: 12.5"></div>
+    <div class="field examLimitField"><label>제한시간</label><div class="picker" id="limitPicker"><div class="limitDial"><div class="limitDialTop"><div><div class="dialValue" id="limitDialValue">60분</div><div class="dialSub">0~240분 · 5분 단위</div></div><div class="dialFace" style="--dial:25"></div></div><input class="dialRange" id="limitDialInput" type="range" min="0" max="240" step="5" value="60" aria-label="제한시간"></div></div></div>
+    <div style="display:none"><div id="rangePicker"></div><select name="count" id="countSelect"></select><input name="total" id="totalInput" value="100"><input name="rank" id="rankInput"><input name="participants" id="participantsInput"></div>
+   </div>
+   <div class="formActions"><button class="blueBtn" id="examSubmitBtn">시험 저장</button><button class="softBtn" type="button" id="cancelExamEditBtn" style="display:none">수정 취소</button><button class="softBtn" type="button" data-view="questionInput">문항 입력으로 이동</button></div>
+  </form>
+ </div>
+ </div>
+ <div class="view" id="questionInputView">
+  <div class="card questionInputStandalone">
+   <div class="cardHead"><div><h3>문항 입력</h3><p class="sub">시험 선택 → 틀린 문항 번호 → 단원·메모 순서로 기록합니다.</p></div><span class="badge" id="inputExamCount">0회</span></div>
    <div id="inputWorkspaceEmpty" class="inputWorkspaceEmpty">시험을 먼저 저장하세요.</div>
    <div id="inputWorkspaceBody" class="inputWorkspaceBody" style="display:none">
     <div class="inputExamTabSection">
-     <div class="inputExamTabHead"><b>시험 선택</b><small>좌우로 스크롤</small></div>
+     <div class="inputExamTabHead"><b>시험 선택</b><small>시험이 많아지면 좌우로 스크롤</small></div>
      <div class="inputExamTabs" id="inputExamList"></div>
     </div>
     <div class="inputWorkspaceScroll">
@@ -226,7 +230,7 @@
       <div class="questionEditorHead"><div><small>선택 문항</small><h3><span id="selectedQuestionNo">-</span>번 문항</h3></div><span class="badge red">오답 기록</span></div>
       <div id="questionEditorEmpty" class="emptyNote">위에서 틀린 문항 번호를 탭하세요.</div>
       <div id="questionEditorFields" style="display:none">
-       <div class="formGrid">
+       <div class="formGrid questionEntryGrid">
         <div class="field"><label>과목명</label><input type="hidden" name="course" id="itemCourse"><button type="button" class="choiceBtn placeholder" id="courseChoice" data-open-selector="course">과목 선택</button></div>
         <div class="field"><label>단원명</label><input type="hidden" name="unit" id="itemUnit"><button type="button" class="choiceBtn placeholder" id="unitChoice" data-open-selector="unit">단원 선택</button></div>
         <div class="field full"><label>메모</label><textarea name="memo" id="itemMemo" placeholder="막힌 지점, 실수 원인, 다음에 볼 신호 등"></textarea></div>
@@ -237,7 +241,6 @@
     </div>
    </div>
   </div>
- </div>
  </div>
  <div class="view" id="reviewView">
  <div class="reviewHeroGrid">
@@ -1115,7 +1118,7 @@ function renderReview(){renderReviewDashboard(current().items)}
 function renderScores(){const exams=sortedExams(current().exams);document.getElementById('scoreTrendBadge').textContent=exams.length+'회';const chronological=exams.slice().reverse(),vals=chronological.map(e=>+e.score).filter(Number.isFinite);const avg=vals.length?vals.reduce((a,b)=>a+b,0)/vals.length:null,best=vals.length?Math.max(...vals):null,latest=vals.length?vals[vals.length-1]:null;document.getElementById('scoreSummary').innerHTML=`<div class="scoreSummaryItem"><small>최근 점수</small><b>${latest??'-'}</b></div><div class="scoreSummaryItem"><small>평균</small><b>${avg!==null?avg.toFixed(1):'-'}</b></div><div class="scoreSummaryItem"><small>최고점</small><b>${best??'-'}</b></div>`;document.getElementById('scoreTrendGraph').innerHTML=vals.length?sparkSvg(vals,'#3f73ff'):empty('점수 기록이 없습니다.');document.getElementById('scoreTrendList').innerHTML=exams.length?exams.map(e=>{const tp=topPercent(e),wrong=examItems(e.id).filter(i=>i.status==='틀림').length;return `<div class="row"><div><b>${e.name}</b><small>${dateLabel(e.date)} · 틀린 문항 ${wrong}개</small></div><div style="text-align:right"><b>${Number.isFinite(+e.score)?+e.score:'-'} / 100</b><small>${tp!==null?'상위 '+tp+'%':'상위 % 미입력'}</small></div></div>`}).join(''):empty('점수 기록이 없습니다.')}
 function renderExamDetail(){const exam=getDetailExam();if(!exam)return;state.detailExamId=exam.id;const items=examItems(exam.id),wrongItems=items.filter(i=>i.status==='틀림');document.getElementById('detailExamTitle').textContent=exam.name;document.getElementById('detailExamSub').textContent=`${dateLabel(exam.date)} · 제한 ${exam.limit||'-'}`;document.getElementById('detailScore').textContent=`${Number.isFinite(+exam.score)?+exam.score:'-'} / 100`;document.getElementById('detailTop').textContent=topPercent(exam)!==null?`상위 ${topPercent(exam)}%`:'-';document.getElementById('detailWrongCount').textContent=wrongItems.length+'개';document.getElementById('detailRange').innerHTML=`<span class="rangePill">${dateLabel(exam.date)}</span>`;document.getElementById('detailScoreHint').innerHTML='';document.getElementById('detailTopHint').innerHTML='';document.getElementById('detailWrongHint').innerHTML='';document.getElementById('detailRangeHint').innerHTML='';renderBars('detailUnitBars',rankBy(wrongItems,unitKey,10),wrongItems.length||1);renderBars('detailCauseBars',rankBy(wrongItems,i=>i.tags||[],10),wrongItems.length||1);const {exams}=current(),sorted=sortedExams(exams),idx=sorted.findIndex(e=>e.id===exam.id),prev=idx>=0?sorted[idx+1]:null,sel=document.getElementById('compareExamSelect');sel.innerHTML=`<option value="cumulative">누적 데이터</option>${prev?`<option value="previous">직전 회차: ${prev.name}</option>`:''}`+sorted.filter(e=>e.id!==exam.id).map(e=>`<option value="${e.id}">${e.name}</option>`).join('');renderCompare(exam);document.getElementById('detailWrongItems').innerHTML=items.length?items.map(i=>`<div class="wrongCard"><div class="wrongCardTop"><div class="wrongTitle"><div class="wrongIcon">${courseIcon(i.course)}</div><div><h4>${i.qno} · ${i.unit||'단원 미입력'}</h4></div></div><span class="badge ${statusBadgeClass(i.status)}">${i.status}</span></div><div class="wrongMemo">${i.memo||'메모 없음'}</div><div class="wrongMeta">${(i.tags||[]).map(t=>`<span class="tiny">${t}</span>`).join('')}</div></div>`).join(''):'<div class="emptyNote">이 회차에 연결된 문항이 없습니다.</div>'}
 function sidePanelGraphic(){return ''}
-function setView(v){const el=document.getElementById(v+'View');if(!el)v='home';state.view=v;document.querySelectorAll('.view').forEach(x=>x.classList.remove('active'));document.getElementById(v+'View').classList.add('active');document.querySelectorAll('.navBtn').forEach(x=>x.classList.toggle('active',x.dataset.view===v));const titles={home:['홈','점수와 약점을 빠르게 확인합니다.'],exams:['시험','저장된 시험을 수정하거나 삭제합니다.'],input:['입력','시험을 만든 뒤 해당 시험 안에서 오답 문항을 기록합니다.'],review:['복습','최근 4회와 전체 누적 약점을 비교합니다.'],scores:['점수','시험별 점수 변화와 상위 퍼센트를 확인합니다.'],examDetail:['회차 분석','선택한 시험의 단원별 오답을 확인합니다.']};document.getElementById('viewTitle').textContent=(titles[v]||titles.home)[0];document.getElementById('viewSub').textContent=(titles[v]||titles.home)[1];localStorage.setItem(KEY,JSON.stringify(state))}
+function setView(v){if(v==='input')v='examInput';const el=document.getElementById(v+'View');if(!el)v='home';state.view=v;document.querySelectorAll('.view').forEach(x=>x.classList.remove('active'));document.getElementById(v+'View').classList.add('active');document.querySelectorAll('.navBtn').forEach(x=>x.classList.toggle('active',x.dataset.view===v));const titles={home:['홈','점수와 약점을 빠르게 확인합니다.'],exams:['시험','저장된 시험을 수정하거나 삭제합니다.'],examInput:['시험 입력','시험명·날짜·점수·상위 %·제한시간을 기록합니다.'],questionInput:['문항 입력','선택한 시험의 오답 문항과 단원·메모를 기록합니다.'],review:['복습','최근 4회와 전체 누적 약점을 비교합니다.'],scores:['점수','시험별 점수 변화와 상위 퍼센트를 확인합니다.'],examDetail:['회차 분석','선택한 시험의 단원별 오답을 확인합니다.']};document.getElementById('viewTitle').textContent=(titles[v]||titles.home)[0];document.getElementById('viewSub').textContent=(titles[v]||titles.home)[1];localStorage.setItem(KEY,JSON.stringify(state))}
 // 기존 submit listener보다 먼저 캡처 단계에서 새 시험 저장 규칙을 적용
 const examFormEl=document.getElementById('examForm');examFormEl.addEventListener('submit',function(e){e.preventDefault();e.stopImmediatePropagation();const f=Object.fromEntries(new FormData(this));const score=Number(f.score);if(state.subject==='math'&&(score<0||score>100||score%4!==0)){alert('수학 점수는 0~100 사이의 4점 단위로 입력하세요.');return}const data={subject:state.subject,name:String(f.name||'').trim(),date:f.date,range:[],limit:selectedLimit,count:state.subject==='math'?25:(+f.count||25),total:state.subject==='math'?100:(+f.total||100),score,topPercent:f.topPercent===''?null:Number(f.topPercent)};if(!data.name){alert('시험명을 입력하세요.');return}const editId=document.getElementById('editingExamId').value;let savedId=editId;if(editId){const idx=state.exams.findIndex(x=>x.id===editId);if(idx>=0)state.exams[idx]={...state.exams[idx],...data,updated:Date.now()};showToast('시험을 수정했습니다')}else{savedId=id();state.exams.push({id:savedId,created:Date.now(),...data});showToast('시험을 저장했습니다')}state.inputExamId=String(savedId);state.inputQno=null;resetExamForm();save()},true);
 
@@ -1410,7 +1413,7 @@ document.getElementById('deleteItemRecordBtn').addEventListener('click', () => {
 
 selectedLimit = /^\d+분$/.test(String(selectedLimit||'')) ? selectedLimit : '60분';
 fillBaseSelects();
-setView((state.view&&state.view!=='analysis')?state.view:'home');
+setView((state.view&&state.view!=='analysis')?(state.view==='input'?'examInput':state.view):'home');
 render();
 </script>
 </body>
