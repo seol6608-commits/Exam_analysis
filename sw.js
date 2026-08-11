@@ -1,4 +1,4 @@
-const CACHE_NAME = 'exam-analysis-v3.24-static';
+const CACHE_NAME = 'exam-analysis-v3.25-static';
 const APP_SHELL = [
   './',
   './index.html',
@@ -11,7 +11,8 @@ const APP_SHELL = [
   './brand-logo-sage.png',
   './brand-logo-plum.png',
   './brand-logo-terracotta.png',
-  './brand-logo-graphite.png'
+  './brand-logo-midnight.png',
+  './brand-logo-teal.png'
 ];
 
 self.addEventListener('install', event => {

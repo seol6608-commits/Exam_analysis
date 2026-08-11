@@ -120,7 +120,7 @@
   .pWeakGrid{gap:14.84px}
 }
 
-/* V.3.24 — theme layer + very small proportional enlargement. Core app behavior is untouched. */
+/* V.3.25 — theme layer + very small proportional enlargement. Core app behavior is untouched. */
 :root{
   --app-bg-1:#f4f1e7;--app-bg-2:#ecefe8;--surface-1:#fcfaf4;--surface-2:#f5f3eb;
   --nav:#6f7d6b;--nav2:#596657;--accent:#b4934d;--accent2:#9d7d3d;
@@ -148,11 +148,12 @@ html,body{background:linear-gradient(145deg,var(--app-bg-1),var(--app-bg-2));}
 .themePanel{padding:13px 14px;border-radius:17px;margin-top:auto;margin-bottom:-9px}
 .sideCard{margin-top:0}
 .themeHead{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px}.themeHead b{font-size:12px}.themeHead span{font-size:10px;font-weight:900;color:var(--theme-muted)}
-.themeChoices{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.themeDot{height:31px;border-radius:10px;border:2px solid rgba(255,255,255,.22);box-shadow:inset 0 0 0 1px rgba(0,0,0,.05)}.themeDot.active{outline:2px solid rgba(255,255,255,.92);outline-offset:2px}.themeDot.sage{background:linear-gradient(135deg,#7c8976 0 58%,#c5a45c 58%)}.themeDot.plum{background:linear-gradient(135deg,#705d73 0 58%,#bf769e 58%)}.themeDot.terracotta{background:linear-gradient(135deg,#9b6049 0 58%,#d09a6c 58%)}.themeDot.graphite{background:linear-gradient(135deg,#55514d 0 58%,#a9855c 58%)}
+.themeChoices{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.themeDot{height:31px;border-radius:10px;border:2px solid rgba(255,255,255,.22);box-shadow:inset 0 0 0 1px rgba(0,0,0,.05)}.themeDot.active{outline:2px solid rgba(255,255,255,.92);outline-offset:2px}.themeDot.sage{background:linear-gradient(135deg,#7c8976 0 58%,#c5a45c 58%)}.themeDot.plum{background:linear-gradient(135deg,#705d73 0 58%,#bf769e 58%)}.themeDot.terracotta{background:linear-gradient(135deg,#9b6049 0 58%,#d09a6c 58%)}.themeDot.midnight{background:linear-gradient(135deg,#0d1b2a 0 52%,#3a6ea5 52%)}.themeDot.teal{background:linear-gradient(135deg,#0d4d4f 0 52%,#1fa7a9 52%)}
 html[data-theme="sage"]{--app-bg-1:#f4f1e7;--app-bg-2:#ecefe8;--surface-1:#fcfaf4;--surface-2:#f5f3eb;--nav:#6f7d6b;--nav2:#596657;--accent:#b4934d;--accent2:#92743a;--soft-accent:#f2ead8;--soft-accent-2:#e8dec7;--theme-text:#fffdf7;--theme-muted:#e8eadf}
 html[data-theme="plum"]{--app-bg-1:#f4eef5;--app-bg-2:#ece7ef;--surface-1:#fdf9fd;--surface-2:#f5eff6;--nav:#705e73;--nav2:#58495c;--accent:#a67b9f;--accent2:#855d7f;--soft-accent:#eee2ef;--soft-accent-2:#e4d4e6;--theme-text:#fffaff;--theme-muted:#eadfec}
 html[data-theme="terracotta"]{--app-bg-1:#f8f0e9;--app-bg-2:#f0e5dc;--surface-1:#fffaf5;--surface-2:#f8eee6;--nav:#9a6049;--nav2:#7d4938;--accent:#c8795c;--accent2:#a55f47;--soft-accent:#f4dfd3;--soft-accent-2:#ebcdbd;--theme-text:#fffaf4;--theme-muted:#f2dfd5}
-html[data-theme="graphite"]{--app-bg-1:#f3f0eb;--app-bg-2:#e9e6e0;--surface-1:#fbf9f5;--surface-2:#f2efea;--nav:#56524e;--nav2:#413e3a;--accent:#aa875d;--accent2:#876945;--soft-accent:#ece3d7;--soft-accent-2:#dfd2c2;--theme-text:#fffdf8;--theme-muted:#e8e1d8}
+html[data-theme="midnight"]{--app-bg-1:#f2f5f9;--app-bg-2:#e8eef5;--surface-1:#ffffff;--surface-2:#f6f9fc;--nav:#0d1b2a;--nav2:#13283d;--accent:#3a6ea5;--accent2:#285882;--soft-accent:#e3edf7;--soft-accent-2:#cbd9e8;--theme-text:#f8fbff;--theme-muted:#b8c7d8}
+html[data-theme="teal"]{--app-bg-1:#f3fafb;--app-bg-2:#e6f4f5;--surface-1:#ffffff;--surface-2:#f4fbfb;--nav:#0d4d4f;--nav2:#136e72;--accent:#1fa7a9;--accent2:#137d80;--soft-accent:#d9f1f2;--soft-accent-2:#bce3e4;--theme-text:#f7ffff;--theme-muted:#bfe2e3}
 /* iPad Air 13 landscape target: only ~2% above V.3.22, with all card geometry/controls enlarged proportionally. */
 @media (min-width:1100px){
   .shell{width:min(1275px,100%);height:min(843.5px,calc(100vh - 36px))}
@@ -165,7 +166,7 @@ html[data-theme="graphite"]{--app-bg-1:#f3f0eb;--app-bg-2:#e9e6e0;--surface-1:#f
 }
 
 
-/* V.3.24 — complete theme pass. No data or feature logic changed. */
+/* V.3.25 — complete theme pass. No data or feature logic changed. */
 :root{
   --theme-track:color-mix(in srgb,var(--soft-accent-2) 72%,white);
   --theme-row:color-mix(in srgb,var(--surface-2) 76%,white);
@@ -213,14 +214,30 @@ html[data-theme="graphite"]{--app-bg-1:#f3f0eb;--app-bg-2:#e9e6e0;--surface-1:#f
 .themeDot.sage{background:linear-gradient(135deg,#7c8976 0 52%,#c5a45c 52%)}
 .themeDot.plum{background:linear-gradient(135deg,#705d73 0 52%,#bf769e 52%)}
 .themeDot.terracotta{background:linear-gradient(135deg,#9b6049 0 52%,#d09a6c 52%)}
-.themeDot.graphite{background:linear-gradient(135deg,#55514d 0 52%,#a9855c 52%)}
+.themeDot.midnight{background:linear-gradient(135deg,#0d1b2a 0 52%,#3a6ea5 52%)}.themeDot.teal{background:linear-gradient(135deg,#0d4d4f 0 52%,#1fa7a9 52%)}
 
+
+/* V.3.25 — 5-theme palette + final legacy-blue cleanup. Feature/data logic unchanged. */
+.examTab strong{color:var(--ink)}
+.examTab.active strong{color:var(--accent2)}
+.examTab.active span{color:color-mix(in srgb,var(--nav) 72%,#666)}
+.homeRecentRow b,.scoreSnapName,.examCardTop b{color:var(--ink)}
+.homeRecentRow:has(.homeRecentScore) .homeRecentScore{color:var(--accent2)}
+.subjectTabs{background:var(--soft-accent)}
+.scoreFill,.pProgressFill{background:linear-gradient(90deg,var(--accent2),var(--accent))}
+.scoreSnapRank.top3{background:var(--soft-accent);color:var(--accent2)}
+.scoreSnapItem.isTop1:before{background:var(--accent2)}
+.pSectionIcon{background:var(--soft-accent);color:var(--accent2);border-color:var(--soft-accent-2)}
+.pRecReason,.pMasteryTag,.pChip{background:var(--soft-accent);color:var(--accent2)}
+.pProgressTrack,.pChapterWeakTrack,.scoreTrack,.unitBarTrack,.bar{background:var(--theme-track)}
+.trendScroller::-webkit-scrollbar-thumb,.pItemList.scrollable::-webkit-scrollbar-thumb,.pLogList.scrollable::-webkit-scrollbar-thumb{background:var(--theme-scroll)}
+.themeChoices{gap:9px}
 </style>
 </head>
 <body>
 <div class="app"><div class="shell">
 <aside class="sidebar">
-<div class="brand"><div class="logo" aria-hidden="true"><img id="brandLogo" src="brand-logo-sage.png" alt=""></div><div><h1>시험 분석</h1><p>V.3.24</p></div></div>
+<div class="brand"><div class="logo" aria-hidden="true"><img id="brandLogo" src="brand-logo-sage.png" alt=""></div><div><h1>시험 분석</h1><p>V.3.25</p></div></div>
 <div class="nav" id="mathNav">
 <button class="navBtn active" data-view="home">⌂ 홈</button>
 <button class="navBtn" data-view="exams">▤ 시험 관리</button>
@@ -240,7 +257,8 @@ html[data-theme="graphite"]{--app-bg-1:#f3f0eb;--app-bg-2:#e9e6e0;--surface-1:#f
 <button class="themeDot sage active" type="button" data-theme="sage" aria-label="Sage 테마" title="Sage"></button>
 <button class="themeDot plum" type="button" data-theme="plum" aria-label="Plum 테마" title="Plum"></button>
 <button class="themeDot terracotta" type="button" data-theme="terracotta" aria-label="Terracotta 테마" title="Terracotta"></button>
-<button class="themeDot graphite" type="button" data-theme="graphite" aria-label="Graphite 테마" title="Graphite"></button>
+<button class="themeDot midnight" type="button" data-theme="midnight" aria-label="Midnight 테마" title="Midnight"></button>
+<button class="themeDot teal" type="button" data-theme="teal" aria-label="Teal 테마" title="Teal"></button>
 </div></div>
 <div class="sideCard"><b>데이터 관리</b><p>3.x 데이터만 백업/복원합니다.</p><div class="sideRow"><button id="exportBtn" class="miniBtn">백업</button><button id="importBtn" class="miniBtn">복원</button><input id="importFile" type="file" accept="application/json" hidden></div></div>
 </aside>
@@ -299,7 +317,8 @@ const THEMES={
  sage:{label:'Sage',logo:'brand-logo-sage.png',meta:'#6f7d6b'},
  plum:{label:'Plum',logo:'brand-logo-plum.png',meta:'#705e73'},
  terracotta:{label:'Terracotta',logo:'brand-logo-terracotta.png',meta:'#9a6049'},
- graphite:{label:'Graphite',logo:'brand-logo-graphite.png',meta:'#56524e'}
+ midnight:{label:'Midnight',logo:'brand-logo-midnight.png',meta:'#0d1b2a'},
+ teal:{label:'Teal',logo:'brand-logo-teal.png',meta:'#0d4d4f'}
 };
 function applyTheme(name,persist=true){
  const key=THEMES[name]?name:'sage',t=THEMES[key];
