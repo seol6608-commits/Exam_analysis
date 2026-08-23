@@ -120,7 +120,7 @@
   .pWeakGrid{gap:14.84px}
 }
 
-/* V.3.28 — preserves the V.3.25 theme/scale layer; physics home is simplified around remaining study progress. */
+/* V.3.29 — preserves the V.3.25 theme/scale layer; physics home is simplified around remaining study progress. */
 :root{
   --app-bg-1:#f4f1e7;--app-bg-2:#ecefe8;--surface-1:#fcfaf4;--surface-2:#f5f3eb;
   --nav:#6f7d6b;--nav2:#596657;--accent:#b4934d;--accent2:#9d7d3d;
@@ -166,7 +166,7 @@ html[data-theme="teal"]{--app-bg-1:#f3fafb;--app-bg-2:#e6f4f5;--surface-1:#fffff
 }
 
 
-/* V.3.28 — theme pass retained from V.3.25. */
+/* V.3.29 — theme pass retained from V.3.25. */
 :root{
   --theme-track:color-mix(in srgb,var(--soft-accent-2) 72%,white);
   --theme-row:color-mix(in srgb,var(--surface-2) 76%,white);
@@ -217,7 +217,7 @@ html[data-theme="teal"]{--app-bg-1:#f3fafb;--app-bg-2:#e6f4f5;--surface-1:#fffff
 .themeDot.midnight{background:linear-gradient(135deg,#0d1b2a 0 52%,#3a6ea5 52%)}.themeDot.teal{background:linear-gradient(135deg,#0d4d4f 0 52%,#1fa7a9 52%)}
 
 
-/* V.3.28 — 5-theme palette retained; physics progress UI revised only. */
+/* V.3.29 — 5-theme palette retained; physics progress UI revised only. */
 .examTab strong{color:var(--ink)}
 .examTab.active strong{color:var(--accent2)}
 .examTab.active span{color:color-mix(in srgb,var(--nav) 72%,#666)}
@@ -233,8 +233,8 @@ html[data-theme="teal"]{--app-bg-1:#f3fafb;--app-bg-2:#e6f4f5;--surface-1:#fffff
 .trendScroller::-webkit-scrollbar-thumb,.pItemList.scrollable::-webkit-scrollbar-thumb,.pLogList.scrollable::-webkit-scrollbar-thumb{background:var(--theme-scroll)}
 .themeChoices{gap:9px}
 
-/* V.3.28 — physics home: chapter progress + complete remaining-unit inventory */
-/* V.3.28 — keep both physics-home inventories compact and independently scrollable. */
+/* V.3.29 — physics home: chapter progress + complete remaining-unit inventory */
+/* V.3.29 — keep both physics-home inventories compact and independently scrollable. */
 .pHomeGrid>.pCard{display:flex;flex-direction:column;height:clamp(360px,48vh,430px);min-height:0}
 .pChapterProgressList,.pRemainingList{display:flex;flex:1;min-height:0;flex-direction:column;gap:8px;margin-top:11px;overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;padding-right:4px;scrollbar-width:thin;scrollbar-color:var(--theme-scroll) transparent}
 .pChapterProgressList::-webkit-scrollbar,.pRemainingList::-webkit-scrollbar{width:7px}
@@ -247,14 +247,14 @@ html[data-theme="teal"]{--app-bg-1:#f3fafb;--app-bg-2:#e6f4f5;--surface-1:#fffff
 .pChapterProgressRow .pProgressTrack{height:7px;margin-top:7px}
 .pRemainingItem{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:center;padding:10px 11px;border:1px solid var(--line);border-radius:13px;background:var(--soft-accent)}
 .pRemainingItem b{display:block;font-size:12px}.pRemainingItem span{display:block;margin-top:2px;color:var(--muted);font-size:9px;font-weight:800}
-.pWeakTag{display:inline-flex;align-items:center;height:23px;padding:0 8px;border-radius:999px;background:#fff0f2;color:var(--red);font-size:9px;font-weight:950;white-space:nowrap}
+.pRemainingWeak{display:inline-flex;align-items:center;justify-content:center;height:29px;padding:0 8px;border-radius:9px;background:#fff0f2;color:#d94b5e;font-size:10px;font-weight:950;white-space:nowrap}
 @media(max-width:900px){.pHomeGrid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
 <div class="app"><div class="shell">
 <aside class="sidebar">
-<div class="brand"><div class="logo" aria-hidden="true"><img id="brandLogo" src="brand-logo-sage.png" alt=""></div><div><h1>시험 분석</h1><p>V.3.28</p></div></div>
+<div class="brand"><div class="logo" aria-hidden="true"><img id="brandLogo" src="brand-logo-sage.png" alt=""></div><div><h1>시험 분석</h1><p>V.3.29</p></div></div>
 <div class="nav" id="mathNav">
 <button class="navBtn active" data-view="home">⌂ 홈</button>
 <button class="navBtn" data-view="exams">▤ 시험 관리</button>
@@ -418,7 +418,7 @@ function renderPhysicsHome(){
  }).sort((a,b)=>a.c.ch-b.c.ch);
  pChapterProgress.innerHTML=chapterRows.map(x=>`<div class="pChapterProgressRow"><div class="pChapterProgressTop"><b>Ch.${x.c.ch} ${esc(x.c.title)}</b><span>${x.done} / ${x.total} 완성</span></div><div class="pChapterProgressMeta"><span>${x.remaining}개 남음</span><span>${x.pct}%</span></div><div class="pProgressTrack"><div class="pProgressFill" style="width:${x.pct}%"></div></div></div>`).join('');
  const remainingUnits=physicsUnits.filter(u=>!pState(u.id).complete).sort((a,b)=>a.id-b.id);
- pRemainingUnits.innerHTML=remainingUnits.length?remainingUnits.map(u=>{const x=pState(u.id);return `<div class="pRemainingItem"><div><b>${u.id}. ${esc(u.name)}</b><span>Ch.${u.ch} ${esc(u.chapter)}</span></div>${x.weakActive?'<span class="pWeakTag">취약</span>':''}</div>`}).join(''):'<div class="empty" style="padding:18px">모든 소단원을 완성했습니다.</div>';
+ pRemainingUnits.innerHTML=remainingUnits.length?remainingUnits.map(u=>{const x=pState(u.id);return `<div class="pRemainingItem"><div><b>${u.id}. ${esc(u.name)}</b><span>Ch.${u.ch} ${esc(u.chapter)}</span></div>${x.weakActive?'<span class="pRemainingWeak">취약</span>':''}</div>`}).join(''):'<div class="empty" style="padding:18px">모든 소단원을 완성했습니다.</div>';
 }
 function renderPhysicsChecklist(){const filter=state.physicsChecklistFilter||'all';document.querySelectorAll('[data-p-filter]').forEach(b=>b.classList.toggle('active',b.dataset.pFilter===filter));pChecklist.innerHTML=physicsChapters.map(c=>{const shown=c.units.filter(([id])=>{const x=pState(id);return filter==='all'||(filter==='remaining'&&!x.complete)||(filter==='complete'&&x.complete)||(filter==='weak'&&x.weakActive);});if(!shown.length)return '';const done=c.units.filter(([id])=>pState(id).complete).length;const rows=shown.map(([id,name])=>{const x=pState(id);return `<div class="pUnitRow ${x.complete?'complete':''}"><div class="pUnitName">${id}. ${esc(name)}<small>${x.weakActive?'현재 취약':''}</small></div><button class="pUnitBtn ${x.weakActive?'weak':''}" data-p-toggle-weak="${id}">취약</button><button class="pUnitBtn ${x.complete?'complete':''}" data-p-toggle-complete="${id}">완성</button></div>`}).join('');return `<section class="pChapter"><div class="pChapterHead"><b>Ch. ${c.ch} ${esc(c.title)}</b><span>${done}/${c.units.length} 완성</span></div><div class="pChapterBody">${rows}</div></section>`;}).join('')||'<div class="empty">해당 조건의 소단원이 없습니다.</div>';}
 function pUnitOptions(){return physicsUnits.map(u=>`<option value="${u.id}">${u.id}. ${esc(u.name)}</option>`).join('');}
