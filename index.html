@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#71836f" />
 <link rel="manifest" href="manifest.webmanifest" />
 <link rel="apple-touch-icon" href="apple-touch-icon.png" />
-<title>시험 분석 3.23</title>
+<title>시험 분석 3.31</title>
 <style>
 :root{--bg:#edf2ff;--panel:#fff;--ink:#182236;--muted:#7c879e;--line:#e3e9f5;--nav:#101827;--nav2:#182236;--blue:#4774ff;--blue2:#5d6ee8;--red:#eb5e70;--green:#27a77b;--shadow:0 16px 40px rgba(35,54,105,.12)}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html,body{margin:0;height:100%;font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR",sans-serif;color:var(--ink);background:#f4f1e7;overflow:hidden}button,input,select,textarea{font:inherit}button{border:0;cursor:pointer}.app{height:100vh;padding:18px;display:flex;justify-content:center;align-items:center}.shell{width:min(1180px,100%);height:min(780px,calc(100vh - 36px));display:grid;grid-template-columns:250px 1fr;background:rgba(255,255,255,.64);backdrop-filter:blur(2px);border-radius:32px;overflow:hidden;box-shadow:0 28px 80px rgba(35,54,105,.18)}
@@ -235,6 +235,7 @@ html[data-theme="teal"]{--app-bg-1:#f3fafb;--app-bg-2:#e6f4f5;--surface-1:#fffff
 
 /* V.3.30 — physics home: chapter progress + complete remaining-unit inventory */
 /* V.3.30 — keep both physics-home inventories compact and independently scrollable. */
+/* V.3.31 — physics exam analytics reuses the math trend chart while reading only physicsExamLogs. */
 .pHomeGrid>.pCard{display:flex;flex-direction:column;height:clamp(360px,48vh,430px);min-height:0}
 .pChapterProgressList,.pRemainingList{display:flex;flex:1;min-height:0;flex-direction:column;gap:8px;margin-top:11px;overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;padding-right:4px;scrollbar-width:thin;scrollbar-color:var(--theme-scroll) transparent}
 .pChapterProgressList::-webkit-scrollbar,.pRemainingList::-webkit-scrollbar{width:7px}
@@ -254,7 +255,7 @@ html[data-theme="teal"]{--app-bg-1:#f3fafb;--app-bg-2:#e6f4f5;--surface-1:#fffff
 <body>
 <div class="app"><div class="shell">
 <aside class="sidebar">
-<div class="brand"><div class="logo" aria-hidden="true"><img id="brandLogo" src="brand-logo-sage.png" alt=""></div><div><h1>시험 분석</h1><p>V.3.30</p></div></div>
+<div class="brand"><div class="logo" aria-hidden="true"><img id="brandLogo" src="brand-logo-sage.png" alt=""></div><div><h1>시험 분석</h1><p>V.3.31</p></div></div>
 <div class="nav" id="mathNav">
 <button class="navBtn active" data-view="home">⌂ 홈</button>
 <button class="navBtn" data-view="exams">▤ 시험 관리</button>
@@ -313,11 +314,13 @@ html[data-theme="teal"]{--app-bg-1:#f3fafb;--app-bg-2:#e6f4f5;--surface-1:#fffff
     <section class="card"><h3 style="margin-top:0">시험 분석 입력</h3><form id="pExamForm"><div class="pFormGrid"><div class="field"><label>날짜</label><input id="pExamDate" type="date" required></div><div class="field"><label>점수</label><input id="pExamScore" type="number" min="0" max="100" step="0.1" required></div><div class="field full"><label>틀린 유형 추가</label><div class="pWrongBuilder"><select id="pExamWrongUnit" aria-label="틀린 소단원 선택"></select><button class="softBtn" id="pAddWrongBtn" type="button">추가</button></div><div id="pExamWrongChips" class="pChipRow"></div></div></div><div class="smallNote" id="pExamMatchPreview">현재 취약 항목과의 일치는 저장 시 자동 계산됩니다.</div><div class="actions"><button class="blueBtn" type="submit">시험 저장</button></div></form></section>
     <section class="card"><h3 style="margin-top:0">시험 기록</h3><div id="pExamList" class="pLogList scrollable"></div></section>
   </div>
+  <div class="grid2 pExamAnalytics" style="margin-top:14px">
+    <section class="dashboardCard"><div class="chartHead"><h3>시험별 점수 추이</h3><span>전체 기록 · 최신 4회 표시</span></div><div id="pExamTrend" class="chartBox"></div></section>
+    <section class="card"><div class="chartHead"><h3>반복 오답 TOP 5</h3><span>전체 시험 누적</span></div><div id="pExamTop5"></div></section>
+  </div>
 </div>
 <div class="view" id="pWeaknessView">
   <div class="pWeakGrid">
-    <section class="card"><h3 style="margin-top:0">현재 취약 소단원</h3><div id="pWeakActive" class="pItemList scrollable"></div></section>
-    <section class="card"><h3 style="margin-top:0">최근 14일 취약</h3><div id="pWeakRecent" class="pItemList scrollable"></div></section>
     <section class="card" style="grid-column:1/-1"><h3 style="margin-top:0">챕터별 현재 약점</h3><div id="pWeakChapters"></div></section>
   </div>
 </div>
@@ -388,7 +391,7 @@ function recordsForExam(examId){return state.records.filter(r=>String(r.examId)=
 function recordFor(examId,qno){return state.records.find(r=>String(r.examId)===String(examId)&&Number(r.qno)===Number(qno))||null;}
 function unitsForSubject(){return state.subject==='math'?mathUnits:(genericUnits[state.subject]||['기타']);}
 function expectedWrong(exam){if(state.subject!=='math'||!Number.isFinite(Number(exam.score)))return null;return Math.max(0,Math.round((100-Number(exam.score))/4));}
-function setView(view){state.view=view;saveState();document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));document.getElementById(view+'View')?.classList.add('active');document.querySelectorAll('.navBtn').forEach(b=>b.classList.toggle('active',b.dataset.view===view));const info={home:['홈','최근 시험과 점수 흐름을 확인합니다.'],exams:['시험 관리','시험 기록을 관리합니다.'],examInput:['시험 입력','시험 기본 정보를 등록합니다.'],questionInput:['문항 입력','틀린 문항을 시험별로 기록합니다.'],review:['복습','단원별 오답 빈도를 확인합니다.'],scores:['점수','시험별 점수와 오답 수를 확인합니다.'],pHome:['홈','98개 소단원의 현재 진행도와 남은 범위를 확인합니다.'],pChecklist:['체크리스트','완벽하게 아는 소단원을 하나씩 지워나갑니다.'],pStudy:['학습 기록','날짜·소단원·완성도·메모만 기록합니다.'],pExam:['시험 분석','점수와 틀린 유형, 기존 약점과의 일치를 확인합니다.'],pWeakness:['약점 분석','현재 및 최근 취약 항목을 확인합니다.']}[view];if(info){viewTitle.textContent=info[0];viewSub.textContent=info[1];}render();}
+function setView(view){state.view=view;saveState();document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));document.getElementById(view+'View')?.classList.add('active');document.querySelectorAll('.navBtn').forEach(b=>b.classList.toggle('active',b.dataset.view===view));const info={home:['홈','최근 시험과 점수 흐름을 확인합니다.'],exams:['시험 관리','시험 기록을 관리합니다.'],examInput:['시험 입력','시험 기본 정보를 등록합니다.'],questionInput:['문항 입력','틀린 문항을 시험별로 기록합니다.'],review:['복습','단원별 오답 빈도를 확인합니다.'],scores:['점수','시험별 점수와 오답 수를 확인합니다.'],pHome:['홈','98개 소단원의 현재 진행도와 남은 범위를 확인합니다.'],pChecklist:['체크리스트','완벽하게 아는 소단원을 하나씩 지워나갑니다.'],pStudy:['학습 기록','날짜·소단원·완성도·메모만 기록합니다.'],pExam:['시험 분석','점수와 틀린 유형, 기존 약점과의 일치를 확인합니다.'],pWeakness:['약점 분석','챕터별 현재 약점을 확인합니다.']}[view];if(info){viewTitle.textContent=info[0];viewSub.textContent=info[1];}render();}
 function syncSubjectUI(){const isPhysics=state.subject==='physics';mathNav.style.display=isPhysics?'none':'flex';physicsNav.style.display=isPhysics?'flex':'none';}
 function setSubject(subject){state.subject=subject;state.selectedExamId=null;state.selectedQuestionNo=null;if(subject==='physics'&&!String(state.view).startsWith('p'))state.view='pHome';if(subject!=='physics'&&String(state.view).startsWith('p'))state.view='home';saveState();document.querySelectorAll('.subjectTab').forEach(b=>b.classList.toggle('active',b.dataset.subject===subject));syncSubjectUI();setView(state.view);}
 function render(){if(state.subject==='physics'){renderPhysics();return;}renderHome();renderExams();renderQuestionInput();renderReview();renderScores();}
@@ -426,8 +429,31 @@ function pExamUnitOptions(){return physicsChapters.map(c=>`<optgroup label="Ch. 
 function renderPhysicsStudy(){if(!pStudyUnit.options.length)pStudyUnit.innerHTML=pUnitOptions();const logs=[...(state.physicsStudyLogs||[])].sort((a,b)=>(b.date||'').localeCompare(a.date||'')||(b.created||0)-(a.created||0));pStudyList.innerHTML=pListOrEmpty(logs,l=>{const u=pUnit(l.unitId),lv=pMasteryLevel(l);return `<div class="pLogRow"><div><b>${u?u.id+'. '+esc(u.name):'소단원 '+l.unitId}</b><div class="pLogMeta">${esc(l.date)} · <span class="pMasteryTag">${lv}단계 ${pMasteryLabel(lv)}</span>${l.memo?' · '+esc(l.memo):''}</div></div><button class="pDelete" data-p-study-delete="${l.id}">삭제</button></div>`},'학습 기록이 없습니다.');}
 let pExamDraftWrong=[];
 function renderPExamChips(){pExamWrongChips.innerHTML=pExamDraftWrong.map(id=>{const u=pUnit(id);return `<span class="pChip">${id}. ${u?esc(u.name):''}<button type="button" data-p-wrong-remove="${id}">×</button></span>`}).join('');const matched=pExamDraftWrong.filter(id=>pState(id).weakActive);pExamMatchPreview.textContent=pExamDraftWrong.length?`현재 취약 약점과 ${matched.length}/${pExamDraftWrong.length}개 일치${matched.length?' · '+matched.map(id=>id+'번').join(', '):''}`:'현재 취약 항목과의 일치는 저장 시 자동 계산됩니다.';}
-function renderPhysicsExam(){if(!pExamWrongUnit.options.length)pExamWrongUnit.innerHTML=pExamUnitOptions();renderPExamChips();const logs=[...(state.physicsExamLogs||[])].sort((a,b)=>(b.date||'').localeCompare(a.date||'')||(b.created||0)-(a.created||0));pExamList.innerHTML=pListOrEmpty(logs,l=>{const names=(l.wrongUnitIds||[]).map(id=>{const u=pUnit(id);return u?`${id}. ${esc(u.name)}`:`${id}번`}).join(', ')||'없음';const match=(l.matchedWeakIds||[]).length;return `<div class="pLogRow"><div><b>${esc(l.date)} · ${l.score}점</b><div class="pLogMeta">틀린 유형 ${names} · 취약과 일치 ${match}/${(l.wrongUnitIds||[]).length}</div></div><button class="pDelete" data-p-exam-delete="${l.id}">삭제</button></div>`},'시험 기록이 없습니다.');}
-function renderPhysicsWeakness(){const active=physicsUnits.filter(u=>pState(u.id).weakActive).sort((a,b)=>Number(pState(b.id).weakMarkedAt||0)-Number(pState(a.id).weakMarkedAt||0));const recent=active.filter(u=>Number(pState(u.id).weakMarkedAt)>=pRecentCutoff());pWeakActive.innerHTML=pListOrEmpty(active,u=>pUnitMini(u,`지정 ${pDate(pState(u.id).weakMarkedAt)}`));pWeakRecent.innerHTML=pListOrEmpty(recent,u=>pUnitMini(u,`최근 지정 ${pDate(pState(u.id).weakMarkedAt)}`));const counts=physicsChapters.map(c=>({c,count:c.units.filter(([id])=>pState(id).weakActive).length})).filter(x=>x.count).sort((a,b)=>b.count-a.count);const max=counts[0]?.count||1;pWeakChapters.innerHTML=counts.length?counts.map(x=>`<div class="pChapterWeakRow"><b>Ch.${x.c.ch} ${esc(x.c.title)}</b><div class="pChapterWeakTrack"><div class="pChapterWeakFill" style="width:${x.count/max*100}%"></div></div><span>${x.count}개</span></div>`).join(''):'<div class="empty" style="padding:18px">현재 취약 챕터가 없습니다.</div>';}
+function renderPhysicsExam(){
+  if(!pExamWrongUnit.options.length)pExamWrongUnit.innerHTML=pExamUnitOptions();
+  renderPExamChips();
+  const newest=[...(state.physicsExamLogs||[])].sort((a,b)=>(b.date||'').localeCompare(a.date||'')||(b.created||0)-(a.created||0));
+  pExamList.innerHTML=pListOrEmpty(newest,l=>{const names=(l.wrongUnitIds||[]).map(id=>{const u=pUnit(id);return u?`${id}. ${esc(u.name)}`:`${id}번`}).join(', ')||'없음';const match=(l.matchedWeakIds||[]).length;return `<div class="pLogRow"><div><b>${esc(l.date)} · ${l.score}점</b><div class="pLogMeta">틀린 유형 ${names} · 취약과 일치 ${match}/${(l.wrongUnitIds||[]).length}</div></div><button class="pDelete" data-p-exam-delete="${l.id}">삭제</button></div>`},'시험 기록이 없습니다.');
+
+  const chronological=[...(state.physicsExamLogs||[])].sort((a,b)=>(a.date||'').localeCompare(b.date||'')||(a.created||0)-(b.created||0));
+  const chartData=chronological.map((l,i)=>({name:`${i+1}회`,date:l.date,score:Number(l.score)||0,created:l.created||0}));
+  pExamTrend.innerHTML=lineChart(chartData);
+  scrollTrendToLatest(pExamTrend);
+
+  const wrongMap=new Map();
+  for(const l of chronological){
+    const ids=[...new Set((l.wrongUnitIds||[]).map(Number).filter(Number.isFinite))];
+    for(const id of ids){
+      const prev=wrongMap.get(id)||{id,count:0,lastDate:'',lastCreated:0};
+      prev.count+=1;
+      if((l.date||'')>prev.lastDate||((l.date||'')===prev.lastDate&&Number(l.created||0)>=prev.lastCreated)){prev.lastDate=l.date||'';prev.lastCreated=Number(l.created||0);}
+      wrongMap.set(id,prev);
+    }
+  }
+  const top5=[...wrongMap.values()].sort((a,b)=>b.count-a.count||String(b.lastDate).localeCompare(String(a.lastDate))||b.lastCreated-a.lastCreated||a.id-b.id).slice(0,5);
+  pExamTop5.innerHTML=top5.length?top5.map((x,i)=>{const u=pUnit(x.id);return `<div class="rankRow"><div class="rankNo">${i+1}</div><div><b>${x.id}. ${u?esc(u.name):'소단원'}</b><div class="bar"><i style="width:${Math.max(8,x.count/(top5[0]?.count||1)*100)}%"></i></div></div><span class="badge red">${x.count}회</span></div>`}).join(''):'<div class="empty">아직 오답 기록이 없습니다.</div>';
+}
+function renderPhysicsWeakness(){const counts=physicsChapters.map(c=>({c,count:c.units.filter(([id])=>pState(id).weakActive).length})).filter(x=>x.count).sort((a,b)=>b.count-a.count);const max=counts[0]?.count||1;pWeakChapters.innerHTML=counts.length?counts.map(x=>`<div class="pChapterWeakRow"><b>Ch.${x.c.ch} ${esc(x.c.title)}</b><div class="pChapterWeakTrack"><div class="pChapterWeakFill" style="width:${x.count/max*100}%"></div></div><span>${x.count}개</span></div>`).join(''):'<div class="empty" style="padding:18px">현재 취약 챕터가 없습니다.</div>';}
 
 function iconBadge(type){const icons={latest:`<rect x="5" y="4" width="14" height="16" rx="2"/><path d="M8 2v4M16 2v4M8 10h8M8 14h5"/>`,average:`<path d="M4 16l5-5 4 3 7-8"/><path d="M16 6h4v4"/>`,wrong:`<circle cx="12" cy="12" r="8"/><path d="M9 9l6 6M15 9l-6 6"/>`,priority:`<circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/><path d="M18 6l-3 3"/>`,recent:`<circle cx="12" cy="12" r="8"/><path d="M12 8v5l3 2M4 5l2 2"/>`,percent:`<circle cx="12" cy="12" r="8"/><path d="M8.5 15.5l7-7"/><circle cx="9" cy="9" r="1.2"/><circle cx="15" cy="15" r="1.2"/>`,best:`<path d="M8 6h8l-1 5a3 3 0 0 1-6 0L8 6Z"/><path d="M9 18h6M12 14v4M6 7H4c0 3 2 5 5 5M18 7h2c0 3-2 5-5 5"/>`};return `<span class="iconBadge" aria-hidden="true"><svg viewBox="0 0 24 24">${icons[type]||icons.average}</svg></span>`;}
 function renderHome(){const ex=currentExams();const rec=state.records.filter(r=>{const e=examById(r.examId);return e&&e.subject===state.subject});const avg=ex.length?Math.round(ex.reduce((s,e)=>s+Number(e.score||0),0)/ex.length):0;const topValues=ex.map(e=>e.topPercent).filter(v=>v!==''&&v!=null&&Number.isFinite(Number(v))).map(Number);const avgTop=topValues.length?Math.round((topValues.reduce((s,v)=>s+v,0)/topValues.length)*10)/10:null;const recent4=ex.slice(0,4);const recentIds=new Set(recent4.map(e=>String(e.id)));const recentRec=rec.filter(r=>recentIds.has(String(r.examId)));const latestWeak=aggregate(recentRec).slice(0,5);const topUnit=latestWeak[0]?.unit||aggregate(rec)[0]?.unit||'-';homeStats.innerHTML=`<div class="stat">${iconBadge('latest')}<small>최근 점수</small><strong>${ex[0]?ex[0].score+'점':'-'}</strong></div><div class="stat">${iconBadge('average')}<small>평균 점수</small><strong>${ex.length?avg+'점':'-'}</strong></div><div class="stat">${iconBadge('percent')}<small>전체 평균 상위 %</small><strong>${avgTop==null?'-':'상위 '+avgTop+'%'}</strong></div><div class="stat">${iconBadge('priority')}<small>현재 최우선 약점</small><strong style="font-size:17px;line-height:1.25">${esc(topUnit)}</strong></div>`;homeTrend.innerHTML=lineChart(ex.slice().reverse());scrollTrendToLatest(homeTrend);homeRecent.innerHTML=ex.slice(0,5).map(e=>`<div class="homeRecentRow"><div><b>${esc(e.name)}</b><div class="homeRecentMeta">${esc(e.date)} · 평균 ${e.averageScore===''||e.averageScore==null?'-':e.averageScore+'점'} · 상위 ${e.topPercent===''||e.topPercent==null?'-':e.topPercent+'%'} · 오답 ${recordsForExam(e.id).length}개</div></div><div class="homeRecentScore">${e.score}점</div></div>`).join('')||'<div class="empty">등록된 시험이 없습니다.</div>';}
