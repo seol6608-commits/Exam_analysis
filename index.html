@@ -120,7 +120,7 @@
   .pWeakGrid{gap:14.84px}
 }
 
-/* V.3.27 — preserves the V.3.25 theme/scale layer; physics home is simplified around remaining study progress. */
+/* V.3.28 — preserves the V.3.25 theme/scale layer; physics home is simplified around remaining study progress. */
 :root{
   --app-bg-1:#f4f1e7;--app-bg-2:#ecefe8;--surface-1:#fcfaf4;--surface-2:#f5f3eb;
   --nav:#6f7d6b;--nav2:#596657;--accent:#b4934d;--accent2:#9d7d3d;
@@ -166,7 +166,7 @@ html[data-theme="teal"]{--app-bg-1:#f3fafb;--app-bg-2:#e6f4f5;--surface-1:#fffff
 }
 
 
-/* V.3.27 — theme pass retained from V.3.25. */
+/* V.3.28 — theme pass retained from V.3.25. */
 :root{
   --theme-track:color-mix(in srgb,var(--soft-accent-2) 72%,white);
   --theme-row:color-mix(in srgb,var(--surface-2) 76%,white);
@@ -217,7 +217,7 @@ html[data-theme="teal"]{--app-bg-1:#f3fafb;--app-bg-2:#e6f4f5;--surface-1:#fffff
 .themeDot.midnight{background:linear-gradient(135deg,#0d1b2a 0 52%,#3a6ea5 52%)}.themeDot.teal{background:linear-gradient(135deg,#0d4d4f 0 52%,#1fa7a9 52%)}
 
 
-/* V.3.27 — 5-theme palette retained; physics progress UI revised only. */
+/* V.3.28 — 5-theme palette retained; physics progress UI revised only. */
 .examTab strong{color:var(--ink)}
 .examTab.active strong{color:var(--accent2)}
 .examTab.active span{color:color-mix(in srgb,var(--nav) 72%,#666)}
@@ -233,8 +233,8 @@ html[data-theme="teal"]{--app-bg-1:#f3fafb;--app-bg-2:#e6f4f5;--surface-1:#fffff
 .trendScroller::-webkit-scrollbar-thumb,.pItemList.scrollable::-webkit-scrollbar-thumb,.pLogList.scrollable::-webkit-scrollbar-thumb{background:var(--theme-scroll)}
 .themeChoices{gap:9px}
 
-/* V.3.27 — physics home: chapter progress + complete remaining-unit inventory */
-/* V.3.27 — keep both physics-home inventories compact and independently scrollable. */
+/* V.3.28 — physics home: chapter progress + complete remaining-unit inventory */
+/* V.3.28 — keep both physics-home inventories compact and independently scrollable. */
 .pHomeGrid>.pCard{display:flex;flex-direction:column;height:clamp(360px,48vh,430px);min-height:0}
 .pChapterProgressList,.pRemainingList{display:flex;flex:1;min-height:0;flex-direction:column;gap:8px;margin-top:11px;overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;padding-right:4px;scrollbar-width:thin;scrollbar-color:var(--theme-scroll) transparent}
 .pChapterProgressList::-webkit-scrollbar,.pRemainingList::-webkit-scrollbar{width:7px}
@@ -254,7 +254,7 @@ html[data-theme="teal"]{--app-bg-1:#f3fafb;--app-bg-2:#e6f4f5;--surface-1:#fffff
 <body>
 <div class="app"><div class="shell">
 <aside class="sidebar">
-<div class="brand"><div class="logo" aria-hidden="true"><img id="brandLogo" src="brand-logo-sage.png" alt=""></div><div><h1>시험 분석</h1><p>V.3.27</p></div></div>
+<div class="brand"><div class="logo" aria-hidden="true"><img id="brandLogo" src="brand-logo-sage.png" alt=""></div><div><h1>시험 분석</h1><p>V.3.28</p></div></div>
 <div class="nav" id="mathNav">
 <button class="navBtn active" data-view="home">⌂ 홈</button>
 <button class="navBtn" data-view="exams">▤ 시험 관리</button>
@@ -292,7 +292,7 @@ html[data-theme="teal"]{--app-bg-1:#f3fafb;--app-bg-2:#e6f4f5;--surface-1:#fffff
 <div class="view" id="pHomeView">
   <div id="pHomeStats" class="pStats"></div>
   <div class="pHomeGrid">
-    <section class="pCard"><div class="pSectionTitle"><span class="pSectionIcon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 18V12M10 18V8M16 18V5M3 20h18"/></svg></span><h3>챕터별 진행도</h3></div><div class="pTiny">23개 챕터 전체 · 완성률이 낮은 순</div><div id="pChapterProgress" class="pChapterProgressList"></div></section>
+    <section class="pCard"><div class="pSectionTitle"><span class="pSectionIcon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 18V12M10 18V8M16 18V5M3 20h18"/></svg></span><h3>챕터별 진행도</h3></div><div class="pTiny">23개 챕터 전체 · 챕터 순서</div><div id="pChapterProgress" class="pChapterProgressList"></div></section>
     <section class="pCard"><div class="pSectionTitle"><span class="pSectionIcon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 4h12v16H6z"/><path d="M9 8h6M9 12h6M9 16h4"/></svg></span><h3>전체 미완성 소단원</h3></div><div class="pTiny">아직 완성하지 않은 소단원을 번호순으로 모두 표시합니다.</div><div id="pRemainingUnits" class="pRemainingList"></div></section>
   </div>
 </div>
@@ -415,7 +415,7 @@ function renderPhysicsHome(){
    const done=c.units.filter(([id])=>pState(id).complete).length;
    const cpct=Math.round(done/total*100);
    return {c,total,done,pct:cpct,remaining:total-done};
- }).sort((a,b)=>a.pct-b.pct||b.remaining-a.remaining||a.c.ch-b.c.ch);
+ }).sort((a,b)=>a.c.ch-b.c.ch);
  pChapterProgress.innerHTML=chapterRows.map(x=>`<div class="pChapterProgressRow"><div class="pChapterProgressTop"><b>Ch.${x.c.ch} ${esc(x.c.title)}</b><span>${x.done} / ${x.total} 완성</span></div><div class="pChapterProgressMeta"><span>${x.remaining}개 남음</span><span>${x.pct}%</span></div><div class="pProgressTrack"><div class="pProgressFill" style="width:${x.pct}%"></div></div></div>`).join('');
  const remainingUnits=physicsUnits.filter(u=>!pState(u.id).complete).sort((a,b)=>a.id-b.id);
  pRemainingUnits.innerHTML=remainingUnits.length?remainingUnits.map(u=>{const x=pState(u.id);return `<div class="pRemainingItem"><div><b>${u.id}. ${esc(u.name)}</b><span>Ch.${u.ch} ${esc(u.chapter)}</span></div>${x.weakActive?'<span class="pWeakTag">취약</span>':''}</div>`}).join(''):'<div class="empty" style="padding:18px">모든 소단원을 완성했습니다.</div>';

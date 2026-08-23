@@ -1,4 +1,4 @@
-const CACHE_NAME = 'exam-analysis-v3.27-static';
+const CACHE_NAME = 'exam-analysis-v3.28-static';
 const APP_SHELL = [
   './',
   './index.html',
